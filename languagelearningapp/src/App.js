@@ -1,4 +1,5 @@
 import "./App.css";
+import Home from "./components/home";
 
 export default function App() {
   return (
