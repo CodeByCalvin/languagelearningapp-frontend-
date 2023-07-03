@@ -1,0 +1,39 @@
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.home-btn {
+  margin: 10px;
+  padding: 10px;
+  width: 35rem;
+  height: 6.4rem;
+  border-radius: 50px;
+  border: none;
+  background-color: F8F9FA;
+  color: black;
+  font-size: 3rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-align: left;
+}
+
+.home-btn-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 1.4rem;
+  margin-left: 1rem;
+  fill: #7950f2;
+}

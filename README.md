@@ -1,2 +1,2 @@
-# Language Learning App (Frontend)
-The frontend of a language learning app.
+# languagelearningapp-frontend-
+This is the frontend of a language learning app built using React, Javascript, HTML and CSS.
