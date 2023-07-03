@@ -8,22 +8,23 @@ import { ReactComponent as HomeIcon } from "../imgs/icons/house-solid.svg";
 import "../css/navbar.css";
 
 export default function Navbar() {
-  const [value, setValue] = React.useState("wordOfDay");
+  const [value, setValue] = React.useState("home");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   return (
     <div className="nav-bar-container">
-      <BottomNavigation value={value} onChange={handleChange}>
+      <BottomNavigation value={value} onChange={handleChange} showLabels={true}>
         <BottomNavigationAction
           label=" "
-          value="wordOfDay"
-          className="nav-btn-icon"
+          value="home"
           icon={
             <HomeIcon
-              className="nav-btn-icon"
-              style={{ color: value === "wordOfDay" ? "#7950f2" : "black" }}
+              className={`nav-btn-icon ${
+                value === "home" ? "selected-icon" : ""
+              }`}
+              style={{ color: value === "home" ? "#7950f2" : "black" }}
             />
           }
         />
@@ -32,7 +33,9 @@ export default function Navbar() {
           value="search"
           icon={
             <MagnifyingGlassIcon
-              className="nav-btn-icon"
+              className={`nav-btn-icon ${
+                value === "search" ? "selected-icon" : ""
+              }`}
               style={{ color: value === "search" ? "#7950f2" : "black" }}
             />
           }
@@ -42,7 +45,9 @@ export default function Navbar() {
           value="notifications"
           icon={
             <BellIcon
-              className="nav-btn-icon"
+              className={`nav-btn-icon ${
+                value === "notifications" ? "selected-icon" : ""
+              }`}
               style={{
                 color: value === "notifications" ? "#7950f2" : "black",
               }}
@@ -54,7 +59,9 @@ export default function Navbar() {
           value="profile"
           icon={
             <UserIcon
-              className="nav-btn-icon"
+              className={`nav-btn-icon ${
+                value === "profile" ? "selected-icon" : ""
+              }`}
               style={{ color: value === "profile" ? "#7950f2" : "black" }}
             />
           }

@@ -7,10 +7,18 @@
 }
 
 .nav-btn-icon {
-  width: 100%;
-  height: 100%;
+  width: 70%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
 }
 
 .nav-bar-container .MuiBottomNavigation-root {
   background-color: transparent;
+}
+
+.nav-bar-container .selected-icon {
+  transform: scale(1.2);
 }
