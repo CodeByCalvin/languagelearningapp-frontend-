@@ -1,10 +1,10 @@
 import "./App.css";
-import Home from "./components/home";
+import WordOfTheDay from "./components/WordOfTheDay";
 
 export default function App() {
   return (
     <div className="App">
-      <h1>Language Learning App</h1>
+      <WordOfTheDay />
     </div>
   );
 }
