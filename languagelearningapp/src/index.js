@@ -6,30 +6,10 @@ import reportWebVitals from "./reportWebVitals";
 import Home from "./components/home";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const theme = createTheme({
-  components: {
-    MuiSwitch: {
-      styleOverrides: {
-        switchBase: {
-          color: "#7950F2",
-          "&.Mui-checked": {
-            color: "#7950F2",
-          },
-          "&.Mui-checked + .MuiSwitch-track": {
-            backgroundColor: "#7950F2",
-          },
-        },
-      },
-    },
-  },
-});
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <App />
   </React.StrictMode>
 );
 

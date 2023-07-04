@@ -13,14 +13,14 @@ export default function App() {
 
   return (
     <div className="App">
-      <ReviewCustomisation />
-      {/* <AnimatePresence mode="wait">
+      {/* <ReviewCustomisation /> */}
+      <AnimatePresence mode="wait">
         {page === "home" ? (
           <Home setPage={setPage} />
         ) : (
           <WordOfTheDay setPage={setPage} />
         )}
-      </AnimatePresence> */}
+      </AnimatePresence>
     </div>
   );
 }

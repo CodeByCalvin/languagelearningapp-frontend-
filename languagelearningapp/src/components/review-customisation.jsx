@@ -15,6 +15,8 @@ import {
   MenuItem,
 } from "@mui/material";
 import "../css/review-customisation.css";
+import IOSSwitch from "./iosswitch";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function CustomTestCard() {
   const [open, setOpen] = useState(false);
@@ -26,7 +28,7 @@ export default function CustomTestCard() {
 
   const handleClose = (newValue) => {
     setOpen(false);
-    if (newValue) {
+    if (typeof newValue === "number") {
       setQuestions(newValue);
     }
   };
@@ -42,55 +44,42 @@ export default function CustomTestCard() {
         padding: "1em",
       }}
     >
-      <Card>
+      {/* CUSTOMISATION OPTIONS */}
+
+      <Card sx={{ borderRadius: "2rem", padding: "2rem", width: "90vw" }}>
         <CardContent>
-          <Typography variant="h5" align="center" gutterBottom>
-            Customize Your Test
-          </Typography>
-
           <Box
             sx={{
               display: "flex",
               justifyContent: "space-between",
               marginBottom: "10px",
               alignItems: "center",
-              width: "90vw",
             }}
           >
-            <Typography variant="body1">Number of Questions:</Typography>
-            <Button variant="outlined" onClick={handleClickOpen}>
-              {questions} &gt;
-            </Button>
-          </Box>
-
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Choose the number of questions</DialogTitle>
-            <DialogContent>
-              <Select
-                value={questions}
-                onChange={(event) => handleClose(event.target.value)}
+            <Typography sx={{ fontSize: "2rem" }} variant="body1">
+              Number of Questions
+            </Typography>
+            <Typography
+              sx={{
+                cursor: "pointer",
+                fontSize: "2rem",
+                color: "var(--main-purple)",
+                "&:hover": { color: "#3f51b5" },
+              }}
+              variant="body1"
+              onClick={handleClickOpen}
+            >
+              <span
+                style={{
+                  color: "var(--main-purple)",
+                  fontWeight: "600",
+                  marginRight: "0.7rem",
+                }}
               >
-                <MenuItem value={5}>5</MenuItem>
-                <MenuItem value={10}>10</MenuItem>
-                <MenuItem value={15}>15</MenuItem>
-                <MenuItem value={20}>20</MenuItem>
-              </Select>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => handleClose()}>Close</Button>
-            </DialogActions>
-          </Dialog>
-
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginBottom: "10px",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="body1">Timer</Typography>
-            <Switch />
+                {questions}
+              </span>
+              <span style={{ color: "black" }}>&gt;</span>
+            </Typography>
           </Box>
 
           <Box
@@ -101,8 +90,10 @@ export default function CustomTestCard() {
               alignItems: "center",
             }}
           >
-            <Typography variant="body1">Multiple Choice</Typography>
-            <Switch />
+            <Typography sx={{ fontSize: "2rem" }} variant="body1">
+              Timer
+            </Typography>
+            <IOSSwitch />
           </Box>
 
           <Box
@@ -113,8 +104,24 @@ export default function CustomTestCard() {
               alignItems: "center",
             }}
           >
-            <Typography variant="body1">True or False</Typography>
-            <Switch />
+            <Typography sx={{ fontSize: "2rem" }} variant="body1">
+              Multiple Choice
+            </Typography>
+            <IOSSwitch />
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "10px",
+              alignItems: "center",
+            }}
+          >
+            <Typography sx={{ fontSize: "2rem" }} variant="body1">
+              True or False
+            </Typography>
+            <IOSSwitch />
           </Box>
 
           <Box
@@ -124,10 +131,110 @@ export default function CustomTestCard() {
               marginTop: "10px",
             }}
           >
-            <button className="start-btn">Start</button>
+            <motion.button
+              className="start-btn"
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 1.2 }}
+            >
+              Start
+            </motion.button>
           </Box>
         </CardContent>
       </Card>
+
+      {/* MODAL WINDOW FOR NUMBER OF QUESTIONS */}
+      <Dialog
+        open={open}
+        keepMounted={false}
+        onClose={handleClose}
+        classes={{ paperScrollPaper: "custom-dialog" }}
+        TransitionComponent={({ children }) => (
+          <AnimatePresence mode="out-in">
+            {open && (
+              <motion.div
+                variants={{
+                  hidden: { y: "100vh", opacity: 0 },
+                  visible: {
+                    y: "0",
+                    opacity: 1,
+                    transition: { delay: 0.05 },
+                  },
+                  exit: {
+                    y: "100vh",
+                    opacity: 0,
+                    transition: { delay: 0.05 },
+                  },
+                }}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                style={{ position: "absolute", bottom: "20%", left: "30%" }}
+              >
+                {children}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        )}
+      >
+        <DialogTitle sx={{ marginBottom: "3rem" }}>
+          <button className="close-btn" onClick={() => handleClose()}>
+            X
+          </button>
+        </DialogTitle>
+
+        <DialogContent>
+          <Select
+            sx={{
+              fontSize: "1.8rem",
+              fontWeight: "500",
+              color: "var(--main-purple)",
+            }}
+            value={questions}
+            onChange={(event) => handleClose(Number(event.target.value))}
+          >
+            <MenuItem
+              sx={{
+                fontSize: "1.8rem",
+                fontWeight: "500",
+                color: "var(--main-purple)",
+              }}
+              value={5}
+            >
+              5
+            </MenuItem>
+            <MenuItem
+              sx={{
+                fontSize: "1.8rem",
+                fontWeight: "500",
+                color: "var(--main-purple)",
+              }}
+              value={10}
+            >
+              10
+            </MenuItem>
+            <MenuItem
+              sx={{
+                fontSize: "1.8rem",
+                fontWeight: "500",
+                color: "var(--main-purple)",
+              }}
+              value={15}
+            >
+              15
+            </MenuItem>
+            <MenuItem
+              sx={{
+                fontSize: "1.8rem",
+                fontWeight: "500",
+                color: "var(--main-purple)",
+              }}
+              value={20}
+            >
+              20
+            </MenuItem>
+          </Select>
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }
