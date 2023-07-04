@@ -1,10 +1,8 @@
-<<<<<<< HEAD
+@import url("https://fonts.googleapis.com/css2?family=Agdasima&family=Quicksand:wght@300;400;500;600;700&display=swap");
 :root {
   --main-purple: #7950F2;
 }
-=======
-@import url("https://fonts.googleapis.com/css2?family=Agdasima&family=Quicksand:wght@300;400;500;600;700&display=swap");
->>>>>>> f7ded60801e276e2e1df82508f4309b69360b649
+
 
 body {
   margin: 0;

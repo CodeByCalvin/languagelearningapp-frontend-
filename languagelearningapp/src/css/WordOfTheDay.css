@@ -1,0 +1,29 @@
+.wotd {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wotd-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.wotd-container h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--main-purple);
+}
+.wotd-container h2 {
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+.highlighted {
+    color: var(--main-purple);
+    font-weight: 700;
+}
