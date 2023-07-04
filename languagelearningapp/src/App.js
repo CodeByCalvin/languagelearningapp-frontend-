@@ -18,11 +18,9 @@ export default function App() {
         {page === "home" ? (
           <Home setPage={setPage} />
         ) : (
-          <DummyPage setPage={setPage} />
+          <WordOfTheDay setPage={setPage} />
         )}
       </AnimatePresence>
-
-      <WordOfTheDay />
 
     </div>
   );

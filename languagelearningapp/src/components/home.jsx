@@ -37,6 +37,7 @@ export default function Home(props) {
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: -300, opacity: 0 }}
       transition={{ duration: 0.5 }}
+      className="homeDiv"
     >
       <div className="main-content">
         <motion.div
