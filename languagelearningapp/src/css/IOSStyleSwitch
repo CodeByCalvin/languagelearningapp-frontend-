@@ -1,0 +1,49 @@
+import * as React from "react";
+import { styled } from "@mui/system";
+import { SwitchUnstyled, alpha } from "@mui/core";
+
+const IOSStyleSwitch = styled(SwitchUnstyled)(({ theme }) => ({
+  width: 42,
+  height: 26,
+  padding: 0,
+  "& .MuiSwitchUnstyled-thumb": {
+    boxSizing: "border-box",
+    width: 22,
+    height: 22,
+  },
+  "& .MuiSwitchUnstyled-input": {
+    cursor: "pointer",
+    position: "absolute",
+    opacity: 0,
+    width: "300%",
+    height: "300%",
+    top: "-100%",
+    left: "-100%",
+    margin: 0,
+    padding: 0,
+    zIndex: 1,
+  },
+  "&.Mui-checked .MuiSwitchUnstyled-thumb": {
+    transform: "translateX(16px)",
+    backgroundColor: "#fff",
+  },
+  "&.Mui-checked .MuiSwitchUnstyled-track": {
+    backgroundColor: theme.palette.mode === "dark" ? "#2ECA45" : "#65C466",
+  },
+  "& .MuiSwitchUnstyled-track": {
+    borderRadius: 26 / 2,
+    backgroundColor: theme.palette.mode === "dark" ? "#8796A5" : "#C4C4C4",
+    opacity: theme.palette.mode === "dark" ? 0.6 : 1,
+    transition: theme.transitions.create("background-color", {
+      duration: 500,
+    }),
+  },
+}));
+
+export default function CustomizedSwitches() {
+  return (
+    <div>
+      <IOSStyleSwitch defaultChecked />
+    </div>
+  );
+}

@@ -1,0 +1,15 @@
+.start-btn {
+  background-color: var(--main-purple);
+  border: none;
+  color: white;
+  padding: 2px 18px;
+  margin: 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 12px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  width: 100%;
+  font-size: 3.2rem;
+}
