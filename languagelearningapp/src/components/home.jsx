@@ -55,8 +55,8 @@ export default function Home(props) {
               animate="visible"
               whileTap="whileTap"
               onClick={() => {
-                props.setPage && props.setPage("dummy");
-                console.log(props.setPage);
+                let newPage = button.text.toLowerCase().replace(/\s+/g, "_");
+                props.setPage && props.setPage(newPage);
               }}
             >
               <button.Icon className="home-btn-icon" />

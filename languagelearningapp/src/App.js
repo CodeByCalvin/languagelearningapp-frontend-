@@ -1,26 +1,33 @@
+import React, { useState } from "react";
 import Home from "./components/home";
 import DummyPage from "./components/dummyPage";
 import "./App.css";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
 import ReviewCustomisation from "./components/review-customisation";
-
-import "./App.css";
 import WordOfTheDay from "./components/WordOfTheDay";
+
+import Review from "./components/review-customisation";
 
 export default function App() {
   const [page, setPage] = useState("home");
 
+  const renderPage = () => {
+    switch (page) {
+      case "home":
+        return <Home setPage={setPage} />;
+      case "word_of_the_day":
+        return <WordOfTheDay setPage={setPage} />;
+
+      case "review":
+        return <Review setPage={setPage} />;
+      default:
+        return <Home setPage={setPage} />;
+    }
+  };
+
   return (
     <div className="App">
-      {/* <ReviewCustomisation /> */}
-      <AnimatePresence mode="wait">
-        {page === "home" ? (
-          <Home setPage={setPage} />
-        ) : (
-          <WordOfTheDay setPage={setPage} />
-        )}
-      </AnimatePresence>
+      <AnimatePresence mode="wait">{renderPage()}</AnimatePresence>
     </div>
   );
 }
