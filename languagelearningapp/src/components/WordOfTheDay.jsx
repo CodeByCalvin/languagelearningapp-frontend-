@@ -4,8 +4,11 @@ import ApiServerClient from "../ApiServerClient";
 import { Container, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faHouse } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion";
 
-const WordOfTheDay = () => {
+const WordOfTheDay = (props) => {
+  const { setPage } = props;
+
   const [word, setWord] = useState("");
   const [translation, setTranslation] = useState("");
   const [definition, setDefinition] = useState("");
@@ -82,9 +85,19 @@ const WordOfTheDay = () => {
   };
 
   return (
-    <div className="wotd">
+    <motion.div 
+      className="wotd"
+      initial={{ y: 300, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -300, opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <Container fluid className="homeContainer">
-        <FontAwesomeIcon icon={faHouse} className="houseIcon" />
+        <FontAwesomeIcon 
+          icon={faHouse} 
+          className="houseIcon" 
+          onClick={() => setPage && setPage("home")}
+        />
       </Container>
       <Container fluid className="wotd-container">
         <div className="d-flex justify-content-center align-items-center">
@@ -108,7 +121,7 @@ const WordOfTheDay = () => {
           <h3>{definition}</h3>
         </div>
       </Container>
-    </div>
+    </motion.div>
   );
 };
 
