@@ -1,10 +1,21 @@
-import "./App.css";
 import Home from "./components/home";
+import DummyPage from "./components/dummyPage";
+import "./App.css";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
 export default function App() {
+  const [page, setPage] = useState("home");
+
   return (
     <div className="App">
-      <h1>Language Learning App</h1>
+      <AnimatePresence mode="wait">
+        {page === "home" ? (
+          <Home setPage={setPage} />
+        ) : (
+          <DummyPage setPage={setPage} />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

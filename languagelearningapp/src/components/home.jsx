@@ -8,7 +8,7 @@ import { ReactComponent as CogWheelIcon } from "../imgs/icons/gear-solid.svg";
 import Navbar from "../components/navbar";
 import { motion } from "framer-motion";
 
-export default function Home() {
+export default function Home(props) {
   const buttons = [
     { Icon: CalendarCheckIcon, text: "Word of the Day" },
     { Icon: GraduationCapIcon, text: "Learn" },
@@ -18,40 +18,53 @@ export default function Home() {
   ];
 
   const buttonVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 50 },
     visible: (index) => ({
       opacity: 1,
       y: 0,
       transition: {
-        delay: index * 0.07,
+        delay: index * 0.1,
+        y: { duration: 0.05 },
+        opacity: { duration: 1 },
       },
     }),
-    whileTap: { scale: 0.9 },
+    whileTap: { scale: 0.1 },
   };
 
   return (
-    <div className="main-content">
-      <motion.div
-        className="buttons-container"
-        initial="hidden"
-        animate="visible"
-      >
-        {buttons.map((button, index) => (
-          <motion.button
-            key={index}
-            className="home-btn"
-            custom={index}
-            variants={buttonVariants}
-            initial="hidden"
-            animate="visible"
-            whileTap="whileTap"
-          >
-            <button.Icon className="home-btn-icon" />
-            {button.text}
-          </motion.button>
-        ))}
-      </motion.div>
-      <Navbar />
-    </div>
+    <motion.div
+      initial={{ y: 300, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -300, opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="main-content">
+        <motion.div
+          className="buttons-container"
+          initial="hidden"
+          animate="visible"
+        >
+          {buttons.map((button, index) => (
+            <motion.button
+              key={index}
+              className="home-btn"
+              custom={index}
+              variants={buttonVariants}
+              initial="hidden"
+              animate="visible"
+              whileTap="whileTap"
+              onClick={() => {
+                props.setPage && props.setPage("dummy");
+                console.log(props.setPage);
+              }}
+            >
+              <button.Icon className="home-btn-icon" />
+              {button.text}
+            </motion.button>
+          ))}
+        </motion.div>
+        <Navbar />
+      </div>
+    </motion.div>
   );
 }
