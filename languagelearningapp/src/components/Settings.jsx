@@ -1,37 +1,23 @@
 import React, { useState } from "react";
-import {
-  Backdrop,
-  Button,
-  DialogActions,
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  Select,
-  MenuItem,
-  Slider,
-} from "@mui/material";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 import "../css/review-customisation.css";
 import IOSSwitch from "./iosswitch";
 import { motion } from "framer-motion";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVolumeHigh, faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import "../css/settings.css";
-import LanguageSelector from "./LanguageSelector";
-import DeleteAccount from "./DeleteAccount";
-import TextSize from "./TextSize";
+import LanguageSelector from "./Settings/LanguageSelector";
+import DeleteAccount from "./Settings/DeleteAccount";
+import TextSize from "./Settings/TextSize";
+import DefaultQuestions from "./Settings/DefaultQuestions";
 
 export default function Settings(props) {
-  const [open, setOpen] = useState(false);
-  const [questions, setQuestions] = useState(10);
   const [selectedLanguage, setSelectedLanguage] = useState("GB");
   const [selectedLearningLanguage, setSelectedLearningLanguage] =
     useState("FR");
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [questionsOpen, setQuestionsOpen] = useState(false);
 
   const handleDeleteOpen = () => {
     setDeleteOpen(!deleteOpen);
@@ -39,6 +25,14 @@ export default function Settings(props) {
 
   const handleDeleteClose = () => {
     setDeleteOpen(false);
+  };
+
+  const handleQuestionsOpen = () => {
+    setQuestionsOpen(true);
+  };
+
+  const handleQuestionsClose = () => {
+    setQuestionsOpen(false);
   };
 
   return (
@@ -60,7 +54,6 @@ export default function Settings(props) {
           padding: "1em",
         }}
       >
-        {/* CUSTOMISATION OPTIONS */}
         <motion.div
           initial={{ y: 300, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -135,7 +128,10 @@ export default function Settings(props) {
                   <Typography sx={{ fontSize: "2rem" }} variant="body1">
                     Default questions
                   </Typography>
-                  <IOSSwitch />
+                  <DefaultQuestions
+                    handleQuestionsOpen={handleQuestionsOpen}
+                    handleQuestionsClose={handleQuestionsClose}
+                  />
                 </Box>
 
                 <Box

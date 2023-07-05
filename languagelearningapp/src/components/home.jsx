@@ -5,7 +5,7 @@ import { ReactComponent as GraduationCapIcon } from "../imgs/icons/graduation-ca
 import { ReactComponent as CircleCheckIcon } from "../imgs/icons/circle-check-solid.svg";
 import { ReactComponent as ProgressIcon } from "../imgs/icons/bars-progress-solid.svg";
 import { ReactComponent as CogWheelIcon } from "../imgs/icons/gear-solid.svg";
-import Navbar from "../components/navbar";
+import Navbar from "./navbar";
 import { motion } from "framer-motion";
 
 export default function Home(props) {

@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Home from "./components/home";
 import "bootstrap/dist/css/bootstrap.min.css";
-import DummyPage from "./components/dummyPage";
 import "./App.css";
 import { motion, AnimatePresence } from "framer-motion";
-
-import ReviewChoice from "./components/ReviewChoice";
-import ReviewCustomisation from "./components/review-customisation";
 import WordOfTheDay from "./components/WordOfTheDay";
 import Settings from "./components/Settings";
 import Review from "./components/review-customisation";

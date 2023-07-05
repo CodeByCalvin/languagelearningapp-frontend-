@@ -34,7 +34,6 @@ export default function TextSize({ textSize, setTextSize }) {
         {textSize}
       </Typography>
 
-      {/* MODAL WINDOW */}
       <Dialog open={open} onClose={handleClose}>
         <motion.div initial="hidden" animate="visible">
           <DialogTitle sx={{ marginBottom: "2rem" }}>
