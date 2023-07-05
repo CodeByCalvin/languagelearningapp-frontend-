@@ -22,6 +22,7 @@ export default function App() {
       case "word_of_the_day":
         return <WordOfTheDay setPage={setPage} />;
       case "review":
+
         return <Review setPage={setPage} />;
       case "settings":
         return (
@@ -31,6 +32,9 @@ export default function App() {
             setTextSize={setTextSize}
           />
         );
+    case "review-choice":
+        return <ReviewChoice setPage={setPage} />;
+
       default:
         return <Home setPage={setPage} />;
     }

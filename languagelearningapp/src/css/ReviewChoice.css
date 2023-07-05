@@ -57,5 +57,25 @@
   align-items: center;
   flex-wrap: wrap;
   margin: 2rem;
-
+}
+.qBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+  margin: 1rem 0;
+}
+.noAnswer {
+  background-color: var(--lighter-grey);
+}
+.correct {
+  background-color: #30cf4b;
+  color: white;
+}
+.false {
+  background-color: #ff6b6b;
+  color: white;
 }
