@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Backdrop,
   Box,
   Card,
   CardContent,
@@ -17,7 +18,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faHouse } from "@fortawesome/free-solid-svg-icons";
 
-export default function CustomTestCard(props) {
+export default function ReviewSettings(props) {
   const [open, setOpen] = useState(false);
   const [questions, setQuestions] = useState(10);
 
@@ -68,7 +69,14 @@ export default function CustomTestCard(props) {
           exit={{ y: -300, opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Card sx={{ borderRadius: "2rem", padding: "2rem", width: "90vw" }}>
+          <Card
+            sx={{
+              borderRadius: "2rem",
+              padding: "2rem",
+              width: "90vw",
+              boxShadow: "0px 3px 10px 0px rgba(0,0,0,0.1)",
+            }}
+          >
             <CardContent>
               <Box
                 sx={{
@@ -169,18 +177,11 @@ export default function CustomTestCard(props) {
             open={open}
             onClose={handleClose}
             classes={{ paperScrollPaper: "custom-dialog" }}
-            BackdropComponent={motion.div}
-            BackdropProps={{
-              variants: backdropVariants,
-              initial: "hidden",
-              animate: "visible",
-            }}
           >
             <motion.div
               variants={modalVariants}
               initial="hidden"
               animate="visible"
-              style={{ position: "absolute", bottom: "20%", left: "30%" }}
             >
               <DialogTitle sx={{ marginBottom: "3rem" }}>
                 <button className="close-btn" onClick={() => handleClose()}>
