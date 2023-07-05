@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Home from "./components/home";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DummyPage from "./components/dummyPage";
@@ -13,6 +13,11 @@ import Review from "./components/review-customisation";
 
 export default function App() {
   const [page, setPage] = useState("home");
+  const [textSize, setTextSize] = useState("medium");
+
+  useEffect(() => {
+    document.body.className = `${textSize}-text`;
+  }, [textSize]);
 
   const renderPage = () => {
     switch (page) {
@@ -23,7 +28,13 @@ export default function App() {
       case "review":
         return <Review setPage={setPage} />;
       case "settings":
-        return <Settings setPage={setPage} />;
+        return (
+          <Settings
+            setPage={setPage}
+            textSize={textSize}
+            setTextSize={setTextSize}
+          />
+        );
       default:
         return <Home setPage={setPage} />;
     }
@@ -31,7 +42,6 @@ export default function App() {
 
   return (
     <div className="App">
-      {/* <Settings /> */}
       <AnimatePresence mode="wait">{renderPage()}</AnimatePresence>
     </div>
   );

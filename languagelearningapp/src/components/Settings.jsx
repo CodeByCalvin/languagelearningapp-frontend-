@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import {
   Backdrop,
+  Button,
+  DialogActions,
   Box,
   Card,
   CardContent,
@@ -10,6 +12,7 @@ import {
   DialogContent,
   Select,
   MenuItem,
+  Slider,
 } from "@mui/material";
 import "../css/review-customisation.css";
 import IOSSwitch from "./iosswitch";
@@ -20,6 +23,7 @@ import { faVolumeHigh, faHouse } from "@fortawesome/free-solid-svg-icons";
 import "../css/settings.css";
 import LanguageSelector from "./LanguageSelector";
 import DeleteAccount from "./DeleteAccount";
+import TextSize from "./TextSize";
 
 export default function Settings(props) {
   const [open, setOpen] = useState(false);
@@ -35,27 +39,6 @@ export default function Settings(props) {
 
   const handleDeleteClose = () => {
     setDeleteOpen(false);
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (newValue) => {
-    setOpen(false);
-    if (typeof newValue === "number") {
-      setQuestions(newValue);
-    }
-  };
-
-  const backdropVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
-  };
-
-  const modalVariants = {
-    hidden: { y: 300, opacity: 0 },
-    visible: { y: 0, opacity: 1 },
   };
 
   return (
@@ -140,6 +123,7 @@ export default function Settings(props) {
                   </Typography>
                   <IOSSwitch />
                 </Box>
+
                 <Box
                   sx={{
                     display: "flex",
@@ -165,21 +149,10 @@ export default function Settings(props) {
                   <Typography sx={{ fontSize: "2rem" }} variant="body1">
                     Text size
                   </Typography>
-                  <IOSSwitch />
-                </Box>
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginBottom: "10px",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography sx={{ fontSize: "2rem" }} variant="body1">
-                    Notifications
-                  </Typography>
-                  <IOSSwitch />
+                  <TextSize
+                    textSize={props.textSize}
+                    setTextSize={props.setTextSize}
+                  />
                 </Box>
 
                 <Box
