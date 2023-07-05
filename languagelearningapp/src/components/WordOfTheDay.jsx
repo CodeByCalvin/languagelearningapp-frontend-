@@ -94,6 +94,23 @@ const WordOfTheDay = (props) => {
     }
   };
 
+  if (!isLoaded) {
+    return (
+      <motion.div
+        className="wotd"
+        initial={{ y: 300, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: -300, opacity: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Container fluid className="wotd-container flex-row">
+          <h1>Loading</h1>
+          <PlaceholderLoader />
+        </Container>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       className="wotd"
@@ -109,39 +126,31 @@ const WordOfTheDay = (props) => {
           onClick={() => setPage && setPage("home")}
         />
       </Container>
-      {!isLoaded ? (
-        <Container fluid className="wotd-container flex-row">
-          <h1>Loading</h1>
-          <PlaceholderLoader />
-        </Container>
-      ) : (
-        <>
-          <Container fluid className="wotd-container">
-            <div className="d-flex justify-content-center align-items-center">
-              <h1>{translation}</h1>
-              <FontAwesomeIcon
-                className="i"
-                icon={faVolumeHigh}
-                onClick={() => speakText(translation, "es-ES")}
-              />
-            </div>
-            <h2>{word}</h2>
-            <br />
-            <br />
-            <h2>{exampleTranslated}</h2>
-            <h3>{example}</h3>
-          </Container>
-          <Container fluid className="descContainer">
-            <div className="descBox">
-              <div className="descTop">
-                <h3>Definition</h3>
-              </div>
-              <hr />
-              <h3>{definition}</h3>
-            </div>
-          </Container>
-        </>
-      )}
+
+      <Container fluid className="wotd-container">
+        <div className="d-flex justify-content-center align-items-center">
+          <h1>{translation}</h1>
+          <FontAwesomeIcon
+            className="i"
+            icon={faVolumeHigh}
+            onClick={() => speakText(translation, "es-ES")}
+          />
+        </div>
+        <h2>{word}</h2>
+        <br />
+        <br />
+        <h2>{exampleTranslated}</h2>
+        <h3>{example}</h3>
+      </Container>
+      <Container fluid className="descContainer">
+        <div className="descBox">
+          <div className="descTop">
+            <h3>Definition</h3>
+          </div>
+          <hr />
+          <h3>{definition}</h3>
+        </div>
+      </Container>
     </motion.div>
   );
 };

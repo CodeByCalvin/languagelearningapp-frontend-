@@ -22,7 +22,7 @@ export default function App() {
         return <WordOfTheDay setPage={setPage} />;
 
       case "review":
-        return <Review setPage={setPage} />;
+        return <ReviewChoice setPage={setPage} />;
       default:
         return <Home setPage={setPage} />;
     }
