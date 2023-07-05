@@ -1,9 +1,11 @@
 
 import Home from "./components/home";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import DummyPage from "./components/dummyPage";
 import "./App.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import ReviewChoice from "./components/ReviewChoice";
 
 import "./App.css";
 import WordOfTheDay from "./components/WordOfTheDay";
@@ -18,7 +20,7 @@ export default function App() {
         {page === "home" ? (
           <Home setPage={setPage} />
         ) : (
-          <WordOfTheDay setPage={setPage} />
+          <ReviewChoice setPage={setPage} />
         )}
       </AnimatePresence>
 
