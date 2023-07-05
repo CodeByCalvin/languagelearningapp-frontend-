@@ -1,0 +1,46 @@
+.delete-btn {
+  background-color: #e03131;
+  border: none;
+  color: white;
+  padding: 2px 18px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 12px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  width: 100%;
+  font-size: 2.4rem;
+}
+
+.customisation-options {
+  margin-bottom: 3.4rem;
+}
+
+.delete-yes-btn {
+  background-color: #e03131;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 12px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  width: 60%;
+  font-size: 2.4rem;
+}
+
+.delete-no-btn {
+  background-color: var(--main-purple);
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 12px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  width: 100%;
+  font-size: 2.4rem;
+}
