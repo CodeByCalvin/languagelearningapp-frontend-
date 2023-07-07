@@ -8,6 +8,7 @@ import Settings from "./components/Settings";
 import Review from "./components/review-customisation";
 import Learn from "./components/Learn";
 import ReviewChoice from "./components/ReviewChoice";
+import ReviewResults from "./components/ReviewResults";
 
 export default function App() {
   const [page, setPage] = useState("home");
@@ -42,7 +43,8 @@ export default function App() {
 
   return (
     <div className="App">
-      <AnimatePresence mode="wait">{renderPage()}</AnimatePresence>
+      <ReviewResults setPage={setPage} />
+      {/* <AnimatePresence mode="wait">{renderPage()}</AnimatePresence> */}
     </div>
   );
 }
