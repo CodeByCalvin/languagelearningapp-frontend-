@@ -10,8 +10,6 @@ import {
   buildStyles,
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-
-// Animation
 import { easeQuadInOut } from "d3-ease";
 import AnimatedProgressProvider from "./AnimatedProgressProvider";
 import "../css/review-results.css";
@@ -43,7 +41,7 @@ export default function ReviewResults(props) {
     const incrementInterval = setInterval(() => {
       setCurrentPercent((prevPercent) => {
         if (prevPercent < percent) {
-          return prevPercent + 2;
+          return prevPercent + 5;
         }
         clearInterval(incrementInterval);
         return prevPercent;
@@ -54,7 +52,6 @@ export default function ReviewResults(props) {
   }, []);
 
   // Change the results header based on the % correct
-
   const setMessage = () => {
     if (correctPercent >= 80) {
       return "Well done!";
@@ -119,8 +116,14 @@ export default function ReviewResults(props) {
             questions correctly.
           </div>
           <div className="results-footer">
-            <RotateRight className="results-footer-icon" />
-            <ArrowRight className="results-footer-icon" />
+            <RotateRight
+              className="results-footer-icon"
+              onClick={() => props.setPage && props.setPage("learn")}
+            />
+            <ArrowRight
+              className="results-footer-icon"
+              onClick={() => props.setPage && props.setPage("home")}
+            />
           </div>
         </div>
       </div>
