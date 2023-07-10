@@ -10,7 +10,7 @@ import PlaceholderLoader from "./PlaceholderLoader";
 const ReviewChoice = (props) => {
   const { setPage } = props;
 
-  const language = "spanish";
+  const language = "german";
 
   const [timer, setTimer] = useState(0);
   const [questions, setQuestions] = useState([]);
