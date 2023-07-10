@@ -1,10 +1,22 @@
+import React, { useState } from "react";
 import "./App.css";
 import Home from "./components/home";
+import { Login } from "./components/login";
+import { Register } from "./components/register";
 
 export default function App() {
+  const [currentForm, setCurrentForm] = useState("login");
+
+  const toggleForm= (formName) => {
+    setCurrentForm(formName)
+  }
+  
   return (
     <div className="App">
-      <h1>Language Learning App</h1>
+      {
+        currentForm == "login" ? <Login onFormSwitch={toggleForm}/> : <Register/>
+      }
     </div>
   );
 }
+
