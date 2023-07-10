@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import WordOfTheDay from "./components/WordOfTheDay";
 import Settings from "./components/Settings";
 import Review from "./components/review-customisation";
+import Learn from "./components/Learn";
 import ReviewChoice from "./components/ReviewChoice";
 
 export default function App() {
@@ -32,7 +33,8 @@ export default function App() {
             setTextSize={setTextSize}
           />
         );
-
+      case "learn":
+        return <Learn setPage={setPage} />;
       default:
         return <Home setPage={setPage} />;
     }
@@ -44,3 +46,4 @@ export default function App() {
     </div>
   );
 }
+

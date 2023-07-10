@@ -1,0 +1,81 @@
+.learn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-header {
+  display: flex;
+  position: absolute;
+  top: 0;
+}
+
+.word-class {
+  font-size: 2rem;
+  color: #40c057;
+}
+
+.word {
+  font-size: 8rem;
+  color: var(--main-purple);
+}
+
+.highlight {
+  color: var(--main-purple);
+  font-weight: 600;
+}
+
+.play-btn {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  text-align: center;
+  justify-content: center;
+  border: none;
+  background-color: var(--main-purple);
+  fill: white;
+}
+
+.microphone-btn {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  text-align: center;
+  justify-content: center;
+  border: none;
+  margin-bottom: 2rem;
+  background-color: transparent;
+  fill: var(--main-purple);
+}
+
+.pronunciation {
+  font-size: 2rem;
+}
+
+.translation {
+  font-size: 6rem;
+}
+
+.language-example {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+.translated-example {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+.response-message {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
