@@ -6,11 +6,12 @@ import reportWebVitals from "./reportWebVitals";
 import Home from "./components/home";
 import { Login } from "./components/login";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Game from "./components/game";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Game />
   </React.StrictMode>
 );
 
