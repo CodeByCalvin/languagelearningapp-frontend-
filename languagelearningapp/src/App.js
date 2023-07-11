@@ -42,7 +42,8 @@ export default function App() {
 
   return (
     <div className="App">
-      <AnimatePresence mode="wait">{renderPage()}</AnimatePresence>
+      {/* <AnimatePresence mode="wait">{renderPage()}</AnimatePresence> */}
+      <Learn setPage={setPage} />
     </div>
   );
 }
