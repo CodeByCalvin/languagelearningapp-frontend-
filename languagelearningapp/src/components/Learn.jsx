@@ -12,6 +12,7 @@ export default function Learn(props) {
   const wordClass = "";
   // const pronunciation = "/vwah-tur/";
   const [word, setWord] = React.useState("");
+  const [englishWord, setEnglishWord] = React.useState("");
   const [languageExample, setLanguageExample] = React.useState("");
   const [translatedExample, setTranslatedExample] = React.useState("");
   const [definition, setDefinition] = React.useState("");
@@ -24,14 +25,27 @@ export default function Learn(props) {
       const response = await ApiServerClient.getRandomWord();
       const data = response.data;
       console.log(data);
-      console.log(data.language[language].word);
 
       // Set the word based on the language
-      setWord(data.language[language].word);
-      setLanguageExample(data.language[language].example);
+      // setWord(data.language[language].word);
+
       setTranslatedExample(data.language[knownLanguage].example);
       setDefinition(data.language[knownLanguage].definition);
-      console.log(word);
+      setWord(data.language[language].word);
+      setEnglishWord(data.language[knownLanguage].word);
+      // Sets the example based on the language (and highlights the specific word)
+      setLanguageExample(
+        highlightWord(
+          data.language[language].word,
+          data.language[language].example
+        )
+      );
+      setTranslatedExample(
+        highlightWord(
+          data.language[knownLanguage].word,
+          data.language[knownLanguage].example
+        )
+      );
     } catch (error) {
       console.log(error);
     }
@@ -75,10 +89,6 @@ export default function Learn(props) {
 
     return highlightedExample;
   };
-
-  // Highlight word in sentence example and translated example
-  // setLanguageExample(highlightWord(word, languageExample));
-  // setTranslatedExample(highlightWord(definition, translatedExample));
 
   // When microphone button is pressed, listen for user's response and compare to correct answer
   const useMicrophone = () => {
