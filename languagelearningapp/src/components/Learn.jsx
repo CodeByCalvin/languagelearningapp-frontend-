@@ -26,9 +26,6 @@ export default function Learn(props) {
       const data = response.data;
       console.log(data);
 
-      // Set the word based on the language
-      // setWord(data.language[language].word);
-
       setTranslatedExample(data.language[knownLanguage].example);
       setDefinition(data.language[knownLanguage].definition);
       setWord(data.language[language].word);
@@ -57,7 +54,7 @@ export default function Learn(props) {
 
   const responseMessage = ["Good job!", "Try again."];
 
-  // When play button is pressed, play audio of word in french
+  // When play button is pressed, play audio of word
   const playAudio = () => {
     const utterance = new SpeechSynthesisUtterance(word);
     speechSynthesis.speak(utterance);
@@ -116,7 +113,7 @@ export default function Learn(props) {
       }
     };
 
-    // set the recognition to only last for 5 seconds
+    // Set the recognition to only last for 5 seconds
     recognition.start();
     setTimeout(() => recognition.stop(), 5000);
   };
