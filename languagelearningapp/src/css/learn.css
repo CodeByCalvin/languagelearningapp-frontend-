@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  padding: 1rem;
 }
 
 .home-content {
@@ -25,7 +26,7 @@
 }
 
 .word {
-  font-size: 8rem;
+  font-size: 4.8rem;
   color: var(--main-purple);
 }
 
@@ -62,17 +63,19 @@
 }
 
 .translation {
-  font-size: 6rem;
+  font-size: 2.8rem;
+  font-weight: 600;
+  margin-bottom: 2.4rem;
 }
 
 .language-example {
-  font-size: 3rem;
-  margin-bottom: 2rem;
+  font-size: 2.6rem;
+  margin-bottom: 2.4rem;
 }
 
 .translated-example {
-  font-size: 3rem;
-  margin-bottom: 2rem;
+  font-size: 2.6rem;
+  margin-bottom: 2.4rem;
 }
 
 .response-message {

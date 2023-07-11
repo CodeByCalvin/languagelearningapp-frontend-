@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Container, ProgressBar } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faSliders, faVolumeHigh, faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHouse,
+  faSliders,
+  faVolumeHigh,
+  faCircleArrowRight,
+} from "@fortawesome/free-solid-svg-icons";
 import "../css/ReviewChoice.css";
 import ApiServerClient from "../ApiServerClient";
 import PlaceholderLoader from "./PlaceholderLoader";
@@ -20,7 +25,6 @@ const ReviewChoice = (props) => {
   const [progBar, setProgBar] = useState(0);
   const [correctText, setCorrectText] = useState("");
   const [intervalId, setIntervalId] = useState(null);
-
 
   useEffect(() => {
     getReviewQuestions();
@@ -47,7 +51,8 @@ const ReviewChoice = (props) => {
   const getReviewQuestions = async () => {
     try {
       const response = await ApiServerClient.getReviewQuestions();
-      setTimeout(() => { // setTimeout is used to simulate a loading time
+      setTimeout(() => {
+        // setTimeout is used to simulate a loading time
         const data = response.data;
         // for each object in data. Push the object into questions array
         const questionsArray = [];
@@ -73,7 +78,8 @@ const ReviewChoice = (props) => {
 
   // fisher-yates shuffle algorithm
   const shuffleQuestions = (array) => {
-    for (let i = array.length - 1; i > 0; i--) { // i = 3
+    for (let i = array.length - 1; i > 0; i--) {
+      // i = 3
       const randomIndex = Math.floor(Math.random() * (i + 1)); // 0.1 to 3.6 => 0 to 3
       // make array[i] equal to array[randomIndex] and array[randomIndex] equal to array[i]
       [array[i], array[randomIndex]] = [array[randomIndex], array[i]]; // [array[3], array[2]] = [array[2], array[3]]
@@ -95,12 +101,12 @@ const ReviewChoice = (props) => {
     } else {
       setQuestionIndex(questionIndex + 1);
       // set questions array to the word and 3 alternatives
-    setShuffledQuestions(
-      shuffleQuestions([
-        questions[questionIndex + 1].word,
-        ...questions[questionIndex + 1].alternatives.slice(0, 3),
-      ])
-    );
+      setShuffledQuestions(
+        shuffleQuestions([
+          questions[questionIndex + 1].word,
+          ...questions[questionIndex + 1].alternatives.slice(0, 3),
+        ])
+      );
     }
   };
 
@@ -162,14 +168,16 @@ const ReviewChoice = (props) => {
           <FontAwesomeIcon className="i" icon={faVolumeHigh} />
         </div>
         {correctText === "Correct!" && (
-        <div className="d-flex">
-          <h2 className="correctText">{correctText}</h2>
-          <FontAwesomeIcon 
-            icon={faCircleArrowRight} 
-            className="slidersIcon" 
-            onClick={() => {nextQuestion()}}
-          />
-        </div>
+          <div className="d-flex">
+            <h2 className="correctText">{correctText}</h2>
+            <FontAwesomeIcon
+              icon={faCircleArrowRight}
+              className="slidersIcon"
+              onClick={() => {
+                nextQuestion();
+              }}
+            />
+          </div>
         )}
         <br />
         <br />
@@ -181,15 +189,17 @@ const ReviewChoice = (props) => {
               onClick={() => {
                 if (question === questions[questionIndex].word) {
                   // add correct class to the clicked div
-                  document.getElementsByClassName("qBlock")[index].classList.add("correct");
+                  document
+                    .getElementsByClassName("qBlock")
+                    [index].classList.add("correct");
                   // set correct text
-                  setCorrectText("Correct!"); 
+                  setCorrectText("Correct!");
                   clearInterval(intervalId);
-               
-
                 } else {
                   // add false class to the clicked div
-                  document.getElementsByClassName("qBlock")[index].classList.add("false");
+                  document
+                    .getElementsByClassName("qBlock")
+                    [index].classList.add("false");
                 }
               }}
             >
@@ -201,7 +211,11 @@ const ReviewChoice = (props) => {
 
       <Container fluid className="descContainer">
         <div className="progBarContainer">
-          <ProgressBar now={progBar} className="progBar" variant="custom-color" />
+          <ProgressBar
+            now={progBar}
+            className="progBar"
+            variant="custom-color"
+          />
         </div>
       </Container>
     </motion.div>
