@@ -7,15 +7,30 @@ import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import ApiServerClient from "../ApiServerClient";
+import ReviewProgBar from "./ReviewProgBar";
+import { ReactComponent as ArrowRight } from "../imgs/icons/arrow-right-solid.svg";
 
 export default function Learn(props) {
   const wordClass = "";
-  // const pronunciation = "/vwah-tur/";
+
+  // Prompt for number of questions and initialize state with empty objects
+
+  const initialQuestionLength = 10;
+  const initialQuestions = Array.from(
+    { length: initialQuestionLength },
+    () => ({})
+  );
+
   const [word, setWord] = React.useState("");
   const [englishWord, setEnglishWord] = React.useState("");
   const [languageExample, setLanguageExample] = React.useState("");
   const [translatedExample, setTranslatedExample] = React.useState("");
   const [definition, setDefinition] = React.useState("");
+  const [responseMessage, setResponseMessage] = React.useState("");
+  const [questionIndex, setQuestionIndex] = React.useState(0);
+  const [questions, setQuestions] = React.useState(initialQuestions);
+  const [shuffledQuestions, setShuffledQuestions] = React.useState([]); // Added this line
+
   const language = "french";
   const knownLanguage = "english";
 
@@ -25,24 +40,45 @@ export default function Learn(props) {
       const response = await ApiServerClient.getRandomWord();
       const data = response.data;
       console.log(data);
+      if (
+        data.language &&
+        data.language[knownLanguage] &&
+        data.language[language]
+      ) {
+        // Save the word data to the questions state  (for review)
+        const newWordData = {
+          index: questionIndex + 1,
+          word: data.language[language].word,
+          definition: data.language[knownLanguage].definition,
+        };
 
-      setTranslatedExample(data.language[knownLanguage].example);
-      setDefinition(data.language[knownLanguage].definition);
-      setWord(data.language[language].word);
-      setEnglishWord(data.language[knownLanguage].word);
-      // Sets the example based on the language (and highlights the specific word)
-      setLanguageExample(
-        highlightWord(
-          data.language[language].word,
-          data.language[language].example
-        )
-      );
-      setTranslatedExample(
-        highlightWord(
-          data.language[knownLanguage].word,
-          data.language[knownLanguage].example
-        )
-      );
+        // Copy old state and replace the question at the current index
+        let newQuestions = [...questions];
+        newQuestions[questionIndex] = newWordData;
+        setQuestions(newQuestions);
+        console.log(questions);
+
+        // Set the word, definition, and example based on the language
+        setTranslatedExample(data.language[knownLanguage].example);
+        setDefinition(data.language[knownLanguage].definition);
+        setWord(data.language[language].word);
+        setEnglishWord(data.language[knownLanguage].word);
+        // Sets the example based on the language (and highlights the specific word)
+        setLanguageExample(
+          highlightWord(
+            data.language[language].word,
+            data.language[language].example
+          )
+        );
+        setTranslatedExample(
+          highlightWord(
+            data.language[knownLanguage].word,
+            data.language[knownLanguage].example
+          )
+        );
+        // Update shuffledQuestions for progress bar
+        setShuffledQuestions(newQuestions); // Added this line
+      }
     } catch (error) {
       console.log(error);
     }
@@ -51,8 +87,6 @@ export default function Learn(props) {
   useEffect(() => {
     getRandomWord();
   }, []);
-
-  const responseMessage = ["Good job!", "Try again."];
 
   // When play button is pressed, play audio of word
   const playAudio = () => {
@@ -118,6 +152,14 @@ export default function Learn(props) {
     setTimeout(() => recognition.stop(), 5000);
   };
 
+  // Increment questionIndex and retrieve new word
+  const nextQuestion = async () => {
+    if (questionIndex < initialQuestionLength - 1) {
+      setQuestionIndex(questionIndex + 1);
+      await getRandomWord();
+    }
+  };
+
   return (
     <motion.div
       className="learn"
@@ -126,59 +168,72 @@ export default function Learn(props) {
       exit={{ y: -300, opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Container fluid className="home-header">
-        <FontAwesomeIcon
-          icon={faHouse}
-          className="houseIcon"
-          onClick={() => props.setPage && props.setPage("home")}
-        />
-      </Container>
+      <div>
+        <Container fluid className="home-header">
+          <FontAwesomeIcon
+            icon={faHouse}
+            className="houseIcon"
+            onClick={() => props.setPage && props.setPage("home")}
+          />
+        </Container>
 
-      <Container
-        fluid
-        className="home-content"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(100vh - IconHeight)",
-        }}
-      >
-        <div className="word-class">{wordClass}</div>
+        <Container
+          fluid
+          className="home-content"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "calc(100vh - IconHeight)",
+          }}
+        >
+          <div className="word-class">{wordClass}</div>
 
-        <Container className="d-flex justify-content-center align-items-center gap-5 mb-4">
-          <div className="word">{word}</div>
+          <Container className="d-flex justify-content-center align-items-center gap-5 mb-4">
+            <div className="word">{word}</div>
 
-          <button onClick={playAudio} className="play-btn">
-            <PlaySolid
+            <button onClick={playAudio} className="play-btn">
+              <PlaySolid
+                style={{
+                  width: "60%",
+                  height: "60%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              />
+            </button>
+          </Container>
+          <div className="translation">{definition}</div>
+          <div className="language-example">{languageExample}</div>
+
+          <div className="translated-example">{translatedExample}</div>
+          <div className="microphone"> </div>
+
+          <button onClick={useMicrophone} className="microphone-btn">
+            <Microphone
               style={{
-                width: "60%",
-                height: "60%",
+                width: "70%",
+                height: "70%",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             />
           </button>
+          <div className="response-message">{responseMessage[0]}</div>
+          <button className="next-btn" onClick={nextQuestion}>
+            <ArrowRight />
+          </button>
+
+          <div className="response-message">{responseMessage[1]}</div>
         </Container>
-        {/* <div className="pronunciation">{pronunciation}</div> */}
-        <div className="translation">{definition}</div>
-        <div className="language-example">{languageExample}</div>
-
-        <div className="translated-example">{translatedExample}</div>
-        <div className="microphone"> </div>
-
-        <button onClick={useMicrophone} className="microphone-btn">
-          <Microphone
-            style={{
-              width: "70%",
-              height: "70%",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          />
-        </button>
-        <div className="response-message">{responseMessage[0]}</div>
+      </div>
+      <Container fluid className="footer">
+        <ReviewProgBar
+          questionIndex={questionIndex}
+          questions={questions}
+          shuffledQuestions={shuffledQuestions}
+        />
       </Container>
     </motion.div>
   );
