@@ -8,7 +8,6 @@ import Settings from "./components/Settings";
 import ReviewSettings from "./components/review-customisation";
 import Learn from "./components/Learn";
 import ReviewChoice from "./components/ReviewChoice";
-import ReviewResults from "./components/ReviewResults";
 import Testing from "./components/Testing";
 import ReviewTrueFalse from "./components/ReviewTrueFalse";
 
@@ -49,9 +48,7 @@ export default function App() {
 
   return (
     <div className="App">
-
       <AnimatePresence mode="wait">{renderPage()}</AnimatePresence>
     </div>
   );
 }
-
