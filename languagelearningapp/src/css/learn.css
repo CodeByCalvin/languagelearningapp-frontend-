@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  width: 100%;
   padding: 1rem;
 }
 
@@ -16,7 +17,7 @@
 
 .home-header {
   display: flex;
-  position: absolute;
+  position: fixed;
   top: 0;
 }
 
@@ -58,6 +59,13 @@
   fill: var(--main-purple);
 }
 
+.response-message {
+  width: 100%;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
 .pronunciation {
   font-size: 2rem;
 }
@@ -81,4 +89,36 @@
 .response-message {
   font-size: 2rem;
   margin-bottom: 2rem;
+}
+
+.next-btn {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.4rem;
+  text-align: center;
+  justify-content: center;
+  border: none;
+  margin-bottom: 2rem;
+  background-color: var(--main-purple);
+  color: white;
+  font-size: 2rem;
+}
+
+.footer {
+  display: flex;
+  position: fixed;
+  bottom: 0rem;
+  width: 100%;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.btn-container {
+  position: fixed;
+  bottom: 6rem;
+  right: 2.4rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
