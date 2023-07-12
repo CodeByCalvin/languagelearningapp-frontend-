@@ -17,14 +17,16 @@ import ReviewProgBar from "./ReviewProgBar";
 const ReviewChoice = (props) => {
   const { setPage } = props;
 
-  const language = "spanish";
+  const language = "german";
 
   const [questions, setQuestions] = useState([]);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [shuffledQuestions, setShuffledQuestions] = useState([]);
   const [correctText, setCorrectText] = useState("");
+
   const [intervalId, setIntervalId] = useState(null); // Used for review timer
+
 
   useEffect(() => {
     getReviewQuestions();
@@ -171,13 +173,17 @@ const ReviewChoice = (props) => {
               onClick={() => {
                 if (question === questions[questionIndex].word) {
                   // add correct class to the clicked div
-                  document.getElementsByClassName("qBlock")[index].classList.add("correct");
+                  document
+                    .getElementsByClassName("qBlock")
+                    [index].classList.add("correct");
                   // set correct text
                   setCorrectText("Correct!");
                   clearInterval(intervalId);
                 } else {
                   // add false class to the clicked div
-                  document.getElementsByClassName("qBlock")[index].classList.add("false");
+                  document
+                    .getElementsByClassName("qBlock")
+                    [index].classList.add("false");
                 }
               }}
             >

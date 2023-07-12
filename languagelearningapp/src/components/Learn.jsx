@@ -2,21 +2,59 @@ import "../css/learn.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { ReactComponent as PlaySolid } from "../imgs/icons/play-solid.svg";
 import { ReactComponent as Microphone } from "../imgs/icons/microphone-solid.svg";
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import ApiServerClient from "../ApiServerClient";
 
 export default function Learn(props) {
-  const wordClass = "feminine noun";
-  const pronunciation = "/vwah-tur/";
-  const word = "car";
-  let languageExample = `J'ai une voiture.`;
-  const definition = "car";
-  let translatedExample = "I have a car.";
+  const wordClass = "";
+  // const pronunciation = "/vwah-tur/";
+  const [word, setWord] = React.useState("");
+  const [englishWord, setEnglishWord] = React.useState("");
+  const [languageExample, setLanguageExample] = React.useState("");
+  const [translatedExample, setTranslatedExample] = React.useState("");
+  const [definition, setDefinition] = React.useState("");
+  const language = "french";
+  const knownLanguage = "english";
+
+  // Retrieve word from database
+  const getRandomWord = async () => {
+    try {
+      const response = await ApiServerClient.getRandomWord();
+      const data = response.data;
+      console.log(data);
+
+      setTranslatedExample(data.language[knownLanguage].example);
+      setDefinition(data.language[knownLanguage].definition);
+      setWord(data.language[language].word);
+      setEnglishWord(data.language[knownLanguage].word);
+      // Sets the example based on the language (and highlights the specific word)
+      setLanguageExample(
+        highlightWord(
+          data.language[language].word,
+          data.language[language].example
+        )
+      );
+      setTranslatedExample(
+        highlightWord(
+          data.language[knownLanguage].word,
+          data.language[knownLanguage].example
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getRandomWord();
+  }, []);
+
   const responseMessage = ["Good job!", "Try again."];
 
-  // When play button is pressed, play audio of word in french
+  // When play button is pressed, play audio of word
   const playAudio = () => {
     const utterance = new SpeechSynthesisUtterance(word);
     speechSynthesis.speak(utterance);
@@ -49,10 +87,6 @@ export default function Learn(props) {
     return highlightedExample;
   };
 
-  // Highlight word in sentence example and translated example
-  languageExample = highlightWord(word, languageExample);
-  translatedExample = highlightWord(definition, translatedExample);
-
   // When microphone button is pressed, listen for user's response and compare to correct answer
   const useMicrophone = () => {
     const SpeechRecognition =
@@ -79,7 +113,7 @@ export default function Learn(props) {
       }
     };
 
-    // set the recognition to only last for 5 seconds
+    // Set the recognition to only last for 5 seconds
     recognition.start();
     setTimeout(() => recognition.stop(), 5000);
   };
@@ -111,9 +145,9 @@ export default function Learn(props) {
           height: "calc(100vh - IconHeight)",
         }}
       >
-        <div className="word-class">feminine noun</div>
+        <div className="word-class">{wordClass}</div>
 
-        <Container className="d-flex justify-content-center align-items-center gap-5">
+        <Container className="d-flex justify-content-center align-items-center gap-5 mb-4">
           <div className="word">{word}</div>
 
           <button onClick={playAudio} className="play-btn">
@@ -127,7 +161,7 @@ export default function Learn(props) {
             />
           </button>
         </Container>
-        <div className="pronunciation">{pronunciation}</div>
+        {/* <div className="pronunciation">{pronunciation}</div> */}
         <div className="translation">{definition}</div>
         <div className="language-example">{languageExample}</div>
 
