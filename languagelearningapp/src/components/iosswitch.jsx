@@ -1,8 +1,12 @@
 import * as React from "react";
 import Switch, { switchClasses } from "@mui/joy/Switch";
+import { useState, useEffect } from "react";
 
-export default function IOSSwitch() {
-  const [checked, setChecked] = React.useState(false);
+export default function IOSSwitch(props) {
+  const {checked, setChecked} = props;
+
+
+
   return (
     <Switch
       checked={checked}
