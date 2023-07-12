@@ -11,42 +11,26 @@ import {
 import "../css/ReviewChoice.css";
 import ApiServerClient from "../ApiServerClient";
 import PlaceholderLoader from "./PlaceholderLoader";
+import ReviewTimer from "./ReviewTimer";
+import ReviewProgBar from "./ReviewProgBar";
 
 const ReviewChoice = (props) => {
   const { setPage } = props;
 
   const language = "german";
 
-  const [timer, setTimer] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [shuffledQuestions, setShuffledQuestions] = useState([]);
-  const [progBar, setProgBar] = useState(0);
   const [correctText, setCorrectText] = useState("");
-  const [intervalId, setIntervalId] = useState(null);
+
+  const [intervalId, setIntervalId] = useState(null); // Used for review timer
+
 
   useEffect(() => {
     getReviewQuestions();
   }, []);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setTimer((timer) => timer + 1);
-    }, 1000);
-    setIntervalId(id);
-    return () => clearInterval(id);
-  }, [questionIndex]);
-
-  useEffect(() => {
-    // calculate progress bar
-    const progBar = (questionIndex / questions.length) * 100;
-    setProgBar(progBar);
-  }, [shuffledQuestions, questionIndex]);
-
-  const minutes = Math.floor(timer / 60);
-  const seconds = timer % 60;
-  const formattedTime = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
   const getReviewQuestions = async () => {
     try {
@@ -93,10 +77,7 @@ const ReviewChoice = (props) => {
     if (questionIndex === questions.length - 1) {
       setQuestionIndex(0);
       setShuffledQuestions(
-        shuffleQuestions([
-          questions[0].word,
-          ...questions[0].alternatives.slice(0, 3),
-        ])
+        shuffleQuestions([questions[0].word, ...questions[0].alternatives.slice(0, 3)])
       );
     } else {
       setQuestionIndex(questionIndex + 1);
@@ -111,7 +92,6 @@ const ReviewChoice = (props) => {
   };
 
   const nextQuestion = () => {
-    setTimer(0);
     setCorrectText("");
     handleAnswer();
     // clear the correct and false class from the divs
@@ -157,7 +137,11 @@ const ReviewChoice = (props) => {
           />
         </div>
         <div className="d-flex align-items-center rightBanner">
-          <h1>{formattedTime}</h1>
+          <ReviewTimer
+            intervalId={intervalId}
+            setIntervalId={setIntervalId}
+            questionIndex={questionIndex}
+          />
           <FontAwesomeIcon icon={faSliders} className="slidersIcon" />
         </div>
       </Container>
@@ -210,14 +194,13 @@ const ReviewChoice = (props) => {
       </Container>
 
       <Container fluid className="descContainer">
-        <div className="progBarContainer">
-          <ProgressBar
-            now={progBar}
-            className="progBar"
-            variant="custom-color"
-          />
-        </div>
+        <ReviewProgBar 
+          questionIndex={questionIndex}
+          questions={questions}
+          shuffleQuestions={shuffleQuestions}
+        />
       </Container>
+
     </motion.div>
   );
 };
