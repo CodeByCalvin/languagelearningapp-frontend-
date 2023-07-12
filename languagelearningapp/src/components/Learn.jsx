@@ -13,13 +13,6 @@ import { ReactComponent as ArrowRight } from "../imgs/icons/arrow-right-solid.sv
 export default function Learn(props) {
   const wordClass = "";
 
-  // Prompt for number of questions and initialize state with empty objects
-  const initialQuestionLength = 10;
-  const initialQuestions = Array.from(
-    { length: initialQuestionLength },
-    () => ({})
-  );
-
   // States for the word, definition, and example
   const [word, setWord] = React.useState("");
   const [englishWord, setEnglishWord] = React.useState("");
@@ -27,9 +20,6 @@ export default function Learn(props) {
   const [translatedExample, setTranslatedExample] = React.useState("");
   const [definition, setDefinition] = React.useState("");
   const [responseMessage, setResponseMessage] = React.useState("");
-  const [questionIndex, setQuestionIndex] = React.useState(0);
-  const [questions, setQuestions] = React.useState(initialQuestions);
-  const [shuffledQuestions, setShuffledQuestions] = React.useState([]); // Added this line
 
   const language = "french";
   const knownLanguage = "english";
@@ -47,16 +37,16 @@ export default function Learn(props) {
       ) {
         // Save the word data to the questions state  (for review)
         const newWordData = {
-          index: questionIndex + 1,
+          index: props.questionIndex + 1,
           word: data.language[language].word,
           definition: data.language[knownLanguage].definition,
         };
 
         // Copy old state and replace the question at the current index
-        let newQuestions = [...questions];
-        newQuestions[questionIndex] = newWordData;
-        setQuestions(newQuestions);
-        console.log(questions);
+        let newQuestions = [...props.questions];
+        newQuestions[props.questionIndex] = newWordData;
+        props.setQuestions(newQuestions);
+        console.log(props.questions);
 
         // Set the word, definition, and example based on the language
         setTranslatedExample(data.language[knownLanguage].example);
@@ -76,8 +66,6 @@ export default function Learn(props) {
             data.language[knownLanguage].example
           )
         );
-        // Update shuffledQuestions for progress bar
-        setShuffledQuestions(newQuestions); // Added this line
       }
     } catch (error) {
       console.log(error);
@@ -170,9 +158,11 @@ export default function Learn(props) {
 
   // Increment questionIndex and retrieve new word
   const nextQuestion = async () => {
-    if (questionIndex < initialQuestionLength - 1) {
-      setQuestionIndex(questionIndex + 1);
+    if (props.questionIndex < props.initialQuestionLength - 1) {
+      props.setQuestionIndex(props.questionIndex + 1);
       await getRandomWord();
+    } else {
+      props.setPage("learn_results");
     }
   };
 
@@ -245,7 +235,11 @@ export default function Learn(props) {
         </button>
       </Container>
       <Container fluid className="footer">
-        <ReviewProgBar questionIndex={questionIndex} questions={questions} />
+        <ReviewProgBar
+          questionIndex={props.questionIndex}
+          questions={props.questions}
+          progress={props.progress}
+        />
       </Container>
     </motion.div>
   );
