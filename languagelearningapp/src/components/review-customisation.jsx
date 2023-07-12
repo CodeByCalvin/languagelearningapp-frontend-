@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Backdrop,
   Box,
@@ -21,6 +21,10 @@ import { faVolumeHigh, faHouse } from "@fortawesome/free-solid-svg-icons";
 export default function ReviewSettings(props) {
   const [open, setOpen] = useState(false);
   const [questions, setQuestions] = useState(10);
+
+
+  useEffect(() => {
+  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -151,7 +155,9 @@ export default function ReviewSettings(props) {
                 <Typography sx={{ fontSize: "2rem" }} variant="body1">
                   True or False
                 </Typography>
-                <IOSSwitch />
+                <IOSSwitch 
+                  
+                />
               </Box>
 
               <Box
@@ -163,8 +169,9 @@ export default function ReviewSettings(props) {
               >
                 <motion.button
                   className="start-btn"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 1.1 }}
+                  whileHover={{ scale: 0.95 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => props.setPage && props.setPage("review_choice")}
                 >
                   Start
                 </motion.button>

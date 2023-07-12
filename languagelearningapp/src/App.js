@@ -5,9 +5,11 @@ import "./App.css";
 import { motion, AnimatePresence } from "framer-motion";
 import WordOfTheDay from "./components/WordOfTheDay";
 import Settings from "./components/Settings";
-import Review from "./components/review-customisation";
+import ReviewSettings from "./components/review-customisation";
 import Learn from "./components/Learn";
 import ReviewChoice from "./components/ReviewChoice";
+import Testing from "./components/Testing";
+import ReviewTrueFalse from "./components/ReviewTrueFalse";
 
 export default function App() {
   const [page, setPage] = useState("home");
@@ -24,7 +26,11 @@ export default function App() {
       case "word_of_the_day":
         return <WordOfTheDay setPage={setPage} />;
       case "review":
+        return <ReviewSettings setPage={setPage} />;
+      case "review_choice":
         return <ReviewChoice setPage={setPage} />;
+      case "review_true_false":
+        return <ReviewTrueFalse setPage={setPage} />;
       case "settings":
         return (
           <Settings
