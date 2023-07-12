@@ -14,13 +14,13 @@ export default function Learn(props) {
   const wordClass = "";
 
   // Prompt for number of questions and initialize state with empty objects
-
   const initialQuestionLength = 10;
   const initialQuestions = Array.from(
     { length: initialQuestionLength },
     () => ({})
   );
 
+  // States for the word, definition, and example
   const [word, setWord] = React.useState("");
   const [englishWord, setEnglishWord] = React.useState("");
   const [languageExample, setLanguageExample] = React.useState("");
@@ -128,11 +128,21 @@ export default function Learn(props) {
     const recognition = new SpeechRecognition();
 
     recognition.onstart = function () {
-      console.log("Voice activated, you can speak to microphone");
+      console.log("Voice activated, please read the word");
+      setResponseMessage(
+        <span style={{ color: "green" }}>
+          Voice activated, please read the word
+        </span>
+      );
     };
 
     recognition.onerror = function (event) {
       console.log("Error occurred in recognition: " + event.error);
+      setResponseMessage(
+        <span style={{ color: "red" }}>
+          Error occurred in recognition: {event.error}
+        </span>
+      );
     };
 
     recognition.onresult = function (event) {
@@ -141,9 +151,15 @@ export default function Learn(props) {
 
       // Check if transcript contains the word
       if (transcript.toLowerCase().includes(word.toLowerCase())) {
-        console.log("Yes"); // Word is heard
+        console.log("Word heard");
+        // Word is heard
+        setResponseMessage(<span style={{ color: "green" }}>Good job!</span>);
       } else {
-        console.log("No"); // Word is not heard
+        // Word is not heard
+        console.log("Word not heard");
+        setResponseMessage(
+          <span style={{ color: "red" }}>Please try again</span>
+        );
       }
     };
 
@@ -220,20 +236,16 @@ export default function Learn(props) {
               }}
             />
           </button>
-          <div className="response-message">{responseMessage[0]}</div>
-          <button className="next-btn" onClick={nextQuestion}>
-            <ArrowRight />
-          </button>
-
-          <div className="response-message">{responseMessage[1]}</div>
+          <div className="response-message">{responseMessage}</div>
         </Container>
       </div>
+      <Container fluid className="btn-container">
+        <button className="next-btn" onClick={nextQuestion}>
+          <ArrowRight />
+        </button>
+      </Container>
       <Container fluid className="footer">
-        <ReviewProgBar
-          questionIndex={questionIndex}
-          questions={questions}
-          shuffledQuestions={shuffledQuestions}
-        />
+        <ReviewProgBar questionIndex={questionIndex} questions={questions} />
       </Container>
     </motion.div>
   );
