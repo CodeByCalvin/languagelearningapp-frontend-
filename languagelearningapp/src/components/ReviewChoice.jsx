@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import { Container, ProgressBar } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,11 +13,13 @@ import ApiServerClient from "../ApiServerClient";
 import PlaceholderLoader from "./PlaceholderLoader";
 import ReviewTimer from "./ReviewTimer";
 import ReviewProgBar from "./ReviewProgBar";
+import ReviewContext from "../ReviewContext";
 
 const ReviewChoice = (props) => {
   const { setPage } = props;
 
   const language = "german";
+  const questionAmount = 10;
 
   const [questions, setQuestions] = useState([]);
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -27,14 +29,17 @@ const ReviewChoice = (props) => {
 
   const [intervalId, setIntervalId] = useState(null); // Used for review timer
 
+  const { qVal } = useContext(ReviewContext);
+
 
   useEffect(() => {
     getReviewQuestions();
+    console.log(qVal);
   }, []);
 
   const getReviewQuestions = async () => {
     try {
-      const response = await ApiServerClient.getReviewQuestions();
+      const response = await ApiServerClient.getReviewQuestions(qVal);
       setTimeout(() => {
         // setTimeout is used to simulate a loading time
         const data = response.data;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext, } from "react";
 import {
   Backdrop,
   Box,
@@ -17,11 +17,23 @@ import { motion } from "framer-motion";
 import { Container, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faHouse } from "@fortawesome/free-solid-svg-icons";
+import ReviewContext from "../ReviewContext";
+import { useNavigate } from "react-router-dom";
 
 export default function ReviewSettings(props) {
   const [open, setOpen] = useState(false);
   const [questions, setQuestions] = useState(10);
+  const { qVal, qFunc } = useContext(ReviewContext);
 
+  const backdropVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  };
+
+  const modalVariants = {
+    hidden: { y: 300, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+  };
 
   useEffect(() => {
   }, []);
@@ -37,14 +49,12 @@ export default function ReviewSettings(props) {
     }
   };
 
-  const backdropVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
-  };
+  const navigate = useNavigate();
 
-  const modalVariants = {
-    hidden: { y: 300, opacity: 0 },
-    visible: { y: 0, opacity: 1 },
+  const startReview = () => {
+    qFunc((qVal) => questions);
+    
+    navigate("/review/choice");
   };
 
   return (
@@ -171,7 +181,7 @@ export default function ReviewSettings(props) {
                   className="start-btn"
                   whileHover={{ scale: 0.95 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => props.setPage && props.setPage("review_choice")}
+                  onClick={startReview}
                 >
                   Start
                 </motion.button>

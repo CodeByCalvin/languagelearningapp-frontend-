@@ -6,8 +6,13 @@ export default class ApiServerClient {
     const url = `${SERVER_URL}/words/random`
     return axios.get(url);
   }
-  static getReviewQuestions() {
-    const url = `${SERVER_URL}/review`
+  static getReviewQuestions(amount) {
+    if (amount === undefined) {
+      amount = 1
+    } else if (amount > 10) {
+      amount = 10
+    }
+    const url = `${SERVER_URL}/review/${amount}`
     return axios.get(url);
   }
 }
