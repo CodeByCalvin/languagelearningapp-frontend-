@@ -5,15 +5,47 @@ import { Container, ProgressBar } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faSliders, faVolumeHigh, faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 import PlaceholderLoader from "./PlaceholderLoader";
+import ReviewTimer from "./ReviewTimer";
+import ApiServerClient from "../ApiServerClient";
 
 const ReviewTrueFalse = (props) => {
   const { setPage } = props;
 
+  const language = "german";
+  const questionAmount = props.questionAmount;
+
   const [isLoaded, setIsLoaded] = useState(false);
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [correctText, setCorrectText] = useState("");
+  const [questions, setQuestions] = useState([]);
+
+  const [intervalId, setIntervalId] = useState(null); // Used for review timer
 
   useEffect(() => {
-    setIsLoaded(true);
+    getReviewQuestions();
   }, []);
+
+  const getReviewQuestions = async () => {
+    try {
+      const response = await ApiServerClient.getReviewQuestions(questionAmount);
+      setTimeout(() => {
+        // setTimeout is used to simulate a loading time
+        const data = response.data;
+        // for each object in data. Push the object into questions array
+        const questionsArray = [];
+        for (let i = 0; i < data.length; i++) {
+          questionsArray.push(data[i]);
+        }
+        setQuestions(questionsArray);
+
+        console.log(questionsArray);
+
+        setIsLoaded(true);
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // guard clause
   if (!isLoaded) {
@@ -50,8 +82,39 @@ const ReviewTrueFalse = (props) => {
           />
         </div>
         <div className="d-flex align-items-center rightBanner">
-          <h1>formattedTime</h1>
+          <ReviewTimer 
+            intervalId={intervalId}
+            setIntervalId={setIntervalId}
+            questionIndex={questionIndex}
+          />
           <FontAwesomeIcon icon={faSliders} className="slidersIcon" />
+        </div>
+      </Container>
+
+      <Container fluid className="wotd-container">
+        <div className="reviewMain">
+          <h1>Word</h1>
+          <FontAwesomeIcon className="i" icon={faVolumeHigh} />
+        </div>
+        {correctText === "Correct!" && (
+          <div className="d-flex">
+            <h2 className="correctText">{correctText}</h2>
+            <FontAwesomeIcon
+              icon={faCircleArrowRight}
+              className="slidersIcon"
+              
+            />
+          </div>
+        )}
+        <br />
+        <br />
+        <div className="tfContainer">
+          <div className="true">
+            <h2>True</h2>
+          </div>
+          <div className="false">
+            <h2>False</h2>
+          </div>
         </div>
       </Container>
 

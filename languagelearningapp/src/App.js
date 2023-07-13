@@ -12,6 +12,8 @@ import Testing from "./components/Testing";
 import ReviewTrueFalse from "./components/ReviewTrueFalse";
 import ReviewResults from "./components/ReviewResults";
 import LearnResults from "./components/LearnResults";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ReviewContext from "./ReviewContext";
 
 export default function App() {
   const [page, setPage] = useState("home");
@@ -50,13 +52,7 @@ export default function App() {
       case "review_true_false":
         return <ReviewTrueFalse setPage={setPage} />;
       case "settings":
-        return (
-          <Settings
-            setPage={setPage}
-            textSize={textSize}
-            setTextSize={setTextSize}
-          />
-        );
+        return <Settings setPage={setPage} textSize={textSize} setTextSize={setTextSize} />;
       case "learn":
         return (
           <Learn
@@ -88,9 +84,24 @@ export default function App() {
     }
   };
 
+  const [qAmount, setQAmount] = useState(1);
+
   return (
     <div className="App">
-      <AnimatePresence mode="wait">{renderPage()}</AnimatePresence>
+      <AnimatePresence mode="wait">
+        <ReviewContext.Provider value={{qVal: qAmount, qFunc: setQAmount}}>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/wotd" element={<WordOfTheDay />} />
+              <Route path="/review" element={<ReviewSettings />} />
+              <Route path="/review/choice" element={<ReviewChoice />} />
+              <Route path="/review/truefalse" element={<ReviewTrueFalse />} />
+              <Route path="/testing" element={<Testing />} />
+            </Routes>
+          </Router>
+        </ReviewContext.Provider>
+      </AnimatePresence>
     </div>
   );
 }
