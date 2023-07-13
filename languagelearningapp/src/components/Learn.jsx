@@ -161,7 +161,7 @@ export default function Learn(props) {
       props.setQuestionIndex(props.questionIndex + 1);
       await getRandomWord();
     } else {
-      props.setPage("learn_results");
+      props.navigateToPage("learn/results");
     }
   };
 
@@ -178,7 +178,7 @@ export default function Learn(props) {
           <FontAwesomeIcon
             icon={faHouse}
             className="houseIcon"
-            onClick={() => props.setPage && props.setPage("home")}
+            onClick={() => props.navigateToPage("")}
           />
         </Container>
 
