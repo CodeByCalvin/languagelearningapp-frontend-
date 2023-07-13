@@ -31,7 +31,7 @@ export default function LearnResults(props) {
         <FontAwesomeIcon
           icon={faHouse}
           className="houseIcon"
-          onClick={() => props.setPage && props.setPage("home")}
+          onClick={() => props.navigateToPage("")}
         />
       </Container>
 

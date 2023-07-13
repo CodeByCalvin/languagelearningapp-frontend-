@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Backdrop,
   Box,
@@ -35,8 +35,7 @@ export default function ReviewSettings(props) {
     visible: { y: 0, opacity: 1 },
   };
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -53,7 +52,7 @@ export default function ReviewSettings(props) {
 
   const startReview = () => {
     qFunc((qVal) => questions);
-    
+
     navigate("/review/choice");
   };
 
@@ -63,7 +62,7 @@ export default function ReviewSettings(props) {
         <FontAwesomeIcon
           icon={faHouse}
           className="houseIcon"
-          onClick={() => props.setPage && props.setPage("home")}
+          onClick={() => props.navigateToPage("")}
         />
       </Container>
       <Box
@@ -165,9 +164,7 @@ export default function ReviewSettings(props) {
                 <Typography sx={{ fontSize: "2rem" }} variant="body1">
                   True or False
                 </Typography>
-                <IOSSwitch 
-                  
-                />
+                <IOSSwitch />
               </Box>
 
               <Box

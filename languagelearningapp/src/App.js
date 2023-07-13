@@ -64,7 +64,10 @@ function RoutesWrapper() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/word-of-the-day" element={<WordOfTheDay />} />
+      <Route
+        path="/word-of-the-day"
+        element={<WordOfTheDay navigateToPage={navigateToPage} />}
+      />
       <Route
         path="/learn"
         element={
@@ -93,10 +96,16 @@ function RoutesWrapper() {
           />
         }
       />
-      <Route path="/review" element={<ReviewSettings />} />
+      <Route
+        path="/review"
+        element={<ReviewSettings navigateToPage={navigateToPage} />}
+      />
       <Route path="/review/choice" element={<ReviewChoice />} />
       <Route path="/review/truefalse" element={<ReviewTrueFalse />} />
-      <Route path="/testing" element={<Testing />} />
+      <Route
+        path="/settings"
+        element={<Settings navigateToPage={navigateToPage} />}
+      />
     </Routes>
   );
 }
