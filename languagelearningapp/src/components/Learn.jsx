@@ -29,7 +29,6 @@ export default function Learn(props) {
     try {
       const response = await ApiServerClient.getRandomWord();
       const data = response.data;
-      console.log(data);
       if (
         data.language &&
         data.language[knownLanguage] &&

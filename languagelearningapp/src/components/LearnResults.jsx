@@ -19,8 +19,6 @@ import { ReactComponent as RotateRight } from "../imgs/icons/rotate-right-solid.
 import "../css/learn-results.css";
 
 export default function LearnResults(props) {
-  const { questions } = props;
-
   return (
     <motion.div
       className="learn"
@@ -44,15 +42,19 @@ export default function LearnResults(props) {
           <div className="results-text">
             You learned{" "}
             <span style={{ color: "var(--main-purple)" }}>
-              {props.initialQuestionLength}
+              {Array.from(
+                new Set(props.questions.map((question) => question.word))
+              ).length - 1}
             </span>{" "}
-            new words today.
+            unique words today.
           </div>
 
-          {/* List of learned words */}
+          {/* List of unique learned words */}
           <ul className="word-list">
-            {questions.map((question, index) => (
-              <li key={index}>{question.word}</li>
+            {Array.from(
+              new Set(props.questions.map((question) => question.word))
+            ).map((word, index) => (
+              <li key={index}>{word}</li>
             ))}
           </ul>
 
@@ -60,7 +62,7 @@ export default function LearnResults(props) {
           <div className="results-footer">
             <RotateRight
               className="results-footer-icon"
-              onClick={() => props.setPage && props.setPage("learn")}
+              onClick={() => props.clearQuestions()}
             />
             <ArrowRight
               className="results-footer-icon"
