@@ -7,15 +7,22 @@ import { ReactComponent as ProgressIcon } from "../imgs/icons/bars-progress-soli
 import { ReactComponent as CogWheelIcon } from "../imgs/icons/gear-solid.svg";
 import Navbar from "./navbar";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export default function Home(props) {
   const buttons = [
-    { Icon: CalendarCheckIcon, text: "Word of the Day" },
-    { Icon: GraduationCapIcon, text: "Learn" },
-    { Icon: CircleCheckIcon, text: "Review" },
-    { Icon: ProgressIcon, text: "Progress" },
-    { Icon: CogWheelIcon, text: "Settings" },
+    {
+      Icon: CalendarCheckIcon,
+      text: "Word of the Day",
+      route: "/word-of-the-day",
+    },
+    { Icon: GraduationCapIcon, text: "Learn", route: "/learn" },
+    { Icon: CircleCheckIcon, text: "Review", route: "/review" },
+    { Icon: ProgressIcon, text: "Progress", route: "/progress" },
+    { Icon: CogWheelIcon, text: "Settings", route: "/settings" },
   ];
+
+  const navigate = useNavigate();
 
   const buttonVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -55,8 +62,7 @@ export default function Home(props) {
               animate="visible"
               whileTap="whileTap"
               onClick={() => {
-                let newPage = button.text.toLowerCase().replace(/\s+/g, "_");
-                props.setPage && props.setPage(newPage);
+                navigate(button.route);
               }}
             >
               <button.Icon className="home-btn-icon" />
