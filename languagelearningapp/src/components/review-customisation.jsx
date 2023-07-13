@@ -23,7 +23,14 @@ import { useNavigate } from "react-router-dom";
 export default function ReviewSettings(props) {
   const [open, setOpen] = useState(false);
   const [questions, setQuestions] = useState(10);
-  const { qVal, qFunc } = useContext(ReviewContext);
+
+  // IOSSwitch states
+  const [checkedTimer, setCheckedTimer] = useState(false);
+  const [checkedChoice, setCheckedChoice] = useState(false);
+  const [checkedTrueFalse, setCheckedTrueFalse] = useState(false);
+
+  // context
+  const { rVal, rFunc } = useContext(ReviewContext);
 
   const backdropVariants = {
     hidden: { opacity: 0 },
@@ -36,7 +43,14 @@ export default function ReviewSettings(props) {
   };
 
   useEffect(() => {
-  }, []);
+    // if true/false is checked, disable multiple choice
+    if (checkedTrueFalse) {
+      setCheckedChoice(false);
+    } else if (checkedChoice) {
+      setCheckedTrueFalse(false);
+    }
+    
+  }, [checkedTrueFalse, checkedChoice]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -52,9 +66,14 @@ export default function ReviewSettings(props) {
   const navigate = useNavigate();
 
   const startReview = () => {
-    qFunc((qVal) => questions);
+    rFunc((rVal) => ({ ...rVal, qAmount: questions }));
+    rFunc((rVal) => ({ ...rVal, timer: checkedTimer }));
     
-    navigate("/review/choice");
+    if (checkedChoice) {
+      navigate("/review/choice");
+    } else if (checkedTrueFalse) {
+      navigate("/review/truefalse");
+    }
   };
 
   return (
@@ -137,7 +156,10 @@ export default function ReviewSettings(props) {
                 <Typography sx={{ fontSize: "2rem" }} variant="body1">
                   Timer
                 </Typography>
-                <IOSSwitch />
+                <IOSSwitch
+                  checked={checkedTimer}
+                  setChecked={setCheckedTimer}
+                />
               </Box>
 
               <Box
@@ -151,7 +173,10 @@ export default function ReviewSettings(props) {
                 <Typography sx={{ fontSize: "2rem" }} variant="body1">
                   Multiple Choice
                 </Typography>
-                <IOSSwitch />
+                <IOSSwitch 
+                  checked={checkedChoice}
+                  setChecked={setCheckedChoice}
+                />
               </Box>
 
               <Box
@@ -166,7 +191,8 @@ export default function ReviewSettings(props) {
                   True or False
                 </Typography>
                 <IOSSwitch 
-                  
+                  checked={checkedTrueFalse}
+                  setChecked={setCheckedTrueFalse}
                 />
               </Box>
 

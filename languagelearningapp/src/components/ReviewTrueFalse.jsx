@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../css/ReviewChoice.css";
 import { motion } from "framer-motion";
 import { Container, ProgressBar } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faSliders, faVolumeHigh, faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHouse,
+  faSliders,
+  faVolumeHigh,
+  faCircleArrowRight,
+} from "@fortawesome/free-solid-svg-icons";
 import PlaceholderLoader from "./PlaceholderLoader";
 import ReviewTimer from "./ReviewTimer";
 import ApiServerClient from "../ApiServerClient";
+import ReviewContext from "../ReviewContext";
 
 const ReviewTrueFalse = (props) => {
   const { setPage } = props;
@@ -21,13 +27,19 @@ const ReviewTrueFalse = (props) => {
 
   const [intervalId, setIntervalId] = useState(null); // Used for review timer
 
+  // context
+  const { rVal } = useContext(ReviewContext);
+  const { qAmount } = rVal;
+  const { timer } = rVal;
+
   useEffect(() => {
     getReviewQuestions();
+    console.log(qAmount);
   }, []);
 
   const getReviewQuestions = async () => {
     try {
-      const response = await ApiServerClient.getReviewQuestions(questionAmount);
+      const response = await ApiServerClient.getReviewQuestions(qAmount);
       setTimeout(() => {
         // setTimeout is used to simulate a loading time
         const data = response.data;
@@ -82,11 +94,13 @@ const ReviewTrueFalse = (props) => {
           />
         </div>
         <div className="d-flex align-items-center rightBanner">
-          <ReviewTimer 
-            intervalId={intervalId}
-            setIntervalId={setIntervalId}
-            questionIndex={questionIndex}
-          />
+          {timer && (
+            <ReviewTimer
+              intervalId={intervalId}
+              setIntervalId={setIntervalId}
+              questionIndex={questionIndex}
+            />
+          )}
           <FontAwesomeIcon icon={faSliders} className="slidersIcon" />
         </div>
       </Container>
@@ -99,11 +113,7 @@ const ReviewTrueFalse = (props) => {
         {correctText === "Correct!" && (
           <div className="d-flex">
             <h2 className="correctText">{correctText}</h2>
-            <FontAwesomeIcon
-              icon={faCircleArrowRight}
-              className="slidersIcon"
-              
-            />
+            <FontAwesomeIcon icon={faCircleArrowRight} className="slidersIcon" />
           </div>
         )}
         <br />
@@ -117,7 +127,6 @@ const ReviewTrueFalse = (props) => {
           </div>
         </div>
       </Container>
-
     </motion.div>
   );
 };

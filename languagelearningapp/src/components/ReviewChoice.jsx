@@ -29,17 +29,19 @@ const ReviewChoice = (props) => {
 
   const [intervalId, setIntervalId] = useState(null); // Used for review timer
 
-  const { qVal } = useContext(ReviewContext);
-
+  // context
+  const { rVal } = useContext(ReviewContext);
+  const { qAmount } = rVal;
+  const { timer } = rVal;
 
   useEffect(() => {
     getReviewQuestions();
-    console.log(qVal);
+    console.log(qAmount);
   }, []);
 
   const getReviewQuestions = async () => {
     try {
-      const response = await ApiServerClient.getReviewQuestions(qVal);
+      const response = await ApiServerClient.getReviewQuestions(qAmount);
       setTimeout(() => {
         // setTimeout is used to simulate a loading time
         const data = response.data;
@@ -142,11 +144,13 @@ const ReviewChoice = (props) => {
           />
         </div>
         <div className="d-flex align-items-center rightBanner">
-          <ReviewTimer
-            intervalId={intervalId}
-            setIntervalId={setIntervalId}
-            questionIndex={questionIndex}
-          />
+          {timer && (
+            <ReviewTimer
+              intervalId={intervalId}
+              setIntervalId={setIntervalId}
+              questionIndex={questionIndex}
+            />
+          )}
           <FontAwesomeIcon icon={faSliders} className="slidersIcon" />
         </div>
       </Container>
@@ -178,17 +182,13 @@ const ReviewChoice = (props) => {
               onClick={() => {
                 if (question === questions[questionIndex].word) {
                   // add correct class to the clicked div
-                  document
-                    .getElementsByClassName("qBlock")
-                    [index].classList.add("correct");
+                  document.getElementsByClassName("qBlock")[index].classList.add("correct");
                   // set correct text
                   setCorrectText("Correct!");
                   clearInterval(intervalId);
                 } else {
                   // add false class to the clicked div
-                  document
-                    .getElementsByClassName("qBlock")
-                    [index].classList.add("false");
+                  document.getElementsByClassName("qBlock")[index].classList.add("false");
                 }
               }}
             >
@@ -199,13 +199,12 @@ const ReviewChoice = (props) => {
       </Container>
 
       <Container fluid className="descContainer">
-        <ReviewProgBar 
+        <ReviewProgBar
           questionIndex={questionIndex}
           questions={questions}
           shuffleQuestions={shuffleQuestions}
         />
       </Container>
-
     </motion.div>
   );
 };

@@ -84,12 +84,15 @@ export default function App() {
     }
   };
 
-  const [qAmount, setQAmount] = useState(1);
+  const [reviewSettings, setReviewSettings] = useState({
+    qAmount: 1,
+    timer: true,
+  });
 
   return (
     <div className="App">
       <AnimatePresence mode="wait">
-        <ReviewContext.Provider value={{qVal: qAmount, qFunc: setQAmount}}>
+        <ReviewContext.Provider value={{rVal: reviewSettings, rFunc: setReviewSettings}}>
           <Router>
             <Routes>
               <Route path="/" element={<Home />} />
