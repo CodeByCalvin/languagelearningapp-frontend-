@@ -37,3 +37,25 @@
 .homeContainer {
   position: absolute;
 }
+.review-custom {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+.reviewCustomTop {
+  position: relative;
+  width: 100%;
+  background-color: var(--lighter-grey);
+  border-radius: 1rem;
+}
+.reviewCustomTop h3 {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  font-size: 2rem;
+  font-weight: 500;
+}

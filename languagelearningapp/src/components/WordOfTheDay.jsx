@@ -123,7 +123,7 @@ const WordOfTheDay = (props) => {
         <FontAwesomeIcon
           icon={faHouse}
           className="houseIcon"
-          onClick={() => setPage && setPage("home")}
+          onClick={() => props.navigateToPage("")}
         />
       </Container>
 

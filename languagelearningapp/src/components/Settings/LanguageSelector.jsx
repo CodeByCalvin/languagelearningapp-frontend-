@@ -7,12 +7,17 @@ import { Box, Select, Typography } from "@mui/material";
 export default function LanguageSelector({
   selectedLanguage,
   setSelectedLanguage,
+  setSelectedLanguageName,
 }) {
   const [open, setOpen] = useState(false);
 
   const countryFlags = [
     { name: "English", code: "GB" },
     { name: "French", code: "FR" },
+    { name: "German", code: "DE" },
+    { name: "Italian", code: "IT" },
+    { name: "Spanish", code: "ES" },
+    { name: "Portuguese", code: "PT" },
   ];
 
   const handleOpen = () => {
@@ -25,6 +30,12 @@ export default function LanguageSelector({
 
   const handleLanguageChange = (event) => {
     setSelectedLanguage(event.target.value);
+
+    const selectedCode = event.target.value;
+    const selectedLanguage = countryFlags.find((language) => language.code === selectedCode);
+
+    setSelectedLanguageName(selectedLanguage.name);
+
     handleClose();
   };
 

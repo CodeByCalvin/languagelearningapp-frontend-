@@ -14,12 +14,12 @@ import PlaceholderLoader from "./PlaceholderLoader";
 import ReviewTimer from "./ReviewTimer";
 import ReviewProgBar from "./ReviewProgBar";
 import ReviewContext from "../ReviewContext";
+import AppContext from "../AppContext";
+import { shuffleQuestions } from "../utility";
+import { useNavigate } from "react-router-dom";
 
 const ReviewChoice = (props) => {
-  const { setPage } = props;
-
-  const language = "german";
-  const questionAmount = 10;
+  const navigate = useNavigate();
 
   const [questions, setQuestions] = useState([]);
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -29,14 +29,20 @@ const ReviewChoice = (props) => {
 
   const [intervalId, setIntervalId] = useState(null); // Used for review timer
 
-  // context
+  // Review context
   const { rVal } = useContext(ReviewContext);
   const { qAmount } = rVal;
   const { timer } = rVal;
 
+  // App context
+  const { aVal } = useContext(AppContext);
+  const { learnLanguage } = aVal;
+  const learnLanguageString = learnLanguage.toString().toLowerCase();
+
   useEffect(() => {
     getReviewQuestions();
     console.log(qAmount);
+    console.log(learnLanguageString);
   }, []);
 
   const getReviewQuestions = async () => {
@@ -65,17 +71,6 @@ const ReviewChoice = (props) => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  // fisher-yates shuffle algorithm
-  const shuffleQuestions = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      // i = 3
-      const randomIndex = Math.floor(Math.random() * (i + 1)); // 0.1 to 3.6 => 0 to 3
-      // make array[i] equal to array[randomIndex] and array[randomIndex] equal to array[i]
-      [array[i], array[randomIndex]] = [array[randomIndex], array[i]]; // [array[3], array[2]] = [array[2], array[3]]
-    }
-    return array;
   };
 
   const handleAnswer = () => {
@@ -140,7 +135,7 @@ const ReviewChoice = (props) => {
           <FontAwesomeIcon
             icon={faHouse}
             className="houseIcon"
-            onClick={() => setPage && setPage("home")}
+            onClick={navigate.bind(this, "/")}
           />
         </div>
         <div className="d-flex align-items-center rightBanner">
@@ -151,13 +146,17 @@ const ReviewChoice = (props) => {
               questionIndex={questionIndex}
             />
           )}
-          <FontAwesomeIcon icon={faSliders} className="slidersIcon" />
+          <FontAwesomeIcon
+            icon={faSliders}
+            className="slidersIcon"
+            onClick={navigate.bind(this, "/review")}
+          />
         </div>
       </Container>
 
       <Container fluid className="wotd-container">
         <div className="reviewMain">
-          <h1>{questions[questionIndex].translation[language]}</h1>
+          <h1>{questions[questionIndex].translation[learnLanguageString]}</h1>
           <FontAwesomeIcon className="i" icon={faVolumeHigh} />
         </div>
         {correctText === "Correct!" && (
