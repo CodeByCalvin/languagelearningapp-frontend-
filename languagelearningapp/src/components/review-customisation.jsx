@@ -23,7 +23,17 @@ import { useNavigate } from "react-router-dom";
 export default function ReviewSettings(props) {
   const [open, setOpen] = useState(false);
   const [questions, setQuestions] = useState(10);
-  const { qVal, qFunc } = useContext(ReviewContext);
+
+  // IOSSwitch states
+  const [checkedTimer, setCheckedTimer] = useState(false);
+  const [checkedChoice, setCheckedChoice] = useState(false);
+  const [checkedTrueFalse, setCheckedTrueFalse] = useState(false);
+  const [checkedMatch, setCheckedMatch] = useState(false);
+
+  // context
+  const { rVal, rFunc } = useContext(ReviewContext);
+
+  const navigate = useNavigate();
 
   const backdropVariants = {
     hidden: { opacity: 0 },
@@ -35,7 +45,21 @@ export default function ReviewSettings(props) {
     visible: { y: 0, opacity: 1 },
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // if true/false is checked, disable multiple choice
+    if (checkedTrueFalse) {
+      setCheckedChoice(false);
+      setCheckedMatch(false);
+    } 
+    if (checkedChoice) {
+      setCheckedTrueFalse(false);
+      setCheckedMatch(false);
+    }
+    if (checkedMatch) {
+      setCheckedTrueFalse(false);
+      setCheckedChoice(false);
+    }
+  }, [checkedTrueFalse, checkedChoice, checkedMatch]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -48,12 +72,17 @@ export default function ReviewSettings(props) {
     }
   };
 
-  const navigate = useNavigate();
-
   const startReview = () => {
-    qFunc((qVal) => questions);
+    rFunc((rVal) => ({ ...rVal, qAmount: questions }));
+    rFunc((rVal) => ({ ...rVal, timer: checkedTimer }));
 
-    navigate("/review/choice");
+    if (checkedChoice) {
+      navigate("/review/choice");
+    } else if (checkedTrueFalse) {
+      navigate("/review/truefalse");
+    } else if (checkedMatch) {
+      navigate("/review/match");
+    }
   };
 
   return (
@@ -69,28 +98,34 @@ export default function ReviewSettings(props) {
         sx={{
           display: "flex",
           justifyContent: "center",
-          alignItems: "flex-end",
+          alignItems: "center",
           height: "100vh",
           width: "100vw",
           padding: "1em",
+
         }}
       >
         {/* CUSTOMISATION OPTIONS */}
         <motion.div
+          className="review-custom"
           initial={{ y: 300, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -300, opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
           <Card
+            className="col-12 col-md-6 col-lg-4"
             sx={{
               borderRadius: "2rem",
               padding: "2rem",
-              width: "90vw",
               boxShadow: "0px 3px 10px 0px rgba(0,0,0,0.1)",
             }}
           >
-            <CardContent>
+            <div className="reviewCustomTop">
+            <h3>Review Customisation</h3>
+            </div>
+            <CardContent className="p-0">
+            
               <Box
                 sx={{
                   display: "flex",
@@ -136,8 +171,10 @@ export default function ReviewSettings(props) {
                 <Typography sx={{ fontSize: "2rem" }} variant="body1">
                   Timer
                 </Typography>
-                <IOSSwitch />
+                <IOSSwitch checked={checkedTimer} setChecked={setCheckedTimer} />
               </Box>
+
+              <hr />
 
               <Box
                 sx={{
@@ -150,7 +187,7 @@ export default function ReviewSettings(props) {
                 <Typography sx={{ fontSize: "2rem" }} variant="body1">
                   Multiple Choice
                 </Typography>
-                <IOSSwitch />
+                <IOSSwitch checked={checkedChoice} setChecked={setCheckedChoice} />
               </Box>
 
               <Box
@@ -164,7 +201,21 @@ export default function ReviewSettings(props) {
                 <Typography sx={{ fontSize: "2rem" }} variant="body1">
                   True or False
                 </Typography>
-                <IOSSwitch />
+                <IOSSwitch checked={checkedTrueFalse} setChecked={setCheckedTrueFalse} />
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "10px",
+                  alignItems: "center",
+                }}
+              >
+                <Typography sx={{ fontSize: "2rem" }} variant="body1">
+                  Match
+                </Typography>
+                <IOSSwitch checked={checkedMatch} setChecked={setCheckedMatch} />
               </Box>
 
               <Box
@@ -185,18 +236,9 @@ export default function ReviewSettings(props) {
               </Box>
             </CardContent>
           </Card>
-
           {/* MODAL WINDOW FOR NUMBER OF QUESTIONS */}
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            classes={{ paperScrollPaper: "custom-dialog" }}
-          >
-            <motion.div
-              variants={modalVariants}
-              initial="hidden"
-              animate="visible"
-            >
+          <Dialog open={open} onClose={handleClose} classes={{ paperScrollPaper: "custom-dialog" }}>
+            <motion.div variants={modalVariants} initial="hidden" animate="visible">
               <DialogTitle sx={{ marginBottom: "3rem" }}>
                 <button className="close-btn" onClick={() => handleClose()}>
                   X

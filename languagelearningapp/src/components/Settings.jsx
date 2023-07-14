@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import "../css/review-customisation.css";
 import IOSSwitch from "./iosswitch";
@@ -11,13 +11,21 @@ import LanguageSelector from "./Settings/LanguageSelector";
 import DeleteAccount from "./Settings/DeleteAccount";
 import TextSize from "./Settings/TextSize";
 import DefaultQuestions from "./Settings/DefaultQuestions";
+import AppContext from "../AppContext";
 
 export default function Settings(props) {
-  const [selectedLanguage, setSelectedLanguage] = useState("GB");
+  // context
+  const { aVal, aFunc } = useContext(AppContext);
+
+  const [selectedLanguage, setSelectedLanguage] = useState(aVal.selectedLanguageCode);
   const [selectedLearningLanguage, setSelectedLearningLanguage] =
-    useState("FR");
+    useState(aVal.learnLanguageCode);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [questionsOpen, setQuestionsOpen] = useState(false);
+
+  const [selectedLanguageName, setSelectedLanguageName] = useState("");
+  const [selectedLearnLanguageName, setSelectedLearnLanguageName] = useState("");
+
 
   const handleDeleteOpen = () => {
     setDeleteOpen(!deleteOpen);
@@ -34,6 +42,26 @@ export default function Settings(props) {
   const handleQuestionsClose = () => {
     setQuestionsOpen(false);
   };
+
+
+  useEffect(() => {
+    aFunc((aVal) => ({ ...aVal, selectedLanguageCode: selectedLanguage }));
+    aFunc((aVal) => ({ ...aVal, learnLanguageCode: selectedLearningLanguage }));
+  }, [selectedLearningLanguage]);
+
+  useEffect(() => {
+    aFunc((aVal) => ({ ...aVal, selectedLanguage: selectedLanguageName }));
+    aFunc((aVal) => ({ ...aVal, learnLanguage: selectedLearnLanguageName }));
+  }, [selectedLearnLanguageName]);
+
+  useEffect(() => {
+    setSelectedLanguage(aVal.selectedLanguageCode);
+    setSelectedLearningLanguage(aVal.learnLanguageCode);
+    setSelectedLanguageName(aVal.selectedLanguage);
+    setSelectedLearnLanguageName(aVal.learnLanguage);
+    console.log("select " + aVal.selectedLanguage);
+    console.log("learn " + aVal.learnLanguage);
+  }, []);
 
   return (
     <div>
@@ -85,6 +113,7 @@ export default function Settings(props) {
                   <LanguageSelector
                     selectedLanguage={selectedLanguage}
                     setSelectedLanguage={setSelectedLanguage}
+                    setSelectedLanguageName={setSelectedLanguageName}
                   />
                 </Box>
                 <Box
@@ -101,6 +130,7 @@ export default function Settings(props) {
                   <LanguageSelector
                     selectedLanguage={selectedLearningLanguage}
                     setSelectedLanguage={setSelectedLearningLanguage}
+                    setSelectedLanguageName={setSelectedLearnLanguageName}
                   />
                 </Box>
                 <Box
@@ -187,6 +217,19 @@ export default function Settings(props) {
                 >
                   <Typography sx={{ fontSize: "2rem" }} variant="body1">
                     High-contrast mode
+                  </Typography>
+                  <IOSSwitch />
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: "10px",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography sx={{ fontSize: "2rem" }} variant="body1">
+                    Porco dio
                   </Typography>
                   <IOSSwitch />
                 </Box>

@@ -12,13 +12,10 @@ import Testing from "./components/Testing";
 import ReviewTrueFalse from "./components/ReviewTrueFalse";
 import ReviewResults from "./components/ReviewResults";
 import LearnResults from "./components/LearnResults";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import ReviewContext from "./ReviewContext";
+import AppContext from "./AppContext";
+import ReviewMatch from "./components/ReviewMatch";
 
 // This function converts button names to route paths
 function getRouteFromButtonName(buttonName) {
@@ -64,10 +61,7 @@ function RoutesWrapper() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route
-        path="/word-of-the-day"
-        element={<WordOfTheDay navigateToPage={navigateToPage} />}
-      />
+      <Route path="/word-of-the-day" element={<WordOfTheDay navigateToPage={navigateToPage} />} />
       <Route
         path="/learn"
         element={
@@ -96,16 +90,11 @@ function RoutesWrapper() {
           />
         }
       />
-      <Route
-        path="/review"
-        element={<ReviewSettings navigateToPage={navigateToPage} />}
-      />
+      <Route path="/review" element={<ReviewSettings navigateToPage={navigateToPage} />} />
       <Route path="/review/choice" element={<ReviewChoice />} />
       <Route path="/review/truefalse" element={<ReviewTrueFalse />} />
-      <Route
-        path="/settings"
-        element={<Settings navigateToPage={navigateToPage} />}
-      />
+      <Route path="/review/match" element={<ReviewMatch />} />
+      <Route path="/settings" element={<Settings navigateToPage={navigateToPage} />} />
     </Routes>
   );
 }
@@ -162,15 +151,29 @@ export default function App() {
   //   }
   // };
 
-  const [qAmount, setQAmount] = useState(1);
+  const [reviewSettings, setReviewSettings] = useState({
+    qAmount: 1,
+    timer: true,
+  });
+
+  const [appSettings, setAppSettings] = useState({
+    selectedLanguage: "English",
+    learnLanguage: "French",
+    selectedLanguageCode: "GB",
+    learnLanguageCode: "FR",
+  });
 
   return (
     <div className="App">
-      <ReviewContext.Provider value={{ qVal: qAmount, qFunc: setQAmount }}>
-        <Router>
-          <RoutesWrapper />
-        </Router>
-      </ReviewContext.Provider>
+      <AnimatePresence mode="wait">
+        <ReviewContext.Provider value={{ rVal: reviewSettings, rFunc: setReviewSettings }}>
+          <AppContext.Provider value={{ aVal: appSettings, aFunc: setAppSettings }}>
+            <Router>
+              <RoutesWrapper />
+            </Router>
+          </AppContext.Provider>
+        </ReviewContext.Provider>
+      </AnimatePresence>
     </div>
   );
 }

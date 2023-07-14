@@ -9,8 +9,8 @@ export default class ApiServerClient {
   static getReviewQuestions(amount) {
     if (amount === undefined) {
       amount = 1
-    } else if (amount > 10) {
-      amount = 10
+    } else if (amount > 20) {
+      amount = 20
     }
     const url = `${SERVER_URL}/review/${amount}`
     return axios.get(url);
