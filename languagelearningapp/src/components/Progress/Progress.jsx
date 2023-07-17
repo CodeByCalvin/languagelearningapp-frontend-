@@ -24,13 +24,12 @@ export default function Progress(props) {
           onClick={() => props.navigateToPage("")}
         />
       </Container>
-      <h1>Your Progress</h1>
-      <div className="chart-card">
+      <div className="calendar-card">
         {" "}
         <CalendarComponent onChange={props.onChange} value={props.value} />{" "}
       </div>
-      <div className="chart-card">
-        <ProgressGraph />
+      <div className="graph-card">
+        <ProgressGraph className="progress-graph" />
       </div>
       <div className="number-card-container">
         <div className="number-card">

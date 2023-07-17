@@ -29,7 +29,7 @@ const options = {
       position: "top",
     },
     title: {
-      display: true,
+      display: false,
       text: "Progress Over Time",
     },
   },
