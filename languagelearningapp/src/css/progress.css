@@ -1,0 +1,49 @@
+.progressDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  padding: 2rem;
+}
+
+.card {
+  background-color: rgba(128, 0, 128, 0.18);
+  border-radius: 15px;
+  width: 90%;
+  padding: 1rem;
+  margin-bottom: 1.8rem;
+}
+
+.number-card-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.number-card {
+  width: calc(50% - 10px);
+  background-color: rgba(128, 0, 128, 0.18);
+  padding: 1rem;
+  border-radius: 15px;
+}
+
+.number-card h2 {
+  font-size: 2.8rem;
+  font-weight: 600;
+}
+
+.words-learned,
+.words-reviewed {
+  font-size: 6.4rem;
+  font-weight: 600;
+}
+
+.words-learned {
+  color: var(--main-purple);
+}
+
+.words-reviewed {
+  color: #60a7a8;
+}
