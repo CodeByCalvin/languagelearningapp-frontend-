@@ -43,14 +43,14 @@ const data = {
     {
       label: "Words Learned",
       data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
+      borderColor: "rgba(121, 80, 242)",
+      backgroundColor: "rgba(121, 80, 242, 0.5)",
     },
     {
       label: "Words Reviewed",
       data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      borderColor: "rgb(53, 162, 235)",
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
+      borderColor: "rgba(96, 167, 168)",
+      backgroundColor: "rgba(96, 167, 168, 0.5)",
     },
   ],
 };

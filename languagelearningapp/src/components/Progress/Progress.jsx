@@ -3,15 +3,12 @@ import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import ApiServerClient from "../../ApiServerClient";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
 import "../../css/progress.css";
 import ProgressGraph from "./ProgressGraph";
 import { Container } from "react-bootstrap";
+import CalendarComponent from "./Calendar";
 
 export default function Progress(props) {
-  const [value, onChange] = useState(new Date());
-
   return (
     <motion.div
       initial={{ y: 300, opacity: 0 }}
@@ -27,12 +24,12 @@ export default function Progress(props) {
           onClick={() => props.navigateToPage("")}
         />
       </Container>
-      <h1>Progress</h1>
-      <div className="card">
+      <h1>Your Progress</h1>
+      <div className="chart-card">
         {" "}
-        <Calendar onChange={onChange} value={value} />
+        <CalendarComponent onChange={props.onChange} value={props.value} />{" "}
       </div>
-      <div className="card">
+      <div className="chart-card">
         <ProgressGraph />
       </div>
       <div className="number-card-container">
