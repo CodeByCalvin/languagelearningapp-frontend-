@@ -41,12 +41,6 @@ const data = {
   labels,
   datasets: [
     {
-      label: "Words Learned",
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      borderColor: "rgba(121, 80, 242)",
-      backgroundColor: "rgba(121, 80, 242, 0.5)",
-    },
-    {
       label: "Words Reviewed",
       data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
       borderColor: "rgba(96, 167, 168)",
@@ -55,7 +49,25 @@ const data = {
   ],
 };
 
-const ProgressGraph = () => {
+const ProgressGraph = ({ learnedWordsData }) => {
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Words Learned",
+        data: learnedWordsData, // use the prop here
+        borderColor: "rgba(121, 80, 242)",
+        backgroundColor: "rgba(121, 80, 242, 0.5)",
+      },
+      {
+        label: "Words Reviewed",
+        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+        borderColor: "rgba(96, 167, 168)",
+        backgroundColor: "rgba(96, 167, 168, 0.5)",
+      },
+    ],
+  };
+
   return <Line options={options} data={data} />;
 };
 
