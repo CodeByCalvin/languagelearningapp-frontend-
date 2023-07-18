@@ -12,7 +12,13 @@ import Testing from "./components/Testing";
 import ReviewTrueFalse from "./components/ReviewTrueFalse";
 import ReviewResults from "./components/ReviewResults";
 import LearnResults from "./components/LearnResults";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import Progress from "./components/Progress/Progress";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 import ReviewContext from "./ReviewContext";
 import AppContext from "./AppContext";
 import ReviewMatch from "./components/ReviewMatch";
@@ -61,7 +67,10 @@ function RoutesWrapper() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/word-of-the-day" element={<WordOfTheDay navigateToPage={navigateToPage} />} />
+      <Route
+        path="/word-of-the-day"
+        element={<WordOfTheDay navigateToPage={navigateToPage} />}
+      />
       <Route
         path="/learn"
         element={
@@ -78,6 +87,10 @@ function RoutesWrapper() {
         }
       />
       <Route
+        path="/progress"
+        element={<Progress navigateToPage={navigateToPage} />}
+      />
+      <Route
         path="/learn/results"
         element={
           <LearnResults
@@ -90,11 +103,17 @@ function RoutesWrapper() {
           />
         }
       />
-      <Route path="/review" element={<ReviewSettings navigateToPage={navigateToPage} />} />
+      <Route
+        path="/review"
+        element={<ReviewSettings navigateToPage={navigateToPage} />}
+      />
       <Route path="/review/choice" element={<ReviewChoice />} />
       <Route path="/review/truefalse" element={<ReviewTrueFalse />} />
       <Route path="/review/match" element={<ReviewMatch />} />
-      <Route path="/settings" element={<Settings navigateToPage={navigateToPage} />} />
+      <Route
+        path="/settings"
+        element={<Settings navigateToPage={navigateToPage} />}
+      />
     </Routes>
   );
 }
@@ -166,8 +185,12 @@ export default function App() {
   return (
     <div className="App">
       <AnimatePresence mode="wait">
-        <ReviewContext.Provider value={{ rVal: reviewSettings, rFunc: setReviewSettings }}>
-          <AppContext.Provider value={{ aVal: appSettings, aFunc: setAppSettings }}>
+        <ReviewContext.Provider
+          value={{ rVal: reviewSettings, rFunc: setReviewSettings }}
+        >
+          <AppContext.Provider
+            value={{ aVal: appSettings, aFunc: setAppSettings }}
+          >
             <Router>
               <RoutesWrapper />
             </Router>
