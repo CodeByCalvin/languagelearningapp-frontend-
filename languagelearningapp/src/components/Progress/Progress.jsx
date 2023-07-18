@@ -56,7 +56,10 @@ export default function Progress(props) {
         <CalendarComponent onChange={props.onChange} value={props.value} />{" "}
       </div>
       <div className="graph-card">
-        <ProgressGraph className="progress-graph" />
+        <ProgressGraph
+          className="progress-graph"
+          learnedWordsData={modalContent.learned.map((word) => word.length)}
+        />
       </div>
       <div className="number-card-container">
         <div className="number-card" onClick={() => setActiveModal("learned")}>
@@ -81,14 +84,17 @@ export default function Progress(props) {
         <Modal.Body className="modal-body">
           <ul>
             {modalContent[activeModal]?.map((word, index) => (
-              <li
+              <motion.li
                 key={index}
                 style={{
                   color: activeModal === "learned" ? "#7950f2" : "#60A7A8",
                 }}
+                initial={{ y: -50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: index * 0.1 }}
               >
                 {word}
-              </li>
+              </motion.li>
             ))}
           </ul>
         </Modal.Body>
