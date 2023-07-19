@@ -21,9 +21,18 @@ export default function Progress(props) {
   const hideModal = () => setActiveModal("");
 
   const getLearnedWords = async () => {
-    const res = await ApiServerClient.getLearnedWords();
-    console.log(res);
-    return res.data.words_learned;
+    try {
+      const res = await ApiServerClient.getLearnedWords();
+      console.log("Response:", res);
+      if (!res.data.words_learned || !Array.isArray(res.data.words_learned)) {
+        console.error("Unexpected format from API:", res.data);
+        return [];
+      }
+      return res.data.words_learned;
+    } catch (error) {
+      console.error("Error fetching learned words:", error);
+      return [];
+    }
   };
 
   // Fetch learned words when activeModal becomes "learned"
@@ -58,7 +67,9 @@ export default function Progress(props) {
       <div className="graph-card">
         <ProgressGraph
           className="progress-graph"
-          learnedWordsData={modalContent.learned.map((word) => word.length)}
+          learnedWordsData={modalContent.learned.map(
+            (wordObject) => wordObject.word.length
+          )}
         />
       </div>
       <div className="number-card-container">
@@ -83,7 +94,7 @@ export default function Progress(props) {
         </Modal.Header>
         <Modal.Body className="modal-body">
           <ul>
-            {modalContent[activeModal]?.map((word, index) => (
+            {modalContent[activeModal]?.map((wordObject, index) => (
               <motion.li
                 key={index}
                 style={{
@@ -93,7 +104,7 @@ export default function Progress(props) {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: index * 0.1 }}
               >
-                {word}
+                {wordObject.word}
               </motion.li>
             ))}
           </ul>
