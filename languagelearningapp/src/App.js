@@ -16,6 +16,8 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-route
 import ReviewContext from "./ReviewContext";
 import AppContext from "./AppContext";
 import ReviewMatch from "./components/ReviewMatch";
+import { Landing } from "./components/pages/Landing";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 
 // This function converts button names to route paths
 function getRouteFromButtonName(buttonName) {
@@ -58,43 +60,48 @@ function RoutesWrapper() {
     navigateToPage("learn");
   };
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/word-of-the-day" element={<WordOfTheDay navigateToPage={navigateToPage} />} />
-      <Route
-        path="/learn"
-        element={
-          <Learn
-            questions={questions}
-            setQuestions={setQuestions}
-            progress={progress}
-            setProgress={setProgress}
-            questionIndex={questionIndex}
-            setQuestionIndex={setQuestionIndex}
-            initialQuestionLength={initialQuestionLength}
-            navigateToPage={navigateToPage}
-          />
-        }
-      />
-      <Route
-        path="/learn/results"
-        element={
-          <LearnResults
-            questions={questions}
-            initialQuestionLength={initialQuestionLength}
-            setQuestionIndex={setQuestionIndex}
-            setQuestions={setQuestions}
-            clearQuestions={clearQuestions}
-            navigateToPage={navigateToPage}
-          />
-        }
-      />
-      <Route path="/review" element={<ReviewSettings navigateToPage={navigateToPage} />} />
-      <Route path="/review/choice" element={<ReviewChoice />} />
-      <Route path="/review/truefalse" element={<ReviewTrueFalse />} />
-      <Route path="/review/match" element={<ReviewMatch />} />
-      <Route path="/settings" element={<Settings navigateToPage={navigateToPage} />} />
+      {/* <Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}> */}
+        <Route path="/" element={<Home />} />
+        <Route path="/word-of-the-day" element={<WordOfTheDay navigateToPage={navigateToPage} />} />
+        <Route
+          path="/learn"
+          element={
+            <Learn
+              questions={questions}
+              setQuestions={setQuestions}
+              progress={progress}
+              setProgress={setProgress}
+              questionIndex={questionIndex}
+              setQuestionIndex={setQuestionIndex}
+              initialQuestionLength={initialQuestionLength}
+              navigateToPage={navigateToPage}
+            />
+          }
+        />
+        <Route
+          path="/learn/results"
+          element={
+            <LearnResults
+              questions={questions}
+              initialQuestionLength={initialQuestionLength}
+              setQuestionIndex={setQuestionIndex}
+              setQuestions={setQuestions}
+              clearQuestions={clearQuestions}
+              navigateToPage={navigateToPage}
+            />
+          }
+        />
+        <Route path="/review" element={<ReviewSettings navigateToPage={navigateToPage} />} />
+        <Route path="/review/choice" element={<ReviewChoice />} />
+        <Route path="/review/truefalse" element={<ReviewTrueFalse />} />
+        <Route path="/review/match" element={<ReviewMatch />} />
+        <Route path="/settings" element={<Settings navigateToPage={navigateToPage} />} />
+      {/* </Route> */}
+      <Route path="/landing" element={<Landing />} />
     </Routes>
   );
 }
