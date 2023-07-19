@@ -18,6 +18,8 @@ export default function Progress(props) {
 
   const [learnedWordsLength, setLearnedWordsLength] = useState(0);
 
+  const [reviewedWordsLength, setReviewedWordsLength] = useState(0);
+
   const hideModal = () => setActiveModal("");
 
   const getLearnedWords = async () => {
@@ -35,12 +37,34 @@ export default function Progress(props) {
     }
   };
 
-  // Fetch learned words when activeModal becomes "learned"
+  const getReviewedWords = async () => {
+    try {
+      const res = await ApiServerClient.getReviewedWords();
+      console.log("Response:", res);
+      if (!res.data.words_reviewed || !Array.isArray(res.data.words_reviewed)) {
+        console.error("Unexpected format from API:", res.data);
+        return [];
+      }
+      return res.data.words_reviewed;
+    } catch (error) {
+      console.error("Error fetching learned words:", error);
+      return [];
+    }
+  };
+
+  // Fetch both learned and reviewed words initially
   useEffect(() => {
     getLearnedWords()
       .then((words) => {
         setModalContent((prevContent) => ({ ...prevContent, learned: words }));
         setLearnedWordsLength(words.length);
+      })
+      .catch((error) => console.error(error));
+
+    getReviewedWords()
+      .then((words) => {
+        setModalContent((prevContent) => ({ ...prevContent, reviewed: words }));
+        setReviewedWordsLength(words.length);
       })
       .catch((error) => console.error(error));
   }, []);
@@ -79,7 +103,7 @@ export default function Progress(props) {
         </div>
         <div className="number-card" onClick={() => setActiveModal("reviewed")}>
           <h2>Words reviewed</h2>
-          <div className="words-reviewed">29</div>
+          <div className="words-reviewed">{reviewedWordsLength}</div>
         </div>
       </div>
 

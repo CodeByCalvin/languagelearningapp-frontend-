@@ -24,4 +24,13 @@ export default class ApiServerClient {
       },
     });
   }
+  static getReviewedWords(token) {
+    const url = `${SERVER_URL}/auth/progress/reviewed`;
+    return axios.get(url, {
+      headers: {
+        Authorization:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YjY3MGJmNzFjY2U0NjUyZTE1YmMxNyIsImlhdCI6MTY4OTY4ODc2OSwiZXhwIjoxNjkyMjgwNzY5fQ.DnuAWqr71gYfsx4DGFYNXPmh1Pzj6-AfGXU2uyq6VSA",
+      },
+    });
+  }
 }
