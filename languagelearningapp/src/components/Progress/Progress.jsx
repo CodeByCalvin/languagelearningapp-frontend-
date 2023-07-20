@@ -16,9 +16,15 @@ export default function Progress(props) {
     reviewed: [],
   });
 
+  // Learned words
   const [learnedWordsLength, setLearnedWordsLength] = useState(0);
+  const [learnedWordsDates, setLearnedWordsDates] = useState([]);
+  const [learnedWordsCounts, setLearnedWordsCounts] = useState([]);
 
+  // Reviewed words
   const [reviewedWordsLength, setReviewedWordsLength] = useState(0);
+  const [reviewedWordsDates, setReviewedWordsDates] = useState([]);
+  const [reviewedWordsCounts, setReviewedWordsCounts] = useState([]);
 
   const hideModal = () => setActiveModal("");
 
@@ -58,6 +64,26 @@ export default function Progress(props) {
       .then((words) => {
         setModalContent((prevContent) => ({ ...prevContent, learned: words }));
         setLearnedWordsLength(words.length);
+
+        // Group by date and count words per day
+        let dateCounts = words.reduce((acc, wordObject) => {
+          let date = new Date(wordObject.learned_date);
+          // Format date as "DD-MM-YYYY"
+          let formattedDate = date.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          });
+          acc[formattedDate] = (acc[formattedDate] || 0) + 1;
+          return acc;
+        }, {});
+
+        // Split the object into separate arrays for dates and counts
+        let dates = Object.keys(dateCounts);
+        let counts = Object.values(dateCounts);
+
+        setLearnedWordsDates(dates);
+        setLearnedWordsCounts(counts);
       })
       .catch((error) => console.error(error));
 
@@ -65,6 +91,23 @@ export default function Progress(props) {
       .then((words) => {
         setModalContent((prevContent) => ({ ...prevContent, reviewed: words }));
         setReviewedWordsLength(words.length);
+
+        let dateCounts = words.reduce((acc, wordObject) => {
+          let date = new Date(wordObject.reviewed_date);
+          let formattedDate = date.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          });
+          acc[formattedDate] = (acc[formattedDate] || 0) + 1;
+          return acc;
+        }, {});
+
+        let dates = Object.keys(dateCounts);
+        let counts = Object.values(dateCounts);
+
+        setReviewedWordsDates(dates);
+        setReviewedWordsCounts(counts);
       })
       .catch((error) => console.error(error));
   }, []);
@@ -91,9 +134,10 @@ export default function Progress(props) {
       <div className="graph-card">
         <ProgressGraph
           className="progress-graph"
-          learnedWordsData={modalContent.learned.map(
-            (wordObject) => wordObject.word.length
-          )}
+          learnedWordsDates={learnedWordsDates}
+          learnedWordsData={learnedWordsCounts}
+          reviewedWordsDates={reviewedWordsDates}
+          reviewedWordsData={reviewedWordsCounts}
         />
       </div>
       <div className="number-card-container">
