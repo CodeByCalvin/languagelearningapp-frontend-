@@ -37,8 +37,8 @@ export default function LearnResults(props) {
         } catch (error) {
           console.log(error);
         }
-        setLearnedWords();
       };
+      setLearnedWords();
     }
   }, []);
 
