@@ -21,16 +21,28 @@ export const Landing = () => {
         confirmPass: payload.confirmPass
       });
     } else {
-      const login = await ApiServerClient.auth("login", {
-        email: payload.email,
-        password: payload.password,
-      });
+      try {
+        const login = await ApiServerClient.auth("login", {
+          email: payload.email,
+          password: payload.password,
+        });
 
-      // Redirect to homr page if login is successful
+        console.log(login);
+
+        // Redirect to homr page if login is successful
       if (login) {
+        console.log("login successful");
         setIsLoggedIn(true);
         navigate("/");
+      } else {
+        console.log("login failed");
       }
+      } catch (error) {
+        console.log(error);
+      }
+    
+
+    
     }
   };
 
