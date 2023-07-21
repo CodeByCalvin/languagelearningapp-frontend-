@@ -129,7 +129,12 @@ export default function Progress(props) {
       </Container>
       <div className="calendar-card">
         {" "}
-        <CalendarComponent onChange={props.onChange} value={props.value} />{" "}
+        <CalendarComponent
+          onChange={props.onChange}
+          value={props.value}
+          learnedWordsDates={learnedWordsDates}
+          reviewedWordsDates={reviewedWordsDates}
+        />{" "}
       </div>
       <div className="graph-card">
         <ProgressGraph

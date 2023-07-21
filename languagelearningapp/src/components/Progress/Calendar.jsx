@@ -8,33 +8,35 @@ const style = {
   reviewed: "circle-reviewed",
 };
 
-export default function CalendarComponent() {
+export default function CalendarComponent(props) {
   const [value, onChange] = useState(new Date());
 
-  // Dummy data (alternating between learned and reviewed)
-  const activityDates = Array.from({ length: 10 }, (_, i) => {
-    const date = new Date();
-    date.setDate(date.getDate() - i);
-    return {
-      date,
-      type: i % 2 === 0 ? "learned" : "reviewed", //
-    };
-  });
-
   const tileClassName = ({ date, view }) => {
+    let formattedDate = date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+
     if (view === "month") {
-      // Check if a date React-Calendar wants to check is on the list of dates to add class to
-      for (let i = 0; i < activityDates.length; i++) {
-        if (
-          activityDates[i].date.getYear() === date.getYear() &&
-          activityDates[i].date.getMonth() === date.getMonth() &&
-          activityDates[i].date.getDate() === date.getDate()
-        ) {
-          return style[activityDates[i].type];
-        }
+      let classes = [];
+
+      // Check if the date is in the learnedWordsDates array
+      if (props.learnedWordsDates.includes(formattedDate)) {
+        classes.push(style.learned);
       }
+
+      // Check if the date is in the reviewedWordsDates array
+      if (props.reviewedWordsDates.includes(formattedDate)) {
+        classes.push(style.reviewed);
+      }
+
+      // Return the classes as a space-separated string
+      return classes.join(" ");
     }
   };
 
-  return <Calendar tileClassName={tileClassName} />;
+  return (
+    <Calendar value={value} onChange={onChange} tileClassName={tileClassName} />
+  );
 }
