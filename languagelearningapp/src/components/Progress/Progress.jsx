@@ -16,22 +16,98 @@ export default function Progress(props) {
     reviewed: [],
   });
 
+  // Learned words
   const [learnedWordsLength, setLearnedWordsLength] = useState(0);
+  const [learnedWordsDates, setLearnedWordsDates] = useState([]);
+  const [learnedWordsCounts, setLearnedWordsCounts] = useState([]);
+
+  // Reviewed words
+  const [reviewedWordsLength, setReviewedWordsLength] = useState(0);
+  const [reviewedWordsDates, setReviewedWordsDates] = useState([]);
+  const [reviewedWordsCounts, setReviewedWordsCounts] = useState([]);
 
   const hideModal = () => setActiveModal("");
 
   const getLearnedWords = async () => {
-    const res = await ApiServerClient.getLearnedWords();
-    console.log(res);
-    return res.data.words_learned;
+    try {
+      const res = await ApiServerClient.getLearnedWords();
+      console.log("Response:", res);
+      if (!res.data.words_learned || !Array.isArray(res.data.words_learned)) {
+        console.error("Unexpected format from API:", res.data);
+        return [];
+      }
+      return res.data.words_learned;
+    } catch (error) {
+      console.error("Error fetching learned words:", error);
+      return [];
+    }
   };
 
-  // Fetch learned words when activeModal becomes "learned"
+  const getReviewedWords = async () => {
+    try {
+      const res = await ApiServerClient.getReviewedWords();
+      console.log("Response:", res);
+      if (!res.data.words_reviewed || !Array.isArray(res.data.words_reviewed)) {
+        console.error("Unexpected format from API:", res.data);
+        return [];
+      }
+      return res.data.words_reviewed;
+    } catch (error) {
+      console.error("Error fetching learned words:", error);
+      return [];
+    }
+  };
+
+  // Fetch both learned and reviewed words initially
   useEffect(() => {
     getLearnedWords()
       .then((words) => {
         setModalContent((prevContent) => ({ ...prevContent, learned: words }));
         setLearnedWordsLength(words.length);
+
+        // Group by date and count words per day
+        let dateCounts = words.reduce((acc, wordObject) => {
+          let date = new Date(wordObject.learned_date);
+          // Format date as "DD-MM-YYYY"
+          let formattedDate = date.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          });
+          acc[formattedDate] = (acc[formattedDate] || 0) + 1;
+          return acc;
+        }, {});
+
+        // Split the object into separate arrays for dates and counts
+        let dates = Object.keys(dateCounts);
+        let counts = Object.values(dateCounts);
+
+        setLearnedWordsDates(dates);
+        setLearnedWordsCounts(counts);
+      })
+      .catch((error) => console.error(error));
+
+    getReviewedWords()
+      .then((words) => {
+        setModalContent((prevContent) => ({ ...prevContent, reviewed: words }));
+        setReviewedWordsLength(words.length);
+
+        let dateCounts = words.reduce((acc, wordObject) => {
+          let date = new Date(wordObject.reviewed_date);
+          let formattedDate = date.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          });
+          acc[formattedDate] = (acc[formattedDate] || 0) + 1;
+          return acc;
+        }, {});
+
+        let dates = Object.keys(dateCounts);
+        let counts = Object.values(dateCounts);
+
+        setReviewedWordsDates(dates);
+        setReviewedWordsCounts(counts);
       })
       .catch((error) => console.error(error));
   }, []);
@@ -53,12 +129,20 @@ export default function Progress(props) {
       </Container>
       <div className="calendar-card">
         {" "}
-        <CalendarComponent onChange={props.onChange} value={props.value} />{" "}
+        <CalendarComponent
+          onChange={props.onChange}
+          value={props.value}
+          learnedWordsDates={learnedWordsDates}
+          reviewedWordsDates={reviewedWordsDates}
+        />{" "}
       </div>
       <div className="graph-card">
         <ProgressGraph
           className="progress-graph"
-          learnedWordsData={modalContent.learned.map((word) => word.length)}
+          learnedWordsDates={learnedWordsDates}
+          learnedWordsData={learnedWordsCounts}
+          reviewedWordsDates={reviewedWordsDates}
+          reviewedWordsData={reviewedWordsCounts}
         />
       </div>
       <div className="number-card-container">
@@ -68,7 +152,7 @@ export default function Progress(props) {
         </div>
         <div className="number-card" onClick={() => setActiveModal("reviewed")}>
           <h2>Words reviewed</h2>
-          <div className="words-reviewed">29</div>
+          <div className="words-reviewed">{reviewedWordsLength}</div>
         </div>
       </div>
 
@@ -83,7 +167,7 @@ export default function Progress(props) {
         </Modal.Header>
         <Modal.Body className="modal-body">
           <ul>
-            {modalContent[activeModal]?.map((word, index) => (
+            {modalContent[activeModal]?.map((wordObject, index) => (
               <motion.li
                 key={index}
                 style={{
@@ -93,7 +177,7 @@ export default function Progress(props) {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: index * 0.1 }}
               >
-                {word}
+                {wordObject.word}
               </motion.li>
             ))}
           </ul>

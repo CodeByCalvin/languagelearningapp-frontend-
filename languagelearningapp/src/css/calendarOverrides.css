@@ -163,7 +163,7 @@
 
 .circle-reviewed {
   background-color: rgba(96, 167, 168, 0.8);
-  border-radius: 50%;
+  border-radius: 100%;
   font-weight: 500;
   color: white;
 }

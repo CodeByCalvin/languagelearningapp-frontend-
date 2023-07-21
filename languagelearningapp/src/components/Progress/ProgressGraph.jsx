@@ -35,33 +35,25 @@ const options = {
   },
 };
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
-
-const data = {
-  labels,
-  datasets: [
-    {
-      label: "Words Reviewed",
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      borderColor: "rgba(96, 167, 168)",
-      backgroundColor: "rgba(96, 167, 168, 0.5)",
-    },
-  ],
-};
-
-const ProgressGraph = ({ learnedWordsData }) => {
+const ProgressGraph = ({
+  learnedWordsData,
+  learnedWordsDates,
+  reviewedWordsData,
+  reviewedWordsDates,
+}) => {
   const data = {
-    labels,
+    labels: learnedWordsDates,
+    reviewedWordsDates,
     datasets: [
       {
         label: "Words Learned",
-        data: learnedWordsData, // use the prop here
+        data: learnedWordsData,
         borderColor: "rgba(121, 80, 242)",
         backgroundColor: "rgba(121, 80, 242, 0.5)",
       },
       {
         label: "Words Reviewed",
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+        data: reviewedWordsData,
         borderColor: "rgba(96, 167, 168)",
         backgroundColor: "rgba(96, 167, 168, 0.5)",
       },
