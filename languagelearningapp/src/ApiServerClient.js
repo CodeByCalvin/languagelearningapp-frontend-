@@ -15,8 +15,17 @@ export default class ApiServerClient {
     } else if (amount > 20) {
       amount = 20;
     }
-    const url = `${SERVER_URL[0]}/review/${amount}`;
+    const url = `${SERVER_URL[0]}/api/review/${amount}`;
     return axios.get(url);
+  }
+  static async auth(action, data) {
+    // console.log(data);
+    // console.log(action);
+    // console.log("test");
+    const url = `${SERVER_URL[1]}/auth/${action}`;
+    const response = await axios.post(url, data, { withCredentials: true });
+    // response.data ? console.log(response.data) : console.log("no data");
+    return response.data;
   }
   static getLearnedWords(token) {
     const url = `${SERVER_URL[0]}/auth/progress/learned`;

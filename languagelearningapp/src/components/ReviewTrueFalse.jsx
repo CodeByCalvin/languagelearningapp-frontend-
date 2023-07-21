@@ -16,6 +16,7 @@ import ReviewContext from "../ReviewContext";
 import AppContext from "../AppContext";
 import { shuffleQuestions } from "../utility";
 import { useNavigate } from "react-router-dom";
+// import { check } from "yargs";
 
 const ReviewTrueFalse = (props) => {
   const navigate = useNavigate();
@@ -40,7 +41,8 @@ const ReviewTrueFalse = (props) => {
 
   useEffect(() => {
     getReviewQuestions();
-    console.log(qAmount);
+    console.log(`qamount ${qAmount}`);
+    console.log(shuffledQuestions);
   }, []);
 
   const getReviewQuestions = async () => {
@@ -70,6 +72,34 @@ const ReviewTrueFalse = (props) => {
       }, 2000);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const checkAnswer = (answer) => {
+    if (answer === true && shuffledQuestions[0] === questions[questionIndex].word) {
+      setCorrectText("Correct!");
+      clearInterval(intervalId);
+    } else if (answer === false && shuffledQuestions[0] !== questions[questionIndex].word) {
+      setCorrectText("Correct!");
+      clearInterval(intervalId);
+    } else {
+      setCorrectText("Incorrect!");
+      clearInterval(intervalId);
+    }
+  };
+
+  const nextQuestion = () => {
+    if (questionIndex < qAmount - 1) {
+      setQuestionIndex(questionIndex + 1);
+      setShuffledQuestions(
+        shuffleQuestions([
+          questions[questionIndex + 1].word,
+          ...questions[questionIndex + 1].alternatives.slice(0, 3),
+        ])
+      );
+      setCorrectText("");
+    } else {
+      navigate("/review");
     }
   };
 
@@ -128,21 +158,53 @@ const ReviewTrueFalse = (props) => {
           <h1>{questions[questionIndex].translation[learnLanguageString]}</h1>
           <FontAwesomeIcon className="i" icon={faVolumeHigh} />
         </div>
-        {correctText === "Correct!" && (
+        <div className="">
+          <h2>{shuffledQuestions[0]}</h2>
+          {/* <h2>{questions[questionIndex].word}</h2> */}
+        </div>
+        {correctText === "Correct!" ? (
           <div className="d-flex">
             <h2 className="correctText">{correctText}</h2>
-            <FontAwesomeIcon icon={faCircleArrowRight} className="slidersIcon" />
+            <FontAwesomeIcon
+              icon={faCircleArrowRight}
+              className="slidersIcon"
+              onClick={() => {
+                nextQuestion();
+              }}
+            />
           </div>
-        )}
+        ) : correctText === "Incorrect!" ? (
+          <div className="d-flex">
+            <h2 className="incorrectText">{correctText}</h2>
+            <FontAwesomeIcon
+              icon={faCircleArrowRight}
+              className="slidersIcon"
+              onClick={() => {
+                nextQuestion();
+              }}
+            />
+          </div>
+        ) : null
+        }
         <br />
         <br />
         <div className="tfContainer">
-          <div className="true">
+          <button 
+          onClick={() => {
+            checkAnswer(true)
+          }}
+          className="true"
+          >
             <h2>True</h2>
-          </div>
-          <div className="false">
+          </button>
+          <button 
+          onClick={() => {
+            checkAnswer(false)
+          }}
+          className="false"
+          >
             <h2>False</h2>
-          </div>
+          </button>
         </div>
       </Container>
     </motion.div>

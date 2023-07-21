@@ -70,7 +70,7 @@ function RoutesWrapper() {
   return (
     <AuthProvider>
       <Routes>
-        {/* <Route element={<ProtectedRoutes />}> */}
+        <Route element={<ProtectedRoutes />}>
           <Route path="/" element={<Home />} />
           <Route
             path="/word-of-the-day"
@@ -109,7 +109,8 @@ function RoutesWrapper() {
           <Route path="/review/truefalse" element={<ReviewTrueFalse />} />
           <Route path="/review/match" element={<ReviewMatch />} />
           <Route path="/settings" element={<Settings navigateToPage={navigateToPage} />} />
-        {/* </Route> */}
+          <Route path="/progress" element={<Progress navigateToPage={navigateToPage} />} />
+        </Route>
         <Route path="/landing" element={<Landing />} />
       </Routes>
     </AuthProvider>
