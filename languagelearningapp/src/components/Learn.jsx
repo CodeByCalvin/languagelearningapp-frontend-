@@ -24,6 +24,17 @@ export default function Learn(props) {
   const language = "french";
   const knownLanguage = "english";
 
+  // Push each word to the backend database
+  const saveLearnedWord = async () => {
+    try {
+      const response = await ApiServerClient.saveLearnedWord(word);
+      const data = response.data;
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Retrieve word from database
   const getRandomWord = async () => {
     try {
@@ -52,6 +63,7 @@ export default function Learn(props) {
         setDefinition(data.language[knownLanguage].definition);
         setWord(data.language[language].word);
         setEnglishWord(data.language[knownLanguage].word);
+
         // Sets the example based on the language (and highlights the specific word)
         setLanguageExample(
           highlightWord(
@@ -162,6 +174,7 @@ export default function Learn(props) {
       await getRandomWord();
     } else {
       props.navigateToPage("learn/results");
+      props.setQuestionIndex(0);
     }
   };
 

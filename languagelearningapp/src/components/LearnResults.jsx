@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
@@ -17,8 +17,31 @@ import chroma from "chroma-js";
 import { ReactComponent as ArrowRight } from "../imgs/icons/arrow-right-solid.svg";
 import { ReactComponent as RotateRight } from "../imgs/icons/rotate-right-solid.svg";
 import "../css/learn-results.css";
+import ApiServerClient from "../ApiServerClient";
 
 export default function LearnResults(props) {
+  // Array of unique learned words
+  const uniqueWords = Array.from(
+    new Set(props.questions.map((question) => question.word))
+  );
+
+  useEffect(() => {
+    if (uniqueWords.length === 0) {
+      return;
+    } else {
+      const setLearnedWords = async () => {
+        try {
+          const response = await ApiServerClient.setLearnedWords(uniqueWords);
+          const data = response.data;
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      setLearnedWords();
+    }
+  }, []);
+
   return (
     <motion.div
       className="learn"
