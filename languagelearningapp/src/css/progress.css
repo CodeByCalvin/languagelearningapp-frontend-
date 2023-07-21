@@ -1,0 +1,93 @@
+.progressDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  padding: 2rem;
+  padding-top: 7rem;
+}
+
+.calendar-card,
+.graph-card {
+  background-color: #fff;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 15px;
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1.8rem;
+}
+
+.graph-card {
+  height: 22rem;
+}
+
+.number-card-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.number-card {
+  width: calc(50% - 10px);
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 15px;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.number-card h2 {
+  font-size: 2.4rem;
+  font-weight: 600;
+}
+
+.words-learned,
+.words-reviewed {
+  font-size: 5rem;
+  font-weight: 600;
+}
+
+.words-learned {
+  color: var(--main-purple);
+}
+
+.words-reviewed {
+  color: #60a7a8;
+}
+
+/* Modal window (Learned/Reviewd)*/
+.modal-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.modal-title {
+  font-size: 2.8rem;
+}
+
+.modal-body {
+  font-size: 2rem;
+  color: var(--main-purple);
+}
+
+.modal-button {
+  font-size: 2rem;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 4px 12px;
+}
+
+.learned-modal ul {
+  padding: 5px;
+}
+
+.learned-modal li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
