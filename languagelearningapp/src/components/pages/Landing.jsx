@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { LoginSignUp } from "../forms/LoginSignUp";
 import { Container } from "react-bootstrap";
 import { motion } from "framer-motion";
 import "./css/Landing.css";
 import ApiServerClient from "../../ApiServerClient";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../../AuthContext';
 
 export const Landing = () => {
+  const { setIsLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleSubmit = async (e, payload) => {
     e.preventDefault();
@@ -16,20 +18,17 @@ export const Landing = () => {
         name: payload.name,
         email: payload.email,
         password: payload.password,
-        confirmPass: payload.confirmPass,
+        confirmPass: payload.confirmPass
       });
     } else {
-      const login = await ApiServerClient.auth(
-        "login",
-        {
-          email: payload.email,
-          password: payload.password,
-        },
-        { withCredentials: true }
-      );
+      const login = await ApiServerClient.auth("login", {
+        email: payload.email,
+        password: payload.password,
+      });
 
       // Redirect to homr page if login is successful
       if (login) {
+        setIsLoggedIn(true);
         navigate("/");
       }
     }
