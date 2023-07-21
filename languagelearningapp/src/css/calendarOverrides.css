@@ -1,5 +1,5 @@
 .react-calendar {
-  max-width: 100%;
+  width: 100%;
   background: white;
   border: none;
   font-family: inherit;
@@ -97,8 +97,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 46px;
   padding: 0;
   background: none;
   text-align: center;
@@ -112,58 +112,78 @@
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
   background-color: #e6e6e6;
-  border-radius: 50%;
 }
 
 .react-calendar__tile--now {
   background: #e6e6e6;
-  border-radius: 50%;
 }
 
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
   background: #e6e6e6;
-  border-radius: 50%;
 }
 
 .react-calendar__tile--hasActive {
   background: #e6e6e6;
-  border-radius: 50%;
 }
 
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
   background: #e6e6e6;
-  border-radius: 50%;
 }
 
 .react-calendar__tile--active {
   background: #e6e6e6;
-  border-radius: 50%;
+
   color: black;
 }
 
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
   background: #e6e6e6;
-  border-radius: 50%;
 }
 
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
-  border-radius: 50%;
-}
-
-.circle-learned {
-  background-color: rgba(121, 80, 242, 0.8);
-  border-radius: 50%;
-  font-weight: 500;
-  color: white;
 }
 
 .circle-reviewed {
   background-color: rgba(96, 167, 168, 0.8);
-  border-radius: 100%;
+  color: rgba(96, 167, 168, 0.8);
   font-weight: 500;
   color: white;
+}
+
+.circle-learned {
+  background-color: rgba(121, 80, 242, 0.8);
+  font-weight: 500;
+  color: white;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: center;
+}
+
+.calendar-switch {
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  background-color: none;
+  border: none;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 10px;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.switch-learned {
+  background-color: rgba(121, 80, 242, 0.8);
+}
+
+.switch-reviewed {
+  background-color: rgba(96, 167, 168, 0.8);
 }
