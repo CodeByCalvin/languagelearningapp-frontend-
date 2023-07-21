@@ -11,7 +11,6 @@ export default function CalendarComponent(props) {
     setCurrentClass(
       currentClass === "circle-learned" ? "circle-reviewed" : "circle-learned"
     );
-    console.log(currentClass);
   };
 
   const tileClassName = ({ date, view }) => {
