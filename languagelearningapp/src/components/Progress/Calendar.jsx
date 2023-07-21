@@ -3,13 +3,15 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../../css/calendarOverrides.css";
 
-const style = {
-  learned: "circle-learned",
-  reviewed: "circle-reviewed",
-};
-
 export default function CalendarComponent(props) {
   const [value, onChange] = useState(new Date());
+  const [currentClass, setCurrentClass] = useState("circle-learned");
+
+  const switchWords = () => {
+    setCurrentClass(
+      currentClass === "circle-learned" ? "circle-reviewed" : "circle-learned"
+    );
+  };
 
   const tileClassName = ({ date, view }) => {
     let formattedDate = date.toLocaleDateString("en-GB", {
@@ -23,12 +25,12 @@ export default function CalendarComponent(props) {
 
       // Check if the date is in the learnedWordsDates array
       if (props.learnedWordsDates.includes(formattedDate)) {
-        classes.push(style.learned);
+        classes.push(currentClass);
       }
 
       // Check if the date is in the reviewedWordsDates array
       if (props.reviewedWordsDates.includes(formattedDate)) {
-        classes.push(style.reviewed);
+        classes.push(currentClass);
       }
 
       // Return the classes as a space-separated string
@@ -37,6 +39,27 @@ export default function CalendarComponent(props) {
   };
 
   return (
-    <Calendar value={value} onChange={onChange} tileClassName={tileClassName} />
+    <div>
+      <div className="calendar-header">
+        <button
+          className={
+            currentClass === "circle-learned"
+              ? "calendar-switch switch-learned"
+              : "calendar-switch switch-reviewed"
+          }
+          onClick={() => switchWords()}
+        >
+          {currentClass === "circle-learned"
+            ? "Learned Words"
+            : "Reviewed Words"}
+        </button>
+      </div>
+
+      <Calendar
+        value={value}
+        onChange={onChange}
+        tileClassName={tileClassName}
+      />
+    </div>
   );
 }

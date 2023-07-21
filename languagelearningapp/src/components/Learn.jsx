@@ -162,6 +162,7 @@ export default function Learn(props) {
       await getRandomWord();
     } else {
       props.navigateToPage("learn/results");
+      props.setQuestionIndex(0);
     }
   };
 
