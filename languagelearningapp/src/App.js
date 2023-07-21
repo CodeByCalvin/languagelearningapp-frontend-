@@ -71,46 +71,53 @@ function RoutesWrapper() {
     <AuthProvider>
       <Routes>
         {/* <Route element={<ProtectedRoutes />}> */}
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/word-of-the-day"
-            element={<WordOfTheDay navigateToPage={navigateToPage} />}
-          />
-          <Route
-            path="/learn"
-            element={
-              <Learn
-                questions={questions}
-                setQuestions={setQuestions}
-                progress={progress}
-                setProgress={setProgress}
-                questionIndex={questionIndex}
-                setQuestionIndex={setQuestionIndex}
-                initialQuestionLength={initialQuestionLength}
-                navigateToPage={navigateToPage}
-              />
-            }
-          />
-          <Route
-            path="/learn/results"
-            element={
-              <LearnResults
-                questions={questions}
-                initialQuestionLength={initialQuestionLength}
-                setQuestionIndex={setQuestionIndex}
-                setQuestions={setQuestions}
-                clearQuestions={clearQuestions}
-                navigateToPage={navigateToPage}
-              />
-            }
-          />
-          <Route path="/review" element={<ReviewSettings navigateToPage={navigateToPage} />} />
-          <Route path="/review/choice" element={<ReviewChoice />} />
-          <Route path="/review/truefalse" element={<ReviewTrueFalse />} />
-          <Route path="/review/match" element={<ReviewMatch />} />
-          <Route path="/settings" element={<Settings navigateToPage={navigateToPage} />} />
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/word-of-the-day"
+          element={<WordOfTheDay navigateToPage={navigateToPage} />}
+        />
+        <Route
+          path="/learn"
+          element={
+            <Learn
+              questions={questions}
+              setQuestions={setQuestions}
+              progress={progress}
+              setProgress={setProgress}
+              questionIndex={questionIndex}
+              setQuestionIndex={setQuestionIndex}
+              initialQuestionLength={initialQuestionLength}
+              navigateToPage={navigateToPage}
+            />
+          }
+        />
+        <Route
+          path="/learn/results"
+          element={
+            <LearnResults
+              questions={questions}
+              initialQuestionLength={initialQuestionLength}
+              setQuestionIndex={setQuestionIndex}
+              setQuestions={setQuestions}
+              clearQuestions={clearQuestions}
+              navigateToPage={navigateToPage}
+            />
+          }
+        />
+        <Route
+          path="/review"
+          element={<ReviewSettings navigateToPage={navigateToPage} />}
+        />
+        <Route path="/review/choice" element={<ReviewChoice />} />
+        <Route path="/review/truefalse" element={<ReviewTrueFalse />} />
+        <Route path="/review/match" element={<ReviewMatch />} />
+        <Route
+          path="/settings"
+          element={<Settings navigateToPage={navigateToPage} />}
+        />
         {/* </Route> */}
         <Route path="/landing" element={<Landing />} />
+        <Route path="/progress" element={<Progress />} />
       </Routes>
     </AuthProvider>
   );
