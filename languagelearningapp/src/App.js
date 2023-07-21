@@ -117,7 +117,10 @@ function RoutesWrapper() {
         />
         {/* </Route> */}
         <Route path="/landing" element={<Landing />} />
-        <Route path="/progress" element={<Progress />} />
+        <Route
+          path="/progress"
+          element={<Progress navigateToPage={navigateToPage} />}
+        />
       </Routes>
     </AuthProvider>
   );
