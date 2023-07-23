@@ -5,7 +5,7 @@ import { Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faHouse } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
-import PlaceholderLoader from "./PlaceholderLoader";
+import PlaceholderLoader from "../components/PlaceholderLoader";
 
 const WordOfTheDay = (props) => {
   const { setPage } = props;

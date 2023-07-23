@@ -10,12 +10,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "../css/ReviewChoice.css";
 import ApiServerClient from "../ApiServerClient";
-import PlaceholderLoader from "./PlaceholderLoader";
-import ReviewTimer from "./ReviewTimer";
-import ReviewProgBar from "./ReviewProgBar";
-import ReviewContext from "../ReviewContext";
-import AppContext from "../AppContext";
-import { shuffleQuestions } from "../utility";
+import PlaceholderLoader from "../components/PlaceholderLoader";
+import ReviewTimer from "../components/ReviewTimer";
+import ReviewProgBar from "../components/ReviewProgBar";
+import ReviewContext from "../context/ReviewContext";
+import AppContext from "../context/AppContext";
+import { shuffleQuestions } from "../utils/utility";
 import { useNavigate } from "react-router-dom";
 
 const ReviewChoice = (props) => {

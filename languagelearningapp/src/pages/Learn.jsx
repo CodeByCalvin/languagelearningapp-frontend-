@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import ApiServerClient from "../ApiServerClient";
-import ReviewProgBar from "./ReviewProgBar";
+import ReviewProgBar from "../components/ReviewProgBar";
 import { ReactComponent as ArrowRight } from "../imgs/icons/arrow-right-solid.svg";
 
 export default function Learn(props) {

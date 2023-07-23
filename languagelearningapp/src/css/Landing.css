@@ -68,9 +68,33 @@
 .login-register-btn-bottom {
   font-size: 4rem;
   font-weight: 600;
-  margin: 3rem;
+  margin: 1rem;
   padding: 1.5rem 4.5rem;
   background-color: var(--main-purple);
+  color: var(--white);
+  border-radius: 1rem;
+  cursor: pointer;
+  border: none;
+}
+.login-register-btn-bottom:hover {
+  position: relative;
+}
+.login-register-btn-bottom:hover::before {
+  border-radius: 1rem;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent black color */
+}
+.guest-btn {
+  font-size: 4rem;
+  font-weight: 600;
+  margin: 1rem;
+  padding: .5rem 4.5rem;
+  background-color: var(--light-grey);
   color: var(--white);
   border-radius: 1rem;
   cursor: pointer;

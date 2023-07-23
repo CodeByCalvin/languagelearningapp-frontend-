@@ -1,30 +1,28 @@
 import React, { useState, useEffect, useCallback, useContext } from "react";
-import Home from "./components/home";
+import Home from "./pages/home";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { motion, AnimatePresence } from "framer-motion";
-import WordOfTheDay from "./components/WordOfTheDay";
-import Settings from "./components/Settings";
-import ReviewSettings from "./components/review-customisation";
-import Learn from "./components/Learn";
-import ReviewChoice from "./components/ReviewChoice";
+import WordOfTheDay from "./pages/WordOfTheDay";
+import Settings from "./pages/Settings";
+import ReviewSettings from "./pages/review-customisation";
+import Learn from "./pages/Learn";
+import ReviewChoice from "./pages/ReviewChoice";
 import Testing from "./components/Testing";
-import ReviewTrueFalse from "./components/ReviewTrueFalse";
-import ReviewResults from "./components/ReviewResults";
-import LearnResults from "./components/LearnResults";
+import ReviewTrueFalse from "./pages/ReviewTrueFalse";
+import ReviewResults from "./pages/ReviewResults";
+import LearnResults from "./pages/LearnResults";
 import Progress from "./components/Progress/Progress";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
-import ReviewContext from "./ReviewContext";
-import AppContext from "./AppContext";
-import ReviewMatch from "./components/ReviewMatch";
-import { Landing } from "./components/pages/Landing";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import ReviewContext from "./context/ReviewContext";
+import AppContext from "./context/AppContext";
+import ReviewMatch from "./pages/ReviewMatch";
+import { UserProvider } from "./context/AuthContext";
+import { Toaster } from "react-hot-toast";
+import TestNavbar from "./components/testingNav";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import ProtectedRoutes from "./components/ProtectedRoutes";
-import { AuthProvider } from "./AuthContext";
 
 // This function converts button names to route paths
 function getRouteFromButtonName(buttonName) {
@@ -68,107 +66,52 @@ function RoutesWrapper() {
   };
 
   return (
-    <AuthProvider>
-      <Routes>
-        <Route element={<ProtectedRoutes />}>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/word-of-the-day"
-            element={<WordOfTheDay navigateToPage={navigateToPage} />}
-          />
-          <Route
-            path="/learn"
-            element={
-              <Learn
-                questions={questions}
-                setQuestions={setQuestions}
-                progress={progress}
-                setProgress={setProgress}
-                questionIndex={questionIndex}
-                setQuestionIndex={setQuestionIndex}
-                initialQuestionLength={initialQuestionLength}
-                navigateToPage={navigateToPage}
-              />
-            }
-          />
-          <Route
-            path="/learn/results"
-            element={
-              <LearnResults
-                questions={questions}
-                initialQuestionLength={initialQuestionLength}
-                setQuestionIndex={setQuestionIndex}
-                setQuestions={setQuestions}
-                clearQuestions={clearQuestions}
-                navigateToPage={navigateToPage}
-              />
-            }
-          />
-          <Route path="/review" element={<ReviewSettings navigateToPage={navigateToPage} />} />
-          <Route path="/review/choice" element={<ReviewChoice />} />
-          <Route path="/review/truefalse" element={<ReviewTrueFalse />} />
-          <Route path="/review/match" element={<ReviewMatch />} />
-          <Route path="/settings" element={<Settings navigateToPage={navigateToPage} />} />
-          <Route path="/progress" element={<Progress navigateToPage={navigateToPage} />} />
-        </Route>
-        <Route path="/landing" element={<Landing />} />
-      </Routes>
-    </AuthProvider>
+    <Routes>
+      <Route element={<ProtectedRoutes />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/word-of-the-day" element={<WordOfTheDay navigateToPage={navigateToPage} />} />
+        <Route
+          path="/learn"
+          element={
+            <Learn
+              questions={questions}
+              setQuestions={setQuestions}
+              progress={progress}
+              setProgress={setProgress}
+              questionIndex={questionIndex}
+              setQuestionIndex={setQuestionIndex}
+              initialQuestionLength={initialQuestionLength}
+              navigateToPage={navigateToPage}
+            />
+          }
+        />
+        <Route
+          path="/learn/results"
+          element={
+            <LearnResults
+              questions={questions}
+              initialQuestionLength={initialQuestionLength}
+              setQuestionIndex={setQuestionIndex}
+              setQuestions={setQuestions}
+              clearQuestions={clearQuestions}
+              navigateToPage={navigateToPage}
+            />
+          }
+        />
+        <Route path="/review" element={<ReviewSettings navigateToPage={navigateToPage} />} />
+        <Route path="/review/choice" element={<ReviewChoice />} />
+        <Route path="/review/truefalse" element={<ReviewTrueFalse />} />
+        <Route path="/review/match" element={<ReviewMatch />} />
+        <Route path="/settings" element={<Settings navigateToPage={navigateToPage} />} />
+        <Route path="/progress" element={<Progress navigateToPage={navigateToPage} />} />
+      </Route>
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
   );
 }
 
 export default function App() {
-  // const renderPage = () => {
-  //   switch (page) {
-  //     case "home":
-  //       return <Home setPage={setPage} />;
-  //     case "word_of_the_day":
-  //       return <WordOfTheDay setPage={setPage} />;
-  //     case "review":
-  //       return <ReviewSettings setPage={setPage} />;
-  //     case "review_choice":
-  //       return <ReviewChoice setPage={setPage} />;
-  //     case "review_true_false":
-  //       return <ReviewTrueFalse setPage={setPage} />;
-  //     case "settings":
-  //       return (
-  //         <Settings
-  //           setPage={setPage}
-  //           textSize={textSize}
-  //           setTextSize={setTextSize}
-  //         />
-  //       );
-  //     case "learn":
-  //       return (
-  //         <Learn
-  //           setPage={setPage}
-  //           questions={questions}
-  //           setQuestions={setQuestions}
-  //           progress={progress}
-  //           setProgress={setProgress}
-  //           questionIndex={questionIndex}
-  //           setQuestionIndex={setQuestionIndex}
-  //           initialQuestionLength={initialQuestionLength}
-  //         />
-  //       );
-  //     case "review_results":
-  //       return <ReviewResults setPage={setPage} />;
-  //     case "learn_results":
-  //       return (
-  //         <LearnResults
-  //           setPage={setPage}
-  //           questions={questions}
-  //           initialQuestionLength={initialQuestionLength}
-  //           setQuestionIndex={setQuestionIndex}
-  //           setQuestions={setQuestions}
-  //           clearQuestions={clearQuestions}
-  //         />
-  //       );
-  //     default:
-  //       return <Home setPage={setPage} />;
-  //   }
-  // };
-
   const [reviewSettings, setReviewSettings] = useState({
     qAmount: 1,
     timer: true,
@@ -184,17 +127,22 @@ export default function App() {
   return (
     <div className="App">
       <AnimatePresence mode="wait">
-        <ReviewContext.Provider
-          value={{ rVal: reviewSettings, rFunc: setReviewSettings }}
-        >
-          <AppContext.Provider
-            value={{ aVal: appSettings, aFunc: setAppSettings }}
-          >
-            <Router>
+        <UserProvider>
+          <ReviewContext.Provider value={{ rVal: reviewSettings, rFunc: setReviewSettings }}>
+            <AppContext.Provider value={{ aVal: appSettings, aFunc: setAppSettings }}>
+              {/* <TestNavbar /> */}
+              <Toaster position="bottom-right" toastOptions={{ 
+                duration: 2000,
+                style: {
+                  background: "#7950f2",
+                  color: "#fff",
+                  fontSize: "20px",
+                }, 
+                }} />
               <RoutesWrapper />
-            </Router>
-          </AppContext.Provider>
-        </ReviewContext.Provider>
+            </AppContext.Provider>
+          </ReviewContext.Provider>
+        </UserProvider>
       </AnimatePresence>
     </div>
   );

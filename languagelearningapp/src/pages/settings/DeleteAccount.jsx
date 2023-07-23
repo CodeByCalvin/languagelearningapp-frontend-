@@ -1,15 +1,37 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { userContext } from "../../context/AuthContext";
+import { logoutUser } from "../../utils/auth";
+import { toast } from "react-hot-toast";
+import ApiServerClient from "../../ApiServerClient";
 
 export default function DeleteAccount({
   open,
   handleDeleteOpen,
   handleDeleteClose,
 }) {
-  const handleDelete = () => {
-    console.log("Account deleted");
-    handleDeleteClose();
+  const { user, setUser } = useContext(userContext);
+  const navigate = useNavigate();
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    if (user.name !== 'Guest') {
+      try {
+        await ApiServerClient.authDelete(`user/${id}`);
+        setUser(null);
+        navigate('/login');
+        toast.success('User deleted');
+        handleDeleteClose();
+        console.log('User deleted');
+      } catch (error) {
+        console.log('error');
+        console.log(error);
+      }
+    } else {
+      toast.error('You must be logged in to delete a user');
+    }
   };
 
   return (
@@ -43,7 +65,7 @@ export default function DeleteAccount({
               className="delete-yes-btn"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 1.1 }}
-              onClick={handleDelete}
+              onClick={() => {handleDelete(user._id)}}
             >
               Yes
             </motion.button>

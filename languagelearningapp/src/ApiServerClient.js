@@ -1,4 +1,7 @@
 import axios from "axios";
+
+axios.defaults.withCredentials = true; // Send cookies with requests
+
 const SERVER_URL = [
   "https://language-api-sogu.onrender.com",
   "http://localhost:3001",
@@ -21,14 +24,23 @@ export default class ApiServerClient {
     const url = `${SERVER_URL[0]}/api/review/${amount}`;
     return axios.get(url);
   }
+  // AUTH POST
   static async auth(action, data) {
-    // console.log(data);
-    // console.log(action);
-    // console.log("test");
     const url = `${SERVER_URL[1]}/auth/${action}`;
     const response = await axios.post(url, data, { withCredentials: true });
-    // response.data ? console.log(response.data) : console.log("no data");
     return response.data;
+  }
+  // AUTH GET
+  static async authGet(action) {
+    const url = `${SERVER_URL[1]}/auth/${action}`;
+    const response = await axios.get(url, { withCredentials: true });
+    return response;
+  }
+  // AUTH DELETE
+  static async authDelete(action) {
+    const url = `${SERVER_URL[1]}/auth/${action}`;
+    const response = await axios.delete(url, { withCredentials: true });
+    return response;
   }
   static getLearnedWords(token) {
     const url = `${SERVER_URL[0]}/auth/progress/learned`;

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import Card from "./card";
+import Card from "../components/card";
 import "../css/Cardcontainer.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import PlaceholderLoader from "./PlaceholderLoader";
+import PlaceholderLoader from "../components/PlaceholderLoader";
 import { motion } from "framer-motion";
 import { Container, ProgressBar } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,10 +13,10 @@ import {
   faCircleArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import ReviewTimer from "./ReviewTimer";
+import ReviewTimer from "../components/ReviewTimer";
 import ApiServerClient from "../ApiServerClient";
-import ReviewContext from "../ReviewContext";
-import AppContext from "../AppContext";
+import ReviewContext from "../context/ReviewContext";
+import AppContext from "../context/AppContext";
 
 const ReviewMatch = () => {
   const navigate = useNavigate();
