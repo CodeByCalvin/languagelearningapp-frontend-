@@ -11,7 +11,7 @@ import {
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { easeQuadInOut } from "d3-ease";
-import AnimatedProgressProvider from "./AnimatedProgressProvider";
+import AnimatedProgressProvider from "../components/AnimatedProgressProvider";
 import "../css/review-results.css";
 import chroma from "chroma-js";
 import { ReactComponent as ArrowRight } from "../imgs/icons/arrow-right-solid.svg";

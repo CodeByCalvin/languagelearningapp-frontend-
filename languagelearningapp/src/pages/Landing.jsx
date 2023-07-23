@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
-import { LoginSignUp } from "../forms/LoginSignUp";
+import { LoginSignUp } from "../components/forms/LoginSignUp";
 import { Container } from "react-bootstrap";
 import { motion } from "framer-motion";
-import "./css/Landing.css";
-import ApiServerClient from "../../ApiServerClient";
+import "../css/Landing.css";
+import ApiServerClient from "../ApiServerClient";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from '../../AuthContext';
+import { AuthContext } from '../context/AuthContext';
 
 export const Landing = () => {
   const { setIsLoggedIn } = useContext(AuthContext);

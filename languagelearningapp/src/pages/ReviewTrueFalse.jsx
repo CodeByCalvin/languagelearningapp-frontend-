@@ -9,12 +9,12 @@ import {
   faVolumeHigh,
   faCircleArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
-import PlaceholderLoader from "./PlaceholderLoader";
-import ReviewTimer from "./ReviewTimer";
+import PlaceholderLoader from "../components/PlaceholderLoader";
+import ReviewTimer from "../components/ReviewTimer";
 import ApiServerClient from "../ApiServerClient";
-import ReviewContext from "../ReviewContext";
-import AppContext from "../AppContext";
-import { shuffleQuestions } from "../utility";
+import ReviewContext from "..//context/ReviewContext";
+import AppContext from "../context/AppContext";
+import { shuffleQuestions } from "../utils/utility";
 import { useNavigate } from "react-router-dom";
 // import { check } from "yargs";
 

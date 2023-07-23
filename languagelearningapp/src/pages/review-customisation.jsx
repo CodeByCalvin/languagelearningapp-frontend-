@@ -12,12 +12,12 @@ import {
   MenuItem,
 } from "@mui/material";
 import "../css/review-customisation.css";
-import IOSSwitch from "./iosswitch";
+import IOSSwitch from "../components/iosswitch";
 import { motion } from "framer-motion";
 import { Container, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faHouse } from "@fortawesome/free-solid-svg-icons";
-import ReviewContext from "../ReviewContext";
+import ReviewContext from "../context/ReviewContext";
 import { useNavigate } from "react-router-dom";
 
 export default function ReviewSettings(props) {

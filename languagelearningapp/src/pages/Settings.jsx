@@ -1,31 +1,31 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import "../css/review-customisation.css";
-import IOSSwitch from "./iosswitch";
+import IOSSwitch from "../components/iosswitch";
 import { motion } from "framer-motion";
 import { Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import "../css/settings.css";
-import LanguageSelector from "./Settings/LanguageSelector";
-import DeleteAccount from "./Settings/DeleteAccount";
-import TextSize from "./Settings/TextSize";
-import DefaultQuestions from "./Settings/DefaultQuestions";
-import AppContext from "../AppContext";
+import LanguageSelector from "./settings/LanguageSelector";
+import DeleteAccount from "./settings/DeleteAccount";
+import TextSize from "./settings/TextSize";
+import DefaultQuestions from "./settings/DefaultQuestions";
+import AppContext from "../context/AppContext";
+import { userContext } from "../context/AuthContext";
 
 export default function Settings(props) {
+  const { user, setUser } = useContext(userContext);
   // context
   const { aVal, aFunc } = useContext(AppContext);
 
   const [selectedLanguage, setSelectedLanguage] = useState(aVal.selectedLanguageCode);
-  const [selectedLearningLanguage, setSelectedLearningLanguage] =
-    useState(aVal.learnLanguageCode);
+  const [selectedLearningLanguage, setSelectedLearningLanguage] = useState(aVal.learnLanguageCode);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [questionsOpen, setQuestionsOpen] = useState(false);
 
   const [selectedLanguageName, setSelectedLanguageName] = useState("");
   const [selectedLearnLanguageName, setSelectedLearnLanguageName] = useState("");
-
 
   const handleDeleteOpen = () => {
     setDeleteOpen(!deleteOpen);
@@ -42,7 +42,6 @@ export default function Settings(props) {
   const handleQuestionsClose = () => {
     setQuestionsOpen(false);
   };
-
 
   useEffect(() => {
     aFunc((aVal) => ({ ...aVal, selectedLanguageCode: selectedLanguage }));
@@ -99,6 +98,7 @@ export default function Settings(props) {
           >
             <CardContent>
               <div className="customisation-options">
+              {!!user && <h2>Settings for {user.name}</h2>}
                 <Box
                   sx={{
                     display: "flex",
@@ -175,10 +175,7 @@ export default function Settings(props) {
                   <Typography sx={{ fontSize: "2rem" }} variant="body1">
                     Text size
                   </Typography>
-                  <TextSize
-                    textSize={props.textSize}
-                    setTextSize={props.setTextSize}
-                  />
+                  <TextSize textSize={props.textSize} setTextSize={props.setTextSize} />
                 </Box>
 
                 <Box
@@ -229,7 +226,7 @@ export default function Settings(props) {
                   }}
                 >
                   <Typography sx={{ fontSize: "2rem" }} variant="body1">
-                    Porco dio
+                    Another Setting
                   </Typography>
                   <IOSSwitch />
                 </Box>
