@@ -53,7 +53,9 @@ export default function Navbar() {
           value="home"
           icon={
             <HomeIcon
-              className={`nav-btn-icon ${value === "home" ? "selected-icon" : ""}`}
+              className={`nav-btn-icon ${
+                value === "home" ? "selected-icon" : ""
+              }`}
               style={{ color: value === "home" ? "#7950f2" : "black" }}
             />
           }
@@ -63,7 +65,9 @@ export default function Navbar() {
           value="search"
           icon={
             <MagnifyingGlassIcon
-              className={`nav-btn-icon ${value === "search" ? "selected-icon" : ""}`}
+              className={`nav-btn-icon ${
+                value === "search" ? "selected-icon" : ""
+              }`}
               style={{ color: value === "search" ? "#7950f2" : "black" }}
             />
           }
@@ -73,7 +77,9 @@ export default function Navbar() {
           value="notifications"
           icon={
             <BellIcon
-              className={`nav-btn-icon ${value === "notifications" ? "selected-icon" : ""}`}
+              className={`nav-btn-icon ${
+                value === "notifications" ? "selected-icon" : ""
+              }`}
               style={{
                 color: value === "notifications" ? "#7950f2" : "black",
               }}
@@ -81,11 +87,13 @@ export default function Navbar() {
           }
         />
         <BottomNavigationAction
-          
+          label=" "
           value="profile"
           icon={
             <UserIcon
-              className={`nav-btn-icon ${value === "profile" ? "selected-icon" : ""}`}
+              className={`nav-btn-icon ${
+                value === "profile" ? "selected-icon" : ""
+              }`}
               style={{ color: value === "profile" ? "#7950f2" : "black" }}
               onClick={handleClick}
             />
@@ -105,7 +113,11 @@ export default function Navbar() {
           }}
         >
           <div>
-            <div><button onClick={handleLogout} className="logout-btn">Logout</button></div>
+            <div>
+              <button onClick={handleLogout} className="logout-btn">
+                Logout
+              </button>
+            </div>
           </div>
         </Popover>
       </BottomNavigation>

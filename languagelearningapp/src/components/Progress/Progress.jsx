@@ -7,6 +7,7 @@ import "../../css/progress.css";
 import ProgressGraph from "./ProgressGraph";
 import { Container, Modal, Button } from "react-bootstrap";
 import CalendarComponent from "./Calendar";
+import HomeButtonHeader from "../HomeButtonHeader";
 
 export default function Progress(props) {
   const [activeModal, setActiveModal] = useState("");
@@ -121,11 +122,7 @@ export default function Progress(props) {
       className="progressDiv"
     >
       <Container fluid className="home-header">
-        <FontAwesomeIcon
-          icon={faHouse}
-          className="houseIcon"
-          onClick={() => props.navigateToPage("")}
-        />
+        <HomeButtonHeader navigateToPage={props.navigateToPage} />
       </Container>
       <div className="calendar-card">
         {" "}

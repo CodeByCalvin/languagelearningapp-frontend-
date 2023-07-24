@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faHouse } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
 import PlaceholderLoader from "../components/PlaceholderLoader";
+import HomeButtonHeader from "../components/HomeButtonHeader";
 
 const WordOfTheDay = (props) => {
   const { setPage } = props;
@@ -119,13 +120,7 @@ const WordOfTheDay = (props) => {
       exit={{ y: -300, opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Container fluid className="homeContainer">
-        <FontAwesomeIcon
-          icon={faHouse}
-          className="houseIcon"
-          onClick={() => props.navigateToPage("")}
-        />
-      </Container>
+      <HomeButtonHeader navigateToPage={props.navigateToPage} />
 
       <Container fluid className="wotd-container">
         <div className="d-flex justify-content-center align-items-center">

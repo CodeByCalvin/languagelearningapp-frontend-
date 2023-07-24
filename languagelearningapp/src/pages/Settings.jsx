@@ -13,19 +13,25 @@ import TextSize from "./settings/TextSize";
 import DefaultQuestions from "./settings/DefaultQuestions";
 import AppContext from "../context/AppContext";
 import { userContext } from "../context/AuthContext";
+import HomeButtonHeader from "../components/HomeButtonHeader";
 
 export default function Settings(props) {
   const { user, setUser } = useContext(userContext);
   // context
   const { aVal, aFunc } = useContext(AppContext);
 
-  const [selectedLanguage, setSelectedLanguage] = useState(aVal.selectedLanguageCode);
-  const [selectedLearningLanguage, setSelectedLearningLanguage] = useState(aVal.learnLanguageCode);
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    aVal.selectedLanguageCode
+  );
+  const [selectedLearningLanguage, setSelectedLearningLanguage] = useState(
+    aVal.learnLanguageCode
+  );
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [questionsOpen, setQuestionsOpen] = useState(false);
 
   const [selectedLanguageName, setSelectedLanguageName] = useState("");
-  const [selectedLearnLanguageName, setSelectedLearnLanguageName] = useState("");
+  const [selectedLearnLanguageName, setSelectedLearnLanguageName] =
+    useState("");
 
   const handleDeleteOpen = () => {
     setDeleteOpen(!deleteOpen);
@@ -64,13 +70,8 @@ export default function Settings(props) {
 
   return (
     <div>
-      <Container fluid className="homeContainer">
-        <FontAwesomeIcon
-          icon={faHouse}
-          className="houseIcon"
-          onClick={() => props.navigateToPage("")}
-        />
-      </Container>
+      <Container fluid className="homeContainer"></Container>
+      <HomeButtonHeader navigateToPage={props.navigateToPage} />
       <Box
         sx={{
           display: "flex",
@@ -98,7 +99,7 @@ export default function Settings(props) {
           >
             <CardContent>
               <div className="customisation-options">
-              {!!user && <h2>Settings for {user.name}</h2>}
+                {!!user && <h2>Settings for {user.name}</h2>}
                 <Box
                   sx={{
                     display: "flex",
@@ -175,7 +176,10 @@ export default function Settings(props) {
                   <Typography sx={{ fontSize: "2rem" }} variant="body1">
                     Text size
                   </Typography>
-                  <TextSize textSize={props.textSize} setTextSize={props.setTextSize} />
+                  <TextSize
+                    textSize={props.textSize}
+                    setTextSize={props.setTextSize}
+                  />
                 </Box>
 
                 <Box
