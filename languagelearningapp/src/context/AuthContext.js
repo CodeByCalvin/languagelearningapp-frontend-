@@ -5,19 +5,23 @@ export const userContext = createContext({});
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const { data } = await ApiServerClient.authGet("user");
-        setUser(data);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchUser();
   }, []);
 
-  return <userContext.Provider value={{ user, setUser }}>{children}</userContext.Provider>;
+  const fetchUser = async () => {
+    try {
+      const { data } = await ApiServerClient.authGet("user");
+      setUser(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return <userContext.Provider value={{ user, setUser, isLoading }}>{children}</userContext.Provider>;
 }
