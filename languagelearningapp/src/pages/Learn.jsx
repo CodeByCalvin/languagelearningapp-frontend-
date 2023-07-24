@@ -4,8 +4,8 @@ import { ReactComponent as PlaySolid } from "../imgs/icons/play-solid.svg";
 import { ReactComponent as Microphone } from "../imgs/icons/microphone-solid.svg";
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import HomeButtonHeader from "../components/HomeButtonHeader";
+
 import ApiServerClient from "../ApiServerClient";
 import ReviewProgBar from "../components/ReviewProgBar";
 import { ReactComponent as ArrowRight } from "../imgs/icons/arrow-right-solid.svg";
@@ -180,67 +180,57 @@ export default function Learn(props) {
 
   return (
     <motion.div
-      className="learn"
       initial={{ y: 300, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: -300, opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div>
-        <Container fluid className="home-header">
-          <FontAwesomeIcon
-            icon={faHouse}
-            className="houseIcon"
-            onClick={() => props.navigateToPage("")}
-          />
-        </Container>
+      <HomeButtonHeader navigateToPage={props.navigateToPage} />
 
-        <Container
-          fluid
-          className="home-content"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "calc(100vh - IconHeight)",
-          }}
-        >
-          <div className="word-class">{wordClass}</div>
+      <Container
+        fluid
+        className="home-content learn"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          height: "calc(100vh - IconHeight)",
+        }}
+      >
+        <div className="word-class">{wordClass}</div>
 
-          <Container className="d-flex justify-content-center align-items-center gap-5 mb-4">
-            <div className="word">{word}</div>
+        <Container className="d-flex justify-content-center align-items-center gap-5 mb-4">
+          <div className="word">{word}</div>
 
-            <button onClick={playAudio} className="play-btn">
-              <PlaySolid
-                style={{
-                  width: "60%",
-                  height: "60%",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              />
-            </button>
-          </Container>
-          <div className="translation">{definition}</div>
-          <div className="language-example">{languageExample}</div>
-
-          <div className="translated-example">{translatedExample}</div>
-          <div className="microphone"> </div>
-
-          <button onClick={useMicrophone} className="microphone-btn">
-            <Microphone
+          <button onClick={playAudio} className="play-btn">
+            <PlaySolid
               style={{
-                width: "70%",
-                height: "70%",
+                width: "60%",
+                height: "60%",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             />
           </button>
-          <div className="response-message">{responseMessage}</div>
         </Container>
-      </div>
+        <div className="translation">{definition}</div>
+        <div className="language-example">{languageExample}</div>
+
+        <div className="translated-example">{translatedExample}</div>
+        <div className="microphone"> </div>
+
+        <button onClick={useMicrophone} className="microphone-btn">
+          <Microphone
+            style={{
+              width: "70%",
+              height: "70%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          />
+        </button>
+        <div className="response-message">{responseMessage}</div>
+      </Container>
+
       <Container fluid className="btn-container">
         <button className="next-btn" onClick={nextQuestion}>
           <ArrowRight />
