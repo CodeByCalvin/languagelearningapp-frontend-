@@ -26,19 +26,19 @@ export default class ApiServerClient {
   }
   // AUTH POST
   static async auth(action, data) {
-    const url = `${SERVER_URL[1]}/auth/${action}`;
+    const url = `${SERVER_URL[0]}/auth/${action}`;
     const response = await axios.post(url, data, { withCredentials: true });
     return response.data;
   }
   // AUTH GET
   static async authGet(action) {
-    const url = `${SERVER_URL[1]}/auth/${action}`;
+    const url = `${SERVER_URL[0]}/auth/${action}`;
     const response = await axios.get(url, { withCredentials: true });
     return response;
   }
   // AUTH DELETE
   static async authDelete(action) {
-    const url = `${SERVER_URL[1]}/auth/${action}`;
+    const url = `${SERVER_URL[0]}/auth/${action}`;
     const response = await axios.delete(url, { withCredentials: true });
     return response;
   }

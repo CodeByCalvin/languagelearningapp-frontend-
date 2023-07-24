@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { Container, ProgressBar } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHouse,
   faSliders,
   faVolumeHigh,
   faCircleArrowRight,
@@ -17,6 +16,7 @@ import ReviewContext from "../context/ReviewContext";
 import AppContext from "../context/AppContext";
 import { shuffleQuestions } from "../utils/utility";
 import { useNavigate } from "react-router-dom";
+import HomeButtonHeader from "../components/HomeButtonHeader";
 
 const ReviewChoice = (props) => {
   const navigate = useNavigate();
@@ -79,7 +79,10 @@ const ReviewChoice = (props) => {
     if (questionIndex === questions.length - 1) {
       setQuestionIndex(0);
       setShuffledQuestions(
-        shuffleQuestions([questions[0].word, ...questions[0].alternatives.slice(0, 3)])
+        shuffleQuestions([
+          questions[0].word,
+          ...questions[0].alternatives.slice(0, 3),
+        ])
       );
     } else {
       setQuestionIndex(questionIndex + 1);
@@ -130,14 +133,9 @@ const ReviewChoice = (props) => {
       exit={{ y: -300, opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
+      <HomeButtonHeader navigateToPage={props.navigateToPage} />
       <Container fluid className="homeContainer justify-content-between">
-        <div>
-          <FontAwesomeIcon
-            icon={faHouse}
-            className="houseIcon"
-            onClick={navigate.bind(this, "/")}
-          />
-        </div>
+        <div></div>
         <div className="d-flex align-items-center rightBanner">
           {timer && (
             <ReviewTimer
@@ -181,13 +179,17 @@ const ReviewChoice = (props) => {
               onClick={() => {
                 if (question === questions[questionIndex].word) {
                   // add correct class to the clicked div
-                  document.getElementsByClassName("qBlock")[index].classList.add("correct");
+                  document
+                    .getElementsByClassName("qBlock")
+                    [index].classList.add("correct");
                   // set correct text
                   setCorrectText("Correct!");
                   clearInterval(intervalId);
                 } else {
                   // add false class to the clicked div
-                  document.getElementsByClassName("qBlock")[index].classList.add("false");
+                  document
+                    .getElementsByClassName("qBlock")
+                    [index].classList.add("false");
                 }
               }}
             >

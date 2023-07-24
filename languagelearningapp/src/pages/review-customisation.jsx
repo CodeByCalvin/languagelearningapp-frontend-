@@ -15,8 +15,7 @@ import "../css/review-customisation.css";
 import IOSSwitch from "../components/iosswitch";
 import { motion } from "framer-motion";
 import { Container, Row, Col } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVolumeHigh, faHouse } from "@fortawesome/free-solid-svg-icons";
+import HomeButtonHeader from "../components/HomeButtonHeader";
 import ReviewContext from "../context/ReviewContext";
 import { useNavigate } from "react-router-dom";
 
@@ -50,7 +49,7 @@ export default function ReviewSettings(props) {
     if (checkedTrueFalse) {
       setCheckedChoice(false);
       setCheckedMatch(false);
-    } 
+    }
     if (checkedChoice) {
       setCheckedTrueFalse(false);
       setCheckedMatch(false);
@@ -87,13 +86,7 @@ export default function ReviewSettings(props) {
 
   return (
     <div>
-      <Container fluid className="homeContainer">
-        <FontAwesomeIcon
-          icon={faHouse}
-          className="houseIcon"
-          onClick={() => props.navigateToPage("")}
-        />
-      </Container>
+      <HomeButtonHeader navigateToPage={props.navigateToPage} />
       <Box
         sx={{
           display: "flex",
@@ -102,7 +95,6 @@ export default function ReviewSettings(props) {
           height: "100vh",
           width: "100vw",
           padding: "1em",
-
         }}
       >
         {/* CUSTOMISATION OPTIONS */}
@@ -122,10 +114,9 @@ export default function ReviewSettings(props) {
             }}
           >
             <div className="reviewCustomTop">
-            <h3>Review Customisation</h3>
+              <h3>Review Customisation</h3>
             </div>
             <CardContent className="p-0">
-            
               <Box
                 sx={{
                   display: "flex",
@@ -171,7 +162,10 @@ export default function ReviewSettings(props) {
                 <Typography sx={{ fontSize: "2rem" }} variant="body1">
                   Timer
                 </Typography>
-                <IOSSwitch checked={checkedTimer} setChecked={setCheckedTimer} />
+                <IOSSwitch
+                  checked={checkedTimer}
+                  setChecked={setCheckedTimer}
+                />
               </Box>
 
               <hr />
@@ -187,7 +181,10 @@ export default function ReviewSettings(props) {
                 <Typography sx={{ fontSize: "2rem" }} variant="body1">
                   Multiple Choice
                 </Typography>
-                <IOSSwitch checked={checkedChoice} setChecked={setCheckedChoice} />
+                <IOSSwitch
+                  checked={checkedChoice}
+                  setChecked={setCheckedChoice}
+                />
               </Box>
 
               <Box
@@ -201,7 +198,10 @@ export default function ReviewSettings(props) {
                 <Typography sx={{ fontSize: "2rem" }} variant="body1">
                   True or False
                 </Typography>
-                <IOSSwitch checked={checkedTrueFalse} setChecked={setCheckedTrueFalse} />
+                <IOSSwitch
+                  checked={checkedTrueFalse}
+                  setChecked={setCheckedTrueFalse}
+                />
               </Box>
 
               <Box
@@ -215,7 +215,10 @@ export default function ReviewSettings(props) {
                 <Typography sx={{ fontSize: "2rem" }} variant="body1">
                   Match
                 </Typography>
-                <IOSSwitch checked={checkedMatch} setChecked={setCheckedMatch} />
+                <IOSSwitch
+                  checked={checkedMatch}
+                  setChecked={setCheckedMatch}
+                />
               </Box>
 
               <Box
@@ -237,8 +240,16 @@ export default function ReviewSettings(props) {
             </CardContent>
           </Card>
           {/* MODAL WINDOW FOR NUMBER OF QUESTIONS */}
-          <Dialog open={open} onClose={handleClose} classes={{ paperScrollPaper: "custom-dialog" }}>
-            <motion.div variants={modalVariants} initial="hidden" animate="visible">
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            classes={{ paperScrollPaper: "custom-dialog" }}
+          >
+            <motion.div
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+            >
               <DialogTitle sx={{ marginBottom: "3rem" }}>
                 <button className="close-btn" onClick={() => handleClose()}>
                   X

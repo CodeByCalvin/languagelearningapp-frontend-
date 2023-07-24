@@ -16,7 +16,7 @@ import ReviewContext from "..//context/ReviewContext";
 import AppContext from "../context/AppContext";
 import { shuffleQuestions } from "../utils/utility";
 import { useNavigate } from "react-router-dom";
-// import { check } from "yargs";
+import HomeButtonHeader from "../components/HomeButtonHeader";
 
 const ReviewTrueFalse = (props) => {
   const navigate = useNavigate();
@@ -76,10 +76,16 @@ const ReviewTrueFalse = (props) => {
   };
 
   const checkAnswer = (answer) => {
-    if (answer === true && shuffledQuestions[0] === questions[questionIndex].word) {
+    if (
+      answer === true &&
+      shuffledQuestions[0] === questions[questionIndex].word
+    ) {
       setCorrectText("Correct!");
       clearInterval(intervalId);
-    } else if (answer === false && shuffledQuestions[0] !== questions[questionIndex].word) {
+    } else if (
+      answer === false &&
+      shuffledQuestions[0] !== questions[questionIndex].word
+    ) {
       setCorrectText("Correct!");
       clearInterval(intervalId);
     } else {
@@ -130,13 +136,8 @@ const ReviewTrueFalse = (props) => {
       transition={{ duration: 0.5 }}
     >
       <Container fluid className="homeContainer justify-content-between">
-        <div>
-          <FontAwesomeIcon
-            icon={faHouse}
-            className="houseIcon"
-            onClick={navigate.bind(this, "/")}
-          />
-        </div>
+        <HomeButtonHeader navigateToPage={props.navigateToPage} />
+        <div></div>
         <div className="d-flex align-items-center rightBanner">
           {timer && (
             <ReviewTimer
@@ -184,24 +185,23 @@ const ReviewTrueFalse = (props) => {
               }}
             />
           </div>
-        ) : null
-        }
+        ) : null}
         <br />
         <br />
         <div className="tfContainer">
-          <button 
-          onClick={() => {
-            checkAnswer(true)
-          }}
-          className="true"
+          <button
+            onClick={() => {
+              checkAnswer(true);
+            }}
+            className="true"
           >
             <h2>True</h2>
           </button>
-          <button 
-          onClick={() => {
-            checkAnswer(false)
-          }}
-          className="false"
+          <button
+            onClick={() => {
+              checkAnswer(false);
+            }}
+            className="false"
           >
             <h2>False</h2>
           </button>

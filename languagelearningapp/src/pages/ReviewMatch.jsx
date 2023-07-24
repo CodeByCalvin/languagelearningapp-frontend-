@@ -17,8 +17,9 @@ import ReviewTimer from "../components/ReviewTimer";
 import ApiServerClient from "../ApiServerClient";
 import ReviewContext from "../context/ReviewContext";
 import AppContext from "../context/AppContext";
+import HomeButtonHeader from "../components/HomeButtonHeader";
 
-const ReviewMatch = () => {
+const ReviewMatch = (props) => {
   const navigate = useNavigate();
 
   // context
@@ -127,36 +128,57 @@ const ReviewMatch = () => {
     }
 
     setCards((prevCards) =>
-      prevCards.map((c) => (c.id === card.id ? { ...c, flipped: true } : { ...c, flipped: false }))
+      prevCards.map((c) =>
+        c.id === card.id ? { ...c, flipped: true } : { ...c, flipped: false }
+      )
     );
     setFlippedCards((prevFlippedCards) => [...prevFlippedCards, card]);
 
     if (flippedCards.length === 1) {
       const [prevCard] = flippedCards;
       if (
-        (prevCard.word === pairs[0].words[0] && card.word === pairs[0].words[1]) ||
-        (prevCard.word === pairs[0].words[1] && card.word === pairs[0].words[0]) ||
-        (prevCard.word === pairs[1].words[0] && card.word === pairs[1].words[1]) ||
-        (prevCard.word === pairs[1].words[1] && card.word === pairs[1].words[0]) ||
-        (prevCard.word === pairs[2].words[0] && card.word === pairs[2].words[1]) ||
-        (prevCard.word === pairs[2].words[1] && card.word === pairs[2].words[0]) ||
-        (prevCard.word === pairs[3].words[0] && card.word === pairs[3].words[1]) ||
-        (prevCard.word === pairs[3].words[1] && card.word === pairs[3].words[0]) ||
-        (prevCard.word === pairs[4].words[0] && card.word === pairs[4].words[1]) ||
-        (prevCard.word === pairs[4].words[1] && card.word === pairs[4].words[0]) ||
-        (prevCard.word === pairs[5].words[0] && card.word === pairs[5].words[1]) ||
+        (prevCard.word === pairs[0].words[0] &&
+          card.word === pairs[0].words[1]) ||
+        (prevCard.word === pairs[0].words[1] &&
+          card.word === pairs[0].words[0]) ||
+        (prevCard.word === pairs[1].words[0] &&
+          card.word === pairs[1].words[1]) ||
+        (prevCard.word === pairs[1].words[1] &&
+          card.word === pairs[1].words[0]) ||
+        (prevCard.word === pairs[2].words[0] &&
+          card.word === pairs[2].words[1]) ||
+        (prevCard.word === pairs[2].words[1] &&
+          card.word === pairs[2].words[0]) ||
+        (prevCard.word === pairs[3].words[0] &&
+          card.word === pairs[3].words[1]) ||
+        (prevCard.word === pairs[3].words[1] &&
+          card.word === pairs[3].words[0]) ||
+        (prevCard.word === pairs[4].words[0] &&
+          card.word === pairs[4].words[1]) ||
+        (prevCard.word === pairs[4].words[1] &&
+          card.word === pairs[4].words[0]) ||
+        (prevCard.word === pairs[5].words[0] &&
+          card.word === pairs[5].words[1]) ||
         (prevCard.word === pairs[5].words[1] && card.word === pairs[5].words[0])
       ) {
-        setMatchedPairs((prevMatchedPairs) => [...prevMatchedPairs, card.id, prevCard.id]);
+        setMatchedPairs((prevMatchedPairs) => [
+          ...prevMatchedPairs,
+          card.id,
+          prevCard.id,
+        ]);
         setCards((prevCards) =>
           prevCards.map((c) =>
-            c.id === card.id || c.id === prevCard.id ? { ...c, matched: true } : c
+            c.id === card.id || c.id === prevCard.id
+              ? { ...c, matched: true }
+              : c
           )
         );
       } else {
         setTimeout(() => {
           setCards((prevCards) =>
-            prevCards.map((c) => (flippedCards.includes(c) ? { ...c, flipped: false } : c))
+            prevCards.map((c) =>
+              flippedCards.includes(c) ? { ...c, flipped: false } : c
+            )
           );
         }, 1000);
       }
@@ -180,13 +202,8 @@ const ReviewMatch = () => {
       transition={{ duration: 0.5 }}
     >
       <Container fluid className="homeContainer justify-content-between">
-        <div>
-          <FontAwesomeIcon
-            icon={faHouse}
-            className="houseIcon"
-            onClick={navigate.bind(this, "/")}
-          />
-        </div>
+        <HomeButtonHeader navigateToPage={props.navigateToPage} />
+        <div></div>
         <div className="d-flex align-items-center rightBanner">
           {/* {timer && <ReviewTimer />} */}
           <FontAwesomeIcon
