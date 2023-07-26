@@ -2,7 +2,6 @@
   "name": "languagelearningapp",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://codebycalvin.github.io/languagelearningapp-frontend",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -22,7 +21,6 @@
     "css-tree": "^2.3.1",
     "d3-ease": "^3.0.1",
     "framer-motion": "^10.12.18",
-    "gh-pages": "^5.0.0",
     "path-browserify": "^1.0.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
@@ -44,9 +42,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
