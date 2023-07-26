@@ -2,7 +2,8 @@
 
 <strong>Welcome to the Language Learning App repository! This is a full-stack app which uses spaced repetition to help users learn a new language. The user can create an account, choose a language to learn, and then start learning. The app will track the user's progress and show them their score.</strong>
 
-![Homepage of weather app](https://i.imgur.com/HEeTr5F.png)
+![Homepage/Word of the Day pages of language learning app](https://i.imgur.com/HEeTr5F.png)
+![Learn/Review pages of language learning app](https://i.imgur.com/yGKWDGK.png)
 
 ## Features
 
