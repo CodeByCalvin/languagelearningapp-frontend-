@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
@@ -8,8 +8,10 @@ import ProgressGraph from "./ProgressGraph";
 import { Container, Modal, Button } from "react-bootstrap";
 import CalendarComponent from "./Calendar";
 import HomeButtonHeader from "../HomeButtonHeader";
+import { userContext } from "../../context/AuthContext";
 
 export default function Progress(props) {
+  const { user, setUser } = useContext(userContext);
   const [activeModal, setActiveModal] = useState("");
 
   const [modalContent, setModalContent] = useState({
@@ -31,7 +33,7 @@ export default function Progress(props) {
 
   const getLearnedWords = async () => {
     try {
-      const res = await ApiServerClient.getLearnedWords();
+      const res = await ApiServerClient.getLearnedWords(user);
       console.log("Response:", res);
       if (!res.data.words_learned || !Array.isArray(res.data.words_learned)) {
         console.error("Unexpected format from API:", res.data);
@@ -46,7 +48,7 @@ export default function Progress(props) {
 
   const getReviewedWords = async () => {
     try {
-      const res = await ApiServerClient.getReviewedWords();
+      const res = await ApiServerClient.getReviewedWords(user);
       console.log("Response:", res);
       if (!res.data.words_reviewed || !Array.isArray(res.data.words_reviewed)) {
         console.error("Unexpected format from API:", res.data);
