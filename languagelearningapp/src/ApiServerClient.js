@@ -42,21 +42,34 @@ export default class ApiServerClient {
     const response = await axios.delete(url, { withCredentials: true });
     return response;
   }
-  static getLearnedWords(token) {
+
+  static getLearnedWords(user) {
     const url = `${SERVER_URL[1]}/auth/progress/learned`;
     return axios.get(url, {
-      headers: {
-        Authorization: `${token}`,
-      },
+      params: { user: user },
+      withCredentials: true,
     });
   }
-  static getReviewedWords() {
+
+  static getReviewedWords(user) {
     const url = `${SERVER_URL[1]}/auth/progress/reviewed`;
-    return axios.get(url, { withCredentials: true });
+    return axios.get(url, {
+      params: { user: user },
+      withCredentials: true,
+    });
   }
 
   static setLearnedWords(words, user) {
     const url = `${SERVER_URL[1]}/auth/setwordslearned`;
+    return axios.post(
+      url,
+      { new_words: words, user: user },
+      { withCredentials: true }
+    );
+  }
+
+  static setReviewedWords(words, user) {
+    const url = `${SERVER_URL[1]}/auth/setwordsreviewed`;
     return axios.post(
       url,
       { new_words: words, user: user },
