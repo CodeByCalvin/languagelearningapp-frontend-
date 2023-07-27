@@ -15,7 +15,7 @@ export function UserProvider({ children }) {
     try {
       const { data } = await ApiServerClient.authGet("user");
       setUser(data);
-      // console.log(data);
+      console.log(data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -23,5 +23,9 @@ export function UserProvider({ children }) {
     }
   };
 
-  return <userContext.Provider value={{ user, setUser, isLoading }}>{children}</userContext.Provider>;
+  return (
+    <userContext.Provider value={{ user, setUser, isLoading }}>
+      {children}
+    </userContext.Provider>
+  );
 }
