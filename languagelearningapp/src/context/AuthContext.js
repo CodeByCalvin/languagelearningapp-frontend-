@@ -15,7 +15,7 @@ export function UserProvider({ children }) {
     try {
       const { data } = await ApiServerClient.authGet("user");
       setUser(data);
-      // console.log(data);
+      console.log(data);
     } catch (error) {
       console.log(error);
     } finally {
