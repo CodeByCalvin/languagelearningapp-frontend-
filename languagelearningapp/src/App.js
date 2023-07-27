@@ -69,10 +69,7 @@ function RoutesWrapper() {
     <Routes>
       <Route element={<ProtectedRoutes />}>
         <Route path="/" element={<Home />} />
-        <Route
-          path="/word-of-the-day"
-          element={<WordOfTheDay navigateToPage={navigateToPage} />}
-        />
+        <Route path="/word-of-the-day" element={<WordOfTheDay navigateToPage={navigateToPage} />} />
         <Route
           path="/learn"
           element={
@@ -101,27 +98,15 @@ function RoutesWrapper() {
             />
           }
         />
-        <Route
-          path="/review"
-          element={<ReviewSettings navigateToPage={navigateToPage} />}
-        />
+        <Route path="/review" element={<ReviewSettings navigateToPage={navigateToPage} />} />
         <Route path="/review/choice" element={<ReviewChoice navigateToPage={navigateToPage} />} />
         <Route
           path="/review/truefalse"
           element={<ReviewTrueFalse navigateToPage={navigateToPage} />}
         />
-        <Route
-          path="/review/match"
-          element={<ReviewMatch navigateToPage={navigateToPage} />}
-        />
-        <Route
-          path="/settings"
-          element={<Settings navigateToPage={navigateToPage} />}
-        />
-        <Route
-          path="/progress"
-          element={<Progress navigateToPage={navigateToPage} />}
-        />
+        <Route path="/review/match" element={<ReviewMatch navigateToPage={navigateToPage} />} />
+        <Route path="/settings" element={<Settings navigateToPage={navigateToPage} />} />
+        <Route path="/progress" element={<Progress navigateToPage={navigateToPage} />} />
       </Route>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
@@ -146,12 +131,8 @@ export default function App() {
     <div className="App">
       <AnimatePresence mode="wait">
         <UserProvider>
-          <ReviewContext.Provider
-            value={{ rVal: reviewSettings, rFunc: setReviewSettings }}
-          >
-            <AppContext.Provider
-              value={{ aVal: appSettings, aFunc: setAppSettings }}
-            >
+          <ReviewContext.Provider value={{ rVal: reviewSettings, rFunc: setReviewSettings }}>
+            <AppContext.Provider value={{ aVal: appSettings, aFunc: setAppSettings }}>
               {/* <TestNavbar /> */}
               <Toaster
                 position="bottom-right"

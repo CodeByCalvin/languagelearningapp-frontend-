@@ -12,7 +12,7 @@ const token =
 
 export default class ApiServerClient {
   static getRandomWord() {
-    const url = `${SERVER_URL[0]}/api/words/random`;
+    const url = `${SERVER_URL[1]}/api/words/random`;
     return axios.get(url);
   }
   static getReviewQuestions(amount) {
@@ -21,29 +21,29 @@ export default class ApiServerClient {
     } else if (amount > 20) {
       amount = 20;
     }
-    const url = `${SERVER_URL[0]}/api/review/${amount}`;
+    const url = `${SERVER_URL[1]}/api/review/${amount}`;
     return axios.get(url);
   }
   // AUTH POST
   static async auth(action, data) {
-    const url = `${SERVER_URL[0]}/auth/${action}`;
+    const url = `${SERVER_URL[1]}/auth/${action}`;
     const response = await axios.post(url, data, { withCredentials: true });
     return response.data;
   }
   // AUTH GET
   static async authGet(action) {
-    const url = `${SERVER_URL[0]}/auth/${action}`;
+    const url = `${SERVER_URL[1]}/auth/${action}`;
     const response = await axios.get(url, { withCredentials: true });
     return response;
   }
   // AUTH DELETE
   static async authDelete(action) {
-    const url = `${SERVER_URL[0]}/auth/${action}`;
+    const url = `${SERVER_URL[1]}/auth/${action}`;
     const response = await axios.delete(url, { withCredentials: true });
     return response;
   }
   static getLearnedWords(token) {
-    const url = `${SERVER_URL[0]}/auth/progress/learned`;
+    const url = `${SERVER_URL[1]}/auth/progress/learned`;
     return axios.get(url, {
       headers: {
         Authorization: `${token}`,
@@ -51,7 +51,7 @@ export default class ApiServerClient {
     });
   }
   static getReviewedWords() {
-    const url = `${SERVER_URL[0]}/auth/progress/reviewed`;
+    const url = `${SERVER_URL[1]}/auth/progress/reviewed`;
     return axios.get(url, {
       headers: {
         Authorization: `${token}`,
@@ -59,16 +59,17 @@ export default class ApiServerClient {
     });
   }
 
-  static setLearnedWords(words) {
-    const url = `${SERVER_URL[0]}/auth/setwordslearned`;
+  static setLearnedWords(words, user) {
+    const url = `${SERVER_URL[1]}/auth/setwordslearned`;
     return axios.post(
       url,
-      { new_words: words },
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
+      { new_words: words,
+        user: user },
+      // {
+      //   headers: {
+      //     Authorization: `${token}`,
+      //   },
+      // }
     );
   }
 }

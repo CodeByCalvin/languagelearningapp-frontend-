@@ -7,7 +7,7 @@ export default function ProtectedRoutes() {
   if (isLoading && !user) {
     return <div>Loading...</div>;
   }
-  console.log(user);
+  // console.log(user);
   console.log(user ? 'User is logged in' : 'User is not logged in');
   return (
     <>
