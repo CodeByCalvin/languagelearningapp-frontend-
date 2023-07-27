@@ -33,7 +33,7 @@ export default class ApiServerClient {
   // AUTH GET
   static async authGet(action) {
   const url = `${SERVER_URL[0]}/auth/${action}?_=${new Date().getTime()}`;
-  const response = await axios.get(url, { withCredentials: true });
+  const response = await axios.get(url, { withCredentials: true }, { headers: { 'Cache-Control': 'no-cache' } });
   return response;
 }
   // AUTH DELETE
