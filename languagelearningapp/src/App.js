@@ -98,14 +98,8 @@ function RoutesWrapper() {
             />
           }
         />
-        <Route
-          path="/review"
-          element={<ReviewSettings navigateToPage={navigateToPage} />}
-        />
-        <Route
-          path="/review/choice"
-          element={<ReviewChoice navigateToPage={navigateToPage} />}
-        />
+        <Route path="/review" element={<ReviewSettings navigateToPage={navigateToPage} />} />
+        <Route path="/review/choice" element={<ReviewChoice navigateToPage={navigateToPage} />} />
         <Route
           path="/review/truefalse"
           element={<ReviewTrueFalse navigateToPage={navigateToPage} />}
