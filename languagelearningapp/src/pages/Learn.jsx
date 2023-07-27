@@ -5,7 +5,6 @@ import { ReactComponent as Microphone } from "../imgs/icons/microphone-solid.svg
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import HomeButtonHeader from "../components/HomeButtonHeader";
-
 import ApiServerClient from "../ApiServerClient";
 import ReviewProgBar from "../components/ReviewProgBar";
 import { ReactComponent as ArrowRight } from "../imgs/icons/arrow-right-solid.svg";

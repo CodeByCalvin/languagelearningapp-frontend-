@@ -52,24 +52,15 @@ export default class ApiServerClient {
   }
   static getReviewedWords() {
     const url = `${SERVER_URL[1]}/auth/progress/reviewed`;
-    return axios.get(url, {
-      headers: {
-        Authorization: `${token}`,
-      },
-    });
+    return axios.get(url, { withCredentials: true });
   }
 
   static setLearnedWords(words, user) {
     const url = `${SERVER_URL[1]}/auth/setwordslearned`;
     return axios.post(
       url,
-      { new_words: words,
-        user: user },
-      // {
-      //   headers: {
-      //     Authorization: `${token}`,
-      //   },
-      // }
+      { new_words: words, user: user },
+      { withCredentials: true }
     );
   }
 }

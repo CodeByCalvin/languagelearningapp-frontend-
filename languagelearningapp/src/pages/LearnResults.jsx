@@ -28,13 +28,16 @@ export default function LearnResults(props) {
   );
 
   useEffect(() => {
-    console.log(user)
+    console.log(user);
     if (uniqueWords.length === 0) {
       return;
     } else {
       const setLearnedWords = async () => {
         try {
-          const response = await ApiServerClient.setLearnedWords(uniqueWords, user);
+          const response = await ApiServerClient.setLearnedWords(
+            uniqueWords,
+            user
+          );
           const data = response.data;
           console.log(data);
         } catch (error) {
