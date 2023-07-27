@@ -12,7 +12,7 @@ const token =
 
 export default class ApiServerClient {
   static getRandomWord() {
-    const url = `${SERVER_URL[1]}/api/words/random`;
+    const url = `${SERVER_URL[0]}/api/words/random`;
     return axios.get(url);
   }
   static getReviewQuestions(amount) {
@@ -26,37 +26,50 @@ export default class ApiServerClient {
   }
   // AUTH POST
   static async auth(action, data) {
-    const url = `${SERVER_URL[1]}/auth/${action}`;
+    const url = `${SERVER_URL[0]}/auth/${action}`;
     const response = await axios.post(url, data, { withCredentials: true });
     return response.data;
   }
   // AUTH GET
   static async authGet(action) {
-    const url = `${SERVER_URL[1]}/auth/${action}`;
+    const url = `${SERVER_URL[0]}/auth/${action}`;
     const response = await axios.get(url, { withCredentials: true });
     return response;
   }
   // AUTH DELETE
   static async authDelete(action) {
-    const url = `${SERVER_URL[1]}/auth/${action}`;
+    const url = `${SERVER_URL[0]}/auth/${action}`;
     const response = await axios.delete(url, { withCredentials: true });
     return response;
   }
-  static getLearnedWords(token) {
-    const url = `${SERVER_URL[1]}/auth/progress/learned`;
+
+  static getLearnedWords(user) {
+    const url = `${SERVER_URL[0]}/auth/progress/learned`;
     return axios.get(url, {
-      headers: {
-        Authorization: `${token}`,
-      },
+      params: { user: user },
+      withCredentials: true,
     });
   }
-  static getReviewedWords() {
-    const url = `${SERVER_URL[1]}/auth/progress/reviewed`;
-    return axios.get(url, { withCredentials: true });
+
+  static getReviewedWords(user) {
+    const url = `${SERVER_URL[0]}/auth/progress/reviewed`;
+    return axios.get(url, {
+      params: { user: user },
+      withCredentials: true,
+    });
   }
 
   static setLearnedWords(words, user) {
-    const url = `${SERVER_URL[1]}/auth/setwordslearned`;
+    const url = `${SERVER_URL[0]}/auth/setwordslearned`;
+    return axios.post(
+      url,
+      { new_words: words, user: user },
+      { withCredentials: true }
+    );
+  }
+
+  static setReviewedWords(words, user) {
+    const url = `${SERVER_URL[0]}/auth/setwordsreviewed`;
     return axios.post(
       url,
       { new_words: words, user: user },
