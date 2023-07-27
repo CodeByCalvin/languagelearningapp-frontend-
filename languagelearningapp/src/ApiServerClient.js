@@ -21,7 +21,7 @@ export default class ApiServerClient {
     } else if (amount > 20) {
       amount = 20;
     }
-    const url = `${SERVER_URL[1]}/api/review/${amount}`;
+    const url = `${SERVER_URL[0]}/api/review/${amount}`;
     return axios.get(url);
   }
   // AUTH POST
