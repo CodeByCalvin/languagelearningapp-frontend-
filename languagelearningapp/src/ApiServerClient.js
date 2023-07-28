@@ -32,43 +32,48 @@ export default class ApiServerClient {
   }
   // AUTH GET
   static async authGet(action) {
-    const url = `${SERVER_URL[0]}/auth/${action}`;
-    const response = await axios.get(url, { withCredentials: true });
-    return response;
-  }
+  const url = `${SERVER_URL[0]}/auth/${action}?_=${new Date().getTime()}`;
+  const response = await axios.get(url, { withCredentials: true }, { headers: { 'Cache-Control': 'no-cache' } });
+  return response;
+}
   // AUTH DELETE
   static async authDelete(action) {
     const url = `${SERVER_URL[0]}/auth/${action}`;
     const response = await axios.delete(url, { withCredentials: true });
     return response;
   }
-  static getLearnedWords(token) {
+
+  static getLearnedWords(user) {
     const url = `${SERVER_URL[0]}/auth/progress/learned`;
     return axios.get(url, {
-      headers: {
-        Authorization: `${token}`,
-      },
-    });
-  }
-  static getReviewedWords() {
-    const url = `${SERVER_URL[0]}/auth/progress/reviewed`;
-    return axios.get(url, {
-      headers: {
-        Authorization: `${token}`,
-      },
+      params: { user: user },
+      withCredentials: true,
     });
   }
 
-  static setLearnedWords(words) {
+  static getReviewedWords(user) {
+    const url = `${SERVER_URL[0]}/auth/progress/reviewed`;
+    return axios.get(url, {
+      params: { user: user },
+      withCredentials: true,
+    });
+  }
+
+  static setLearnedWords(words, user) {
     const url = `${SERVER_URL[0]}/auth/setwordslearned`;
     return axios.post(
       url,
-      { new_words: words },
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
+      { new_words: words, user: user },
+      { withCredentials: true }
+    );
+  }
+
+  static setReviewedWords(words, user) {
+    const url = `${SERVER_URL[0]}/auth/setwordsreviewed`;
+    return axios.post(
+      url,
+      { new_words: words, user: user },
+      { withCredentials: true }
     );
   }
 }

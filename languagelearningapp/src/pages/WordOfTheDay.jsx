@@ -17,6 +17,7 @@ const WordOfTheDay = (props) => {
   const [example, setExample] = useState("");
   const [exampleTranslated, setExampleTranslated] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
+  const [wordDate, setWordDate] = useState("");
 
   useEffect(() => {
     getRandomWord();
@@ -68,8 +69,10 @@ const WordOfTheDay = (props) => {
     try {
       const response = await ApiServerClient.getRandomWord();
       setTimeout(() => {
-        const data = response.data;
+        console.log(response.data.wordOfTheDay);
+        const data = response.data.wordOfTheDay;
         setWord(data.language.english.word);
+        setWordDate(response.data.date);
         // set language here
         const language = "spanish";
         setTranslation(data.language[language].word);
@@ -124,7 +127,10 @@ const WordOfTheDay = (props) => {
 
       <Container fluid className="wotd-container">
         <div className="d-flex justify-content-center align-items-center">
-          <h1>{translation}</h1>
+          <div className="d-flex flex-column">
+            <h3>{wordDate}</h3>
+            <h1>{translation}</h1>
+          </div>
           <FontAwesomeIcon
             className="i"
             icon={faVolumeHigh}
