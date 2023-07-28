@@ -1,0 +1,38 @@
+.userpage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: white;
+  }
+  
+  .userpage-heading {
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+ 
+  .avatar-container {
+    /* ... (other styles remain unchanged) */
+    position: relative;
+  }
+  
+  .badge {
+    /* ... (other styles remain unchanged) */
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(50%, 50%);
+    border: 2px solid black; /* Black border around the badge */
+    border-radius: 50%;
+    width: 30px; /* Adjust the badge size as needed */
+    height: 30px; /* Adjust the badge size as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #7950f2; /* Purple background color */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  

@@ -22,6 +22,7 @@ import { Toaster } from "react-hot-toast";
 import TestNavbar from "./components/testingNav";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Userpage from "./pages/userpage";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 
 // This function converts button names to route paths
@@ -104,9 +105,22 @@ function RoutesWrapper() {
           path="/review/truefalse"
           element={<ReviewTrueFalse navigateToPage={navigateToPage} />}
         />
-        <Route path="/review/match" element={<ReviewMatch navigateToPage={navigateToPage} />} />
-        <Route path="/settings" element={<Settings navigateToPage={navigateToPage} />} />
-        <Route path="/progress" element={<Progress navigateToPage={navigateToPage} />} />
+        <Route
+          path="/review/match"
+          element={<ReviewMatch navigateToPage={navigateToPage} />}
+        />
+        <Route
+          path="/settings"
+          element={<Settings navigateToPage={navigateToPage} />}
+        />
+        <Route
+          path="/progress"
+          element={<Progress navigateToPage={navigateToPage} />}
+        />
+        <Route
+          path="/userpage"
+          element={<Userpage navigateToPage={navigateToPage} />} // Pass the navigateToPage function as a prop
+        />
       </Route>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />

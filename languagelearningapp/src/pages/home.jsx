@@ -5,6 +5,7 @@ import { ReactComponent as GraduationCapIcon } from "../imgs/icons/graduation-ca
 import { ReactComponent as CircleCheckIcon } from "../imgs/icons/circle-check-solid.svg";
 import { ReactComponent as ProgressIcon } from "../imgs/icons/bars-progress-solid.svg";
 import { ReactComponent as CogWheelIcon } from "../imgs/icons/gear-solid.svg";
+import { ReactComponent as ProfileIcon } from "../imgs/icons/profile-icon.svg";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
@@ -20,6 +21,7 @@ export default function Home(props) {
     { Icon: CircleCheckIcon, text: "Review", route: "/review" },
     { Icon: ProgressIcon, text: "Progress", route: "/progress" },
     { Icon: CogWheelIcon, text: "Settings", route: "/settings" },
+    { Icon: ProfileIcon, text: "Userpage", route: "/userpage" },
   ];
 
   const navigate = useNavigate();

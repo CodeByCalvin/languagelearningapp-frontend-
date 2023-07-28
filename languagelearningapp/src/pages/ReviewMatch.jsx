@@ -83,7 +83,7 @@ const ReviewMatch = (props) => {
     ],
   ];
 
-  const pairs = gameData[languageSelect.german];
+  const pairs = gameData[languageSelect.italian];
 
   const [cards, setCards] = useState([]);
   const [flippedCards, setFlippedCards] = useState([]);
