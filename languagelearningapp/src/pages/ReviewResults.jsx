@@ -16,6 +16,7 @@ import "../css/review-results.css";
 import chroma from "chroma-js";
 import { ReactComponent as ArrowRight } from "../imgs/icons/arrow-right-solid.svg";
 import { ReactComponent as RotateRight } from "../imgs/icons/rotate-right-solid.svg";
+import HomeButtonHeader from "../components/HomeButtonHeader";
 
 export default function ReviewResults(props) {
   const [correctPercent, setCorrectPercent] = React.useState(0);
@@ -73,11 +74,7 @@ export default function ReviewResults(props) {
       transition={{ duration: 0.5 }}
     >
       <Container fluid className="home-header">
-        <FontAwesomeIcon
-          icon={faHouse}
-          className="houseIcon"
-          onClick={() => props.setPage && props.setPage("home")}
-        />
+        <HomeButtonHeader navigateToPage={props.navigateToPage} />
       </Container>
 
       <div className="results-container">

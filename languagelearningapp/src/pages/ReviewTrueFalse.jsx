@@ -17,6 +17,7 @@ import AppContext from "../context/AppContext";
 import { shuffleQuestions } from "../utils/utility";
 import { useNavigate } from "react-router-dom";
 import HomeButtonHeader from "../components/HomeButtonHeader";
+import ReviewProgBar from "../components/ReviewProgBar";
 
 const ReviewTrueFalse = (props) => {
   const navigate = useNavigate();
@@ -28,6 +29,9 @@ const ReviewTrueFalse = (props) => {
   const [shuffledQuestions, setShuffledQuestions] = useState([]);
 
   const [intervalId, setIntervalId] = useState(null); // Used for review timer
+
+
+  const [isDisabled, setIsDisabled] = useState(false);
 
   // context
   const { rVal } = useContext(ReviewContext);
@@ -82,15 +86,18 @@ const ReviewTrueFalse = (props) => {
     ) {
       setCorrectText("Correct!");
       clearInterval(intervalId);
+      setIsDisabled(true);
     } else if (
       answer === false &&
       shuffledQuestions[0] !== questions[questionIndex].word
     ) {
       setCorrectText("Correct!");
       clearInterval(intervalId);
+      setIsDisabled(true);
     } else {
       setCorrectText("Incorrect!");
       clearInterval(intervalId);
+      setIsDisabled(true);
     }
   };
 
@@ -104,8 +111,9 @@ const ReviewTrueFalse = (props) => {
         ])
       );
       setCorrectText("");
+      setIsDisabled(false);
     } else {
-      navigate("/review");
+      props.navigateToPage("review/results");
     }
   };
 
@@ -194,6 +202,7 @@ const ReviewTrueFalse = (props) => {
               checkAnswer(true);
             }}
             className="true"
+            disabled={isDisabled}
           >
             <h2>True</h2>
           </button>
@@ -202,10 +211,19 @@ const ReviewTrueFalse = (props) => {
               checkAnswer(false);
             }}
             className="false"
+            disabled={isDisabled}
           >
             <h2>False</h2>
           </button>
         </div>
+      </Container>
+
+      <Container fluid className="descContainer">
+        <ReviewProgBar
+          questionIndex={questionIndex}
+          questions={questions}
+          shuffleQuestions={shuffleQuestions}
+        />
       </Container>
     </motion.div>
   );

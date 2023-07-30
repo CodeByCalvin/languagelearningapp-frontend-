@@ -2,12 +2,13 @@ import "../css/learn.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { ReactComponent as PlaySolid } from "../imgs/icons/play-solid.svg";
 import { ReactComponent as Microphone } from "../imgs/icons/microphone-solid.svg";
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { motion } from "framer-motion";
 import HomeButtonHeader from "../components/HomeButtonHeader";
 import ApiServerClient from "../ApiServerClient";
 import ReviewProgBar from "../components/ReviewProgBar";
 import { ReactComponent as ArrowRight } from "../imgs/icons/arrow-right-solid.svg";
+import AppContext from "../context/AppContext";
 
 export default function Learn(props) {
   const wordClass = "";
@@ -20,7 +21,12 @@ export default function Learn(props) {
   const [definition, setDefinition] = React.useState("");
   const [responseMessage, setResponseMessage] = React.useState("");
 
-  const language = "french";
+  // App context
+  const { aVal } = useContext(AppContext);
+  const { learnLanguage } = aVal;
+  const language = learnLanguage.toString().toLowerCase();
+
+  // const language = "french";
   const knownLanguage = "english";
 
   // Push each word to the backend database
@@ -39,11 +45,7 @@ export default function Learn(props) {
     try {
       const response = await ApiServerClient.getRandomWord();
       const data = response.data;
-      if (
-        data.language &&
-        data.language[knownLanguage] &&
-        data.language[language]
-      ) {
+      if (data.language && data.language[knownLanguage] && data.language[language]) {
         // Save the word data to the questions state  (for review)
         const newWordData = {
           index: props.questionIndex + 1,
@@ -65,16 +67,10 @@ export default function Learn(props) {
 
         // Sets the example based on the language (and highlights the specific word)
         setLanguageExample(
-          highlightWord(
-            data.language[language].word,
-            data.language[language].example
-          )
+          highlightWord(data.language[language].word, data.language[language].example)
         );
         setTranslatedExample(
-          highlightWord(
-            data.language[knownLanguage].word,
-            data.language[knownLanguage].example
-          )
+          highlightWord(data.language[knownLanguage].word, data.language[knownLanguage].example)
         );
       }
     } catch (error) {
@@ -121,25 +117,20 @@ export default function Learn(props) {
 
   // When microphone button is pressed, listen for user's response and compare to correct answer
   const useMicrophone = () => {
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
 
     recognition.onstart = function () {
       console.log("Voice activated, please read the word");
       setResponseMessage(
-        <span style={{ color: "green" }}>
-          Voice activated, please read the word
-        </span>
+        <span style={{ color: "green" }}>Voice activated, please read the word</span>
       );
     };
 
     recognition.onerror = function (event) {
       console.log("Error occurred in recognition: " + event.error);
       setResponseMessage(
-        <span style={{ color: "red" }}>
-          Error occurred in recognition: {event.error}
-        </span>
+        <span style={{ color: "red" }}>Error occurred in recognition: {event.error}</span>
       );
     };
 
@@ -155,9 +146,7 @@ export default function Learn(props) {
       } else {
         // Word is not heard
         console.log("Word not heard");
-        setResponseMessage(
-          <span style={{ color: "red" }}>Please try again</span>
-        );
+        setResponseMessage(<span style={{ color: "red" }}>Please try again</span>);
       }
     };
 
