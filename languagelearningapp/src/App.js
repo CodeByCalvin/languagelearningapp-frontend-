@@ -109,6 +109,7 @@ function RoutesWrapper() {
           path="/review/match"
           element={<ReviewMatch navigateToPage={navigateToPage} />}
         />
+        <Route path="/review/results" element={<ReviewResults navigateToPage={navigateToPage} />} />
         <Route
           path="/settings"
           element={<Settings navigateToPage={navigateToPage} />}

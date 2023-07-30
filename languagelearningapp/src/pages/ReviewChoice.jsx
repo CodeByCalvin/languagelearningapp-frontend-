@@ -75,15 +75,10 @@ const ReviewChoice = (props) => {
 
   const handleAnswer = () => {
     // get the next question
-    // if the questionIndex is equal to the length of the questions array, set it to 0
+    // if the questionIndex is equal to the length of the questions array, navioate to the results page and reset the questionIndex
     if (questionIndex === questions.length - 1) {
+      props.navigateToPage("review/results");
       setQuestionIndex(0);
-      setShuffledQuestions(
-        shuffleQuestions([
-          questions[0].word,
-          ...questions[0].alternatives.slice(0, 3),
-        ])
-      );
     } else {
       setQuestionIndex(questionIndex + 1);
       // set questions array to the word and 3 alternatives
