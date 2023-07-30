@@ -69,8 +69,8 @@ const WordOfTheDay = (props) => {
     try {
       const response = await ApiServerClient.getRandomWord();
       setTimeout(() => {
-        console.log(response.data.wordOfTheDay);
-        const data = response.data.wordOfTheDay;
+        console.log(response.data);
+        const data = response.data;
         setWord(data.language.english.word);
         setWordDate(response.data.date);
         // set language here

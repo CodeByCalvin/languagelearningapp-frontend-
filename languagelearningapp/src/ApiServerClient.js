@@ -12,7 +12,7 @@ const token =
 
 export default class ApiServerClient {
   static getRandomWord() {
-    const url = `${SERVER_URL[0]}/api/words/random`;
+    const url = `${SERVER_URL[1]}/api/words/random`;
     return axios.get(url);
   }
   static getReviewQuestions(amount) {
@@ -21,30 +21,30 @@ export default class ApiServerClient {
     } else if (amount > 20) {
       amount = 20;
     }
-    const url = `${SERVER_URL[0]}/api/review/${amount}`;
+    const url = `${SERVER_URL[1]}/api/review/${amount}`;
     return axios.get(url);
   }
   // AUTH POST
   static async auth(action, data) {
-    const url = `${SERVER_URL[0]}/auth/${action}`;
+    const url = `${SERVER_URL[1]}/auth/${action}`;
     const response = await axios.post(url, data, { withCredentials: true });
     return response.data;
   }
   // AUTH GET
   static async authGet(action) {
-  const url = `${SERVER_URL[0]}/auth/${action}?_=${new Date().getTime()}`;
+  const url = `${SERVER_URL[1]}/auth/${action}?_=${new Date().getTime()}`;
   const response = await axios.get(url, { withCredentials: true }, { headers: { 'Cache-Control': 'no-cache' } });
   return response;
 }
   // AUTH DELETE
   static async authDelete(action) {
-    const url = `${SERVER_URL[0]}/auth/${action}`;
+    const url = `${SERVER_URL[1]}/auth/${action}`;
     const response = await axios.delete(url, { withCredentials: true });
     return response;
   }
 
   static getLearnedWords(user) {
-    const url = `${SERVER_URL[0]}/auth/progress/learned`;
+    const url = `${SERVER_URL[1]}/auth/progress/learned`;
     return axios.get(url, {
       params: { user: user },
       withCredentials: true,
@@ -52,7 +52,7 @@ export default class ApiServerClient {
   }
 
   static getReviewedWords(user) {
-    const url = `${SERVER_URL[0]}/auth/progress/reviewed`;
+    const url = `${SERVER_URL[1]}/auth/progress/reviewed`;
     return axios.get(url, {
       params: { user: user },
       withCredentials: true,
@@ -60,7 +60,7 @@ export default class ApiServerClient {
   }
 
   static setLearnedWords(words, user) {
-    const url = `${SERVER_URL[0]}/auth/setwordslearned`;
+    const url = `${SERVER_URL[1]}/auth/setwordslearned`;
     return axios.post(
       url,
       { new_words: words, user: user },
@@ -69,7 +69,7 @@ export default class ApiServerClient {
   }
 
   static setReviewedWords(words, user) {
-    const url = `${SERVER_URL[0]}/auth/setwordsreviewed`;
+    const url = `${SERVER_URL[1]}/auth/setwordsreviewed`;
     return axios.post(
       url,
       { new_words: words, user: user },

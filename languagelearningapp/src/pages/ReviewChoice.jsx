@@ -133,8 +133,8 @@ const ReviewChoice = (props) => {
       exit={{ y: -300, opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <HomeButtonHeader navigateToPage={props.navigateToPage} />
       <Container fluid className="homeContainer justify-content-between">
+        <HomeButtonHeader navigateToPage={props.navigateToPage} />
         <div></div>
         <div className="d-flex align-items-center rightBanner">
           {timer && (
